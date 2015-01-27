@@ -1,0 +1,6 @@
+bower_components/
+tmp/
+
+src/lodash.js
+src/q.js
+src/qwest.js
