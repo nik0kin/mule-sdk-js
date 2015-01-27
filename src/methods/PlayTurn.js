@@ -1,4 +1,4 @@
-define(['../qwest'], function (qwest) {
+define(['../utils/qwest'], function (qwest) {
   return function (contextPath) {
     var that = {};
 

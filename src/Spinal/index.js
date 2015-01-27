@@ -1,4 +1,4 @@
-define(['../q', '../utils/index'], function (Q, utils) {
+define(['../lib/q', '../utils/index'], function (Q, utils) {
   return function (SDK) {
     return function spinalConstructor() {
       var that = {};
@@ -60,7 +60,7 @@ define(['../q', '../utils/index'], function (Q, utils) {
             .then(function (result) {
               userId = result._id;
             })
-            .fail(function () {
+            .catch(function () {
               // ignore if hooks.noSession is undefined
               if (hooks.noSession) {
                 hooks.noSession();
@@ -75,7 +75,7 @@ define(['../q', '../utils/index'], function (Q, utils) {
         return startPromise
           .then(function () {
             return SDK.Games.readQ(gameId)
-              .fail(function () {
+              .catch(function () {
                 throw 'invalid gameId';
               })
               .then(function (game) {
@@ -104,7 +104,7 @@ define(['../q', '../utils/index'], function (Q, utils) {
             return SDK.GameBoards.readGamesBoardQ(gameId)
               .then(function (gameBoard) {
                 cachedGameBoard = gameBoard
-              })
+              });
           })
           .then(function () {
             return readGameStateQ();

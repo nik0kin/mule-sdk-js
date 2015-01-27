@@ -1,6 +1,6 @@
 bower_components/
 tmp/
 
-src/lodash.js
-src/q.js
-src/qwest.js
+src/lib/lodash.js
+src/lib/q.js
+src/lib/qwest.js

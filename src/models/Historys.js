@@ -3,7 +3,7 @@
  *
  */
 
-define(['../lodash', '../qwest'], function (_, qwest) {
+define(['../lib/lodash', '../utils/qwest'], function (_, qwest) {
   return function (contextPath) {
     var that = {};
 
@@ -16,7 +16,7 @@ define(['../lodash', '../qwest'], function (_, qwest) {
     };
 
     that.readGamesHistoryQ = function (gameId) {
-      return qwest.get(contextPath+"games/" + gameId + '/history');
+      return qwest.get(contextPath+"games/" + gameId + '/history', null, {responseType:'json'});
     };
 
     that.readGamesFullHistoryQ = function (gameId) {

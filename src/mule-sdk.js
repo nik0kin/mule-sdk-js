@@ -4,7 +4,7 @@
  */
 
 define(
-  ['./q',
+  ['./lib/q',
     "./models/Users", "./models/Games",
     "./models/RuleBundles", "./models/GameBoards",
     './models/GameStates',

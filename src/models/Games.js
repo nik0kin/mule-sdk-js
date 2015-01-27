@@ -3,7 +3,7 @@
  *
  */
 
-define(['./Users', '../q', '../lodash', '../qwest'], function (Users, Q, _, qwest) {
+define(['./Users', '../lib/q', '../lib/lodash', '../utils/qwest'], function (Users, Q, _, qwest) {
   return function (contextPath) {
     var that = {};
 

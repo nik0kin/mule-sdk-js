@@ -1,8 +1,5 @@
 ({
-    baseUrl: ".",
-    paths: {
-        //qwest: "some/other/jquery"
-    },
-    name: 'src/sdk',
-    out: 'mule-sdk.js'
+    baseUrl: "./src",
+    name: 'mule-sdk',
+    out: 'dist/mule-sdk.min.js'
 })
