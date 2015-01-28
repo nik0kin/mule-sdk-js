@@ -56,7 +56,10 @@ define(['../lib/q', '../utils/index'], function (Q, utils) {
           userId = config.userId
           startPromise = SDK.Q();
         } else if (config.useSessionForUserId) {
-          startPromise = SDK.Users.sessionQ()
+          startPromise = Q()
+            .then(function () {
+              return SDK.Users.sessionQ();
+            })
             .then(function (result) {
               userId = result._id;
             })
@@ -118,18 +121,19 @@ define(['../lib/q', '../utils/index'], function (Q, utils) {
           })
         // Return objects
           .then(function () {
-            return {
+            return Q({
               game: cachedGame,
               history: cachedHistory,
               gameBoard: cachedGameBoard,
               gameState: cachedGameState,
               lastTurn: lastTurn
-            };
+            });
           })
         // Error
-          .fail(function (err) {
+          .catch(function (err) {
             console.log('MuleSDK: Spinal.initQ failed: ')
             console.log(err);
+            throw err;
           });
       };
 
@@ -203,11 +207,14 @@ define(['../lib/q', '../utils/index'], function (Q, utils) {
       };
 
       var checkForUpdatesQ = function () {
-        return SDK.Games.readQ(gameId)
+        return Q()
+          .then(function () {
+            return SDK.Games.readQ(gameId);
+          })
           .then(function(game) {
             cachedGame = game;
 
-            return SDK.Historys.readGamesHistoryQ(gameId)
+            return SDK.Historys.readGamesHistoryQ(gameId);
           })
           .then(function(history) {
             cachedHistory = history;
