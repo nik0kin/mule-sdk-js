@@ -4,13 +4,13 @@
  */
 
 define(
-  ['./lib/q',
+  ['./lib/q', './utils/index',
     "./models/Users", "./models/Games",
     "./models/RuleBundles", "./models/GameBoards",
     './models/GameStates',
     "./models/Historys", "./models/Turns",
     "./methods/PlayTurn", './Spinal/index'],
-  function (Q,
+  function (Q, utils,
     Users, Games,
     RuleBundles, GameBoards,
     GameStates,
@@ -22,6 +22,7 @@ define(
     var that = {};
 
     that.Q = Q;
+    that.utils = utils;
 
     that.Users = Users(contextPath);
     that.Games = Games(contextPath);

@@ -93,6 +93,7 @@ SDK.PlayTurn.sendGameTurnQ(gameId, params)
 #### ETC
 
 SDK.Q - Q library
+SDK.utils.getUrlParameter(paramName)
 
 #### Experimental Spinal
 
