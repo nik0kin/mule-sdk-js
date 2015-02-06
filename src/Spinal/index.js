@@ -255,7 +255,10 @@ define(['../lib/q', '../utils/index'], function (Q, utils) {
 
       // fetching last Turn and new GameState
       var fetchAllUpdatesQ = function () {
-        return readLastTurnQ()
+        return Q()
+          .then(function () {
+            return readLastTurnQ();
+          })
           .then(function () {
             return readGameStateQ();
           })
