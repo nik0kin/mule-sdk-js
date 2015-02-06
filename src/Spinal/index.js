@@ -18,6 +18,7 @@ define(['../lib/q', '../utils/index'], function (Q, utils) {
 
       var currentTurnNumber,
         lastTurn,
+        currentTurn,
         turns = {};
 
       // initilizes configuration and reads
@@ -119,6 +120,18 @@ define(['../lib/q', '../utils/index'], function (Q, utils) {
             }
             return readLastTurnQ();
           })
+        // if playByMail, fetch currentTurn
+          .then(function () {
+            if (config.turnSubmitStyle === 'playByMail') {
+              return Q()
+                .then(function () {
+                  return readCurrentTurnQ();
+                })
+                .catch(function () {
+                  console.log('caught')
+                })
+            }
+          })
         // Return objects
           .then(function () {
             return Q({
@@ -126,6 +139,7 @@ define(['../lib/q', '../utils/index'], function (Q, utils) {
               history: cachedHistory,
               gameBoard: cachedGameBoard,
               gameState: cachedGameState,
+              currentTurn: currentTurn,
               lastTurn: lastTurn
             });
           })
@@ -165,6 +179,13 @@ define(['../lib/q', '../utils/index'], function (Q, utils) {
           .then(function (turn) {
             lastTurn = turn;
             turns[currentTurnNumber - 1] = turn;
+          });
+      };
+
+      var readCurrentTurnQ = function () {
+        return SDK.Turns.readGamesTurnQ(gameId, currentTurnNumber)
+          .then(function (turn) {
+            currentTurn = turn;
           });
       };
 
