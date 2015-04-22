@@ -203,6 +203,10 @@ define(['../lib/q', '../utils/index'], function (Q, utils) {
         dontQuery = true;
       };
 
+      that.setRefreshTime = function (milliseconds) {
+        config.refreshTime = milliseconds;
+      };
+
       that.getTimeTilNextRefresh = function () {
         if (dontQuery) {
           return -1;
