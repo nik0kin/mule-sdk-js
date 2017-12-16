@@ -25,6 +25,10 @@ define(['mule-sdk'], function (sdk) {
 });
 ```
 
+#### Gulp based on
+
+https://github.com/Microsoft/TypeScriptSamples/tree/ac60a3cc89c731d44fc30d5a1b170f71f246e4c2/react-flux-babel-karma
+
 #### Example SDK Instantiation
 
 ```
