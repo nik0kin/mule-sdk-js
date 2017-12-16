@@ -1,9 +1,3 @@
-bower_components/
-tmp/
-
-src/lib/lodash.js
-src/lib/q.js
-src/lib/qwest.js
 
 build/
 node_modules/
