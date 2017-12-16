@@ -1,11 +1,17 @@
 import * as _ from 'lodash';
 import * as Q from 'q';
 
-import {theGreeter} from '../../src/mule-sdk';
+import {sdk} from '../../src/mule-sdk';
 
-describe('Yee', () => {
-  it('should work', () => {
-    theGreeter.greet();
+describe('mule-sdk', () => {
+  it('should expose sdk', () => {
+    expect(sdk).toBeDefined();
+  });
+
+  it('should create an SDK instance', () => {
+    var SDK = sdk('http://zion.tgp.io:313/webservices/');
+    
+    expect(SDK).toBeDefined();
   });
   
   it('should depencies should work', () => {
@@ -16,11 +22,3 @@ describe('Yee', () => {
   });
   
 });
-
-
-// define(['mule-sdk'], function (sdk) {
-//   var SDK = sdk('http://zion.tgp.io:313/webservices/');
-
-//   console.log('sdk should not be undefined', sdk);
-//   console.log('SDK should not be undefined', SDK);
-// });
