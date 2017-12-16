@@ -2,43 +2,12 @@
 import * as Q from 'q';
 import * as _ from 'lodash';
 
+import { User, UserCache, MuleUserCreateResponse, MuleUserSessionResponse, MuleUserLoginResponse } from '../../types/mule';
+import { UsersApi } from '../../types/sdk';
+
 import { qwest } from '../utils/qwest';
 
 let userId: string | undefined;
-
-export interface UsersApi {
-  getLoggedInUserId(): number | undefined;
-  indexQ(): Q.Promise<User[]>;
-  createQ(params: any): Q.Promise<MuleUserCreateResponse>;
-  readQ(userId: string): Q.Promise<User>;
-  sessionQ(): Q.Promise<MuleUserSessionResponse>;
-  loginQ(params: any): Q.Promise<MuleUserLoginResponse>;
-  usersCache: UserCache;
-  fakeCacheWrite(result: User): void;
-  readCacheQ(userId: string): Q.Promise<User | undefined>;
-  indexCacheQ(force: boolean): Q.Promise<UserCache>;
-}
-
-export interface User {
-  _id: number;
-  username: string;
-}
-
-export interface MuleUserCreateResponse {
-  userId: string;
-};
-
-export interface MuleUserSessionResponse {
-  [s: string]: any;
-};
-
-export interface MuleUserLoginResponse {
-  [s: string]: any;
-};
-
-export interface UserCache {
-  [userId: string]: User;
-}
 
 export function initUsersApi(contextPath: string): UsersApi {
   let that: any = {};

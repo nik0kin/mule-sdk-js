@@ -1,33 +1,19 @@
 import * as Q from 'q';
 
+import { SDK } from '../types/sdk';
+
 import * as utils from './utils';
 
-import { initUsersApi, UsersApi } from './models/Users';
-import { initGamesApi, GamesApi } from './models/Games';
-import { initRuleBundlesApi, RuleBundlesApi } from './models/RuleBundles';
-import { initGameBoardsApi, GameBoardsApi } from './models/GameBoards';
-import { initGameStatesApi, GameStatesApi } from './models/GameStates';
-import { initHistorysApi, HistorysApi } from './models/Historys';
-import { initTurnsApi, TurnsApi } from './models/Turns';
+import { initUsersApi } from './models/Users';
+import { initGamesApi } from './models/Games';
+import { initRuleBundlesApi } from './models/RuleBundles';
+import { initGameBoardsApi } from './models/GameBoards';
+import { initGameStatesApi } from './models/GameStates';
+import { initHistorysApi } from './models/Historys';
+import { initTurnsApi } from './models/Turns';
 
-import { initPlayTurnApi, PlayTurnApi } from './methods/PlayTurn';
+import { initPlayTurnApi } from './methods/PlayTurn';
 
-export interface SDK {
-  Q: any;
-  utils: {getUrlParameter(obj: any): string | undefined};
-
-  Users: UsersApi;
-  Games: GamesApi;
-  RuleBundles: RuleBundlesApi;
-  GameBoards: GameBoardsApi;
-  GameStates: GameStatesApi;
-  Historys: HistorysApi;
-  Turns: TurnsApi;
-
-  PlayTurn: PlayTurnApi;
-
-  // Spinal: Spinal
-}
 
 export function sdk(contextPath: string): SDK {
   return {

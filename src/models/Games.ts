@@ -2,42 +2,12 @@
 import * as Q from 'q';
 import * as _ from 'lodash';
 
-import { initUsersApi, UsersApi, User } from '../models/Users';
+import { Game, PlayersMap, User } from '../../types/mule';
+import { GamesApi, UsersApi } from '../../types/sdk';
+
+import { initUsersApi } from '../models/Users';
 import { qwest } from '../utils/qwest';
 
-export interface GamesApi {
-  indexQ(): Q.Promise<Game[]>;
-  createQ(params: any): Q.Promise<any>;
-  readQ(gameId: string): Q.Promise<string>;
-  readUsersGamesQ(userId: string): Q.Promise<Game[]>;
-  readMyGamesQ(): Q.Promise<Game[]>;
-  joinGameQ(gameId: string): Q.Promise<any>;
-  getPlayersMapQ(game: Game): Q.Promise<PlayersMap>;
-}
-
-export interface Game {
-  _id: string;
-  gameBoard: string; // id
-  gameStatus: string;
-  maxPlayers: number;
-  players: PlayersMap;
-  name: string;
-  nextTurnTime: Date;
-  ruleBundle: {
-    id: string;
-    name: string;
-  };
-  turnProgressStyle: string;
-  turnTimeLimit: number;
-}
-
-export interface PlayersMap {
-  [playerNum: string]: { //  'p1'
-    playerId: string;
-    playerStatus: string;
-    name?: string; // added by getPlayersMapQ()
-  };
-}
 
 export function initGamesApi(contextPath: string) {
   var that: any = {};

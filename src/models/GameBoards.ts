@@ -2,47 +2,11 @@
 import * as Q from 'q';
 import * as _ from 'lodash';
 
+import { GameBoard, GameState, Piece } from '../../types/mule';
+import { GameBoardsApi } from '../../types/sdk';
+
 import { qwest } from '../utils/qwest';
-import { GameState, Piece } from '../models/GameStates';
 
-export interface GameBoardsApi {
-  indexQ(): Q.Promise<GameBoard[]>;
-  readQ(GameBoardId: string): Q.Promise<GameBoard>;
-  readGamesBoardQ(gameId: string): Q.Promise<GameBoard>;
-  gameBoardsCache: GameBoardCache;
-  fakeCacheWrite(result: GameBoard): void;
-  readCacheQ(gameBoardId: string): Q.Promise<GameBoard>;
-  getFullSpaceInfo(gameBoard: GameBoard, gameState: GameState, spaceId: string): Q.Promise<any>;
-  getPiecesOnSpace(gameState: GameState, spaceId: string): Piece[];
-  getPiecesByOwnerIdOnSpaceId(gameState: GameState, spaceId: string, ownerId: string): Piece[];
-  getPiecesFromId(gameState: GameState, pieceId: string): Piece[];
-  getClassesFromPieces(gameState: GameState, className: string): Piece[];
-}
-
-export interface GameBoardCache {
-  [gameBoardId: string]: GameBoard;
-}
-
-export interface GameBoard {
-  _id: string;
-  board: BoardSpace[];
-  boardType: string;
-  gameState: string; // id
-  history: string; // id
-  ruleBundle: {
-    id: string;
-    name: string;
-  }
-}
-
-export interface BoardSpace {
-  id: string;
-  class: string;
-  attributes: {
-    [attribute: string]: string;
-  };
-  edges: {id: string}[];
-}
 
 export function initGameBoardsApi(contextPath: string): GameBoardsApi {
 

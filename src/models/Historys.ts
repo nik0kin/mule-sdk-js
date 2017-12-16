@@ -1,37 +1,10 @@
 import * as Q from 'q';
 import * as _ from 'lodash';
 
+import { History, Turn } from '../../types/mule';
+import { HistorysApi } from '../../types/sdk';
+
 import { qwest } from '../utils/qwest';
-import { Turn } from './Turns';
-
-export interface HistorysApi {
-  indexQ(): Q.Promise<History[]>;
-  readQ(historyId: string): Q.Promise<History>;
-  readGamesHistoryQ(gameId: string): Q.Promise<History>;
-  readGamesFullHistoryQ(gameId: string): Q.Promise<History[]>;
-  markAllTurnsRead(history: History): void;
-  getLastUnreadTurn(history: History): Turn;
-  getLastRoundMeta(history: History): Turn | undefined;
-  getWhosTurnIsIt(history: History): string;
-}
-
-export interface History {
-  _id: string;
-  currentPlayerIndexTurn: number;
-  currentRound: number;
-  currentTurn: number;
-  currentTurnStatus: {
-    [playerNum: string]: boolean; 
-  };
-  gameId: string;
-  turnOrder: string[]; // string = playerNum (eg: p1, p2)
-  turnSubmitStyle: string;
-  turns: {
-    meta?: Turn[];
-    [turnIndex: number]: Turn[];
-   };
-}
-
 
 export function initHistorysApi(contextPath: string): HistorysApi {
   const that: any = {};

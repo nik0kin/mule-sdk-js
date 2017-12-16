@@ -1,11 +1,8 @@
 import * as Q from 'q';
 
-import { qwest } from '../utils/qwest';
+import { PlayTurnApi } from '../../types/sdk';
 
-export interface PlayTurnApi {
-  sendQ(params: any): Q.Promise<any>;
-  sendGameTurnQ(gameId: string, params: any): Q.Promise<any>;
-}
+import { qwest } from '../utils/qwest';
 
 export function initPlayTurnApi(contextPath: string): PlayTurnApi {
   const that: any = {};

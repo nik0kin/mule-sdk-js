@@ -1,23 +1,9 @@
 import * as Q from 'q';
 
+import { Turn } from '../../types/mule';
+import { TurnsApi } from '../../types/sdk';
+
 import { qwest } from '../utils/qwest';
-import { Turn } from './Turns';
-
-export interface TurnsApi {
-  readQ(historyId: string): Q.Promise<Turn>;
-  readGamesTurnQ(gameId: string, turnNumber: number): Q.Promise<Turn>;
-}
-
-export interface Turn {
-  _id: string;
-  gameId: string;
-  playerTurns: {
-    [playerNum: string]: {
-      actions: any[];
-      dateSubmitted: Date;
-    }
-  }
-}
 
 export function initTurnsApi(contextPath: string): TurnsApi {
   const that: any = {};

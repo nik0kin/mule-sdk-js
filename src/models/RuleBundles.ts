@@ -1,17 +1,10 @@
 
 import * as Q from 'q';
 
+import { RuleBundle } from '../../types/mule';
+import { RuleBundlesApi } from '../../types/sdk';
+
 import { qwest } from '../utils/qwest';
-
-export interface RuleBundlesApi {
-  indexQ(): Q.Promise<RuleBundle[]>;
-  createQ(params: any): Q.Promise<any>;
-  readQ(ruleBundleId: string): Q.Promise<RuleBundle>;
-}
-
-export interface RuleBundle {
-  name: string;
-}
 
 export function initRuleBundlesApi(contextPath: string): RuleBundlesApi {
   var that: any = {};
