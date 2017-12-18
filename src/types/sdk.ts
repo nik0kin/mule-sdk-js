@@ -3,13 +3,14 @@ import {
   MuleUserCreateResponse, MuleUserSessionResponse, MuleUserLoginResponse,
   Game, RuleBundle,
   GameBoard, GameState,
-  GameBoardCache, Piece,
+  GameBoardCache,
   History, Turn,
 } from './mule';
 
+import { FnLibrary } from '../shared/fn';
+
 export interface SDK {
-  Q: any;
-  utils: {getUrlParameter(obj: any): string | undefined};
+  fn: FnLibrary; // functional function library
 
   Users: UsersApi;
   Games: GamesApi;
@@ -26,16 +27,11 @@ export interface SDK {
 
 export interface GameBoardsApi {
   indexQ(): Q.Promise<GameBoard[]>;
-  readQ(GameBoardId: string): Q.Promise<GameBoard>;
+  readQ(gameBoardId: string): Q.Promise<GameBoard>;
   readGamesBoardQ(gameId: string): Q.Promise<GameBoard>;
   gameBoardsCache: GameBoardCache;
   fakeCacheWrite(result: GameBoard): void;
   readCacheQ(gameBoardId: string): Q.Promise<GameBoard>;
-  getFullSpaceInfo(gameBoard: GameBoard, gameState: GameState, spaceId: string): Q.Promise<any>;
-  getPiecesOnSpace(gameState: GameState, spaceId: string): Piece[];
-  getPiecesByOwnerIdOnSpaceId(gameState: GameState, spaceId: string, ownerId: string): Piece[];
-  getPiecesFromId(gameState: GameState, pieceId: string): Piece[];
-  getClassesFromPieces(gameState: GameState, className: string): Piece[];
 }
 
 export interface GamesApi {
@@ -59,10 +55,6 @@ export interface HistorysApi {
   readQ(historyId: string): Q.Promise<History>;
   readGamesHistoryQ(gameId: string): Q.Promise<History>;
   readGamesFullHistoryQ(gameId: string): Q.Promise<History[]>;
-  markAllTurnsRead(history: History): void;
-  getLastUnreadTurn(history: History): Turn;
-  getLastRoundMeta(history: History): Turn | undefined;
-  getWhosTurnIsIt(history: History): string;
 }
 
 export interface RuleBundlesApi {

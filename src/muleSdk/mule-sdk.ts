@@ -1,8 +1,6 @@
-import * as Q from 'q';
 
 import { SDK } from '../types/sdk';
-
-import * as utils from './utils';
+import * as fn from '../shared/fn';
 
 import { initUsersApi } from './models/Users';
 import { initGamesApi } from './models/Games';
@@ -17,8 +15,7 @@ import { initPlayTurnApi } from './methods/PlayTurn';
 
 export function sdk(contextPath: string): SDK {
   return {
-    Q,
-    utils,
+    fn: fn.allFn,
 
     Users: initUsersApi(contextPath),
     Games: initGamesApi(contextPath),

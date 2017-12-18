@@ -1,4 +1,8 @@
 
+export interface HttpFnLibrary {
+  getUrlParameter(sParam: any): string | undefined;
+}
+
 export function getUrlParameter(sParam: any): string | undefined {
   var sPageURL = window.location.search.substring(1);
   var sURLVariables = sPageURL.split('&');

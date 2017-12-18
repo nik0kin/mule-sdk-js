@@ -19,7 +19,7 @@ var babelOptions = {
 module.exports = {
   cache: true,
   entry: {
-    main: ['./src/mule-sdk.ts', './mockSrc/mock-sdk.ts'],
+    main: ['./src/muleSdk/mule-sdk.ts', './src/mockSdk/mock-sdk.ts'],
     vendor: [
       // 'babel-polyfill',
       'lodash',

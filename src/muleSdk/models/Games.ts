@@ -6,7 +6,7 @@ import { Game, PlayersMap, User } from '../../types/mule';
 import { GamesApi, UsersApi } from '../../types/sdk';
 
 import { initUsersApi } from '../models/Users';
-import { qwest } from '../utils/qwest';
+import { http } from '../utils/http';
 
 
 export function initGamesApi(contextPath: string) {
@@ -15,19 +15,19 @@ export function initGamesApi(contextPath: string) {
   const usersApi: UsersApi = initUsersApi(contextPath);
 
   that.indexQ = function (): Q.Promise<Game[]> {
-    return qwest.get(contextPath + 'games');
+    return http.get(contextPath + 'games');
   };
 
   that.createQ = function (params: any): Q.Promise<any> {
-    return qwest.post(contextPath + 'games', params);
+    return http.post(contextPath + 'games', params);
   };
 
   that.readQ = function (gameId: string): Q.Promise<string> {
-    return qwest.get(contextPath + 'games/' + gameId);
+    return http.get(contextPath + 'games/' + gameId);
   };
 
   that.readUsersGamesQ = function (userId: string): Q.Promise<Game[]> {
-    return qwest.get(contextPath + 'users/' + userId + '/games');
+    return http.get(contextPath + 'users/' + userId + '/games');
   };
 
   that.readMyGamesQ = function (): Q.Promise<Game[]> {
@@ -37,7 +37,7 @@ export function initGamesApi(contextPath: string) {
   ////// GAME SERVICES //////
 
   that.joinGameQ = function (gameId: string): Q.Promise<any> {
-    return qwest.post(contextPath + 'games/' + gameId + '/join');
+    return http.post(contextPath + 'games/' + gameId + '/join');
   };
 
   ///// other //////

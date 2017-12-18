@@ -22,7 +22,7 @@ function post(url: string, data: any/*, opts: any*/): Q.Promise<any> {
     .then((response: any) => response.json());
 }
 
-export const qwest = {
+export const http = {
   get: function (url: any/*, data: any, opts: any*/): Q.Promise<any> {
     return Q.Promise(function (resolve, reject) {
       get(url/*, data, opts || {dataType: 'json', withCredentials: true}*/)

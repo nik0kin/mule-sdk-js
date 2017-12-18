@@ -5,7 +5,7 @@ import * as _ from 'lodash';
 import { User, UserCache, MuleUserCreateResponse, MuleUserSessionResponse, MuleUserLoginResponse } from '../../types/mule';
 import { UsersApi } from '../../types/sdk';
 
-import { qwest } from '../utils/qwest';
+import { http } from '../utils/http';
 
 let userId: string | undefined;
 
@@ -17,11 +17,11 @@ export function initUsersApi(contextPath: string): UsersApi {
   };
 
   that.indexQ = function (): Q.Promise<User[]> {
-    return qwest.get(contextPath + 'users');
+    return http.get(contextPath + 'users');
   };
 
   that.createQ = function (params: any): Q.Promise<MuleUserCreateResponse> {
-    return qwest.post(contextPath + 'users', params)
+    return http.post(contextPath + 'users', params)
       .then(function (result: MuleUserCreateResponse) {
         userId = result.userId;
         that.fakeCacheWrite({_id: result.userId, username: params.username});
@@ -30,16 +30,16 @@ export function initUsersApi(contextPath: string): UsersApi {
   };
 
   that.readQ = function (userId: number): Q.Promise<User> {
-    return qwest.get(contextPath + 'users/' + userId);
+    return http.get(contextPath + 'users/' + userId);
   };
 
   ////// USER SERVICES //////
   that.sessionQ = function (): Q.Promise<MuleUserSessionResponse> {
-    return qwest.get(contextPath + 'session');
+    return http.get(contextPath + 'session');
   };
 
   that.loginQ = function (params: any): Q.Promise<MuleUserLoginResponse> {
-    return qwest.post(contextPath + 'LoginAuth', params)
+    return http.post(contextPath + 'LoginAuth', params)
       .then(function (result: MuleUserLoginResponse) {
         userId = result.userId;
         that.fakeCacheWrite({_id: result.userId, username: params.username});

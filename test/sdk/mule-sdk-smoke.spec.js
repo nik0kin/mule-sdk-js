@@ -1,7 +1,7 @@
 import * as _ from 'lodash';
 import * as Q from 'q';
 
-import {sdk} from '../../src/mule-sdk';
+import { sdk } from '../../src/muleSdk/mule-sdk';
 
 describe('mule-sdk', () => {
   it('should expose sdk', () => {
@@ -15,7 +15,7 @@ describe('mule-sdk', () => {
   });
   
   it('should depencies should work', () => {
-    _.times(3, () => console.log('lol'));
+    _.times(2, () => console.log('lol'));
 
     console.log(fetch)
     console.log(Q)
