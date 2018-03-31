@@ -3,18 +3,27 @@
 import { SDK } from '../types/sdk';
 import * as fn from '../shared/fn';
 
-import { MockGameBoardsApi } from './api/models/GameBoards';
-import { MockGamesApi } from './api/models/Games';
-import { MockGameStatesApi } from './api/models/GameStates';
-import { MockHistorysApi } from './api/models/Historys';
-import { MockRuleBundlesApi } from './api/models/RuleBundles';
-import { MockTurnsApi } from './api/models/Turns';
-import { MockUsersApi } from './api/models/Users';
-import { MockPlayTurnApi } from './api/methods/PlayTurn';
+import { MockGameBoardsApi } from './frontendApi/models/GameBoards';
+import { MockGamesApi } from './frontendApi/models/Games';
+import { MockGameStatesApi } from './frontendApi/models/GameStates';
+import { MockHistorysApi } from './frontendApi/models/Historys';
+import { MockRuleBundlesApi } from './frontendApi/models/RuleBundles';
+import { MockTurnsApi } from './frontendApi/models/Turns';
+import { MockUsersApi } from './frontendApi/models/Users';
+import { MockPlayTurnApi } from './frontendApi/methods/PlayTurn';
+
+import { setMockData } from './mockBackend/data';
 
 export class MockSdk implements SDK {
+
+  constructor(contextPath?: string) {
+    console.log('MockSdk initialized with path: ' + contextPath);
+  }
+
+  // expose util fn  
   public fn = fn.allFn;
 
+  // export mock apis
   public Users = new MockUsersApi();
   public Games = new MockGamesApi();
   public RuleBundles = new MockRuleBundlesApi();
@@ -24,4 +33,8 @@ export class MockSdk implements SDK {
   public Turns = new MockTurnsApi();
 
   public PlayTurn = new MockPlayTurnApi();
+
+
+  // special Mock SDK features 
+  public static setMockData = setMockData;
 }

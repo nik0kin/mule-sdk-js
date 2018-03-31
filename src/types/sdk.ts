@@ -37,7 +37,7 @@ export interface GameBoardsApi {
 export interface GamesApi {
   indexQ(): Q.Promise<Game[]>;
   createQ(params: any): Q.Promise<any>;
-  readQ(gameId: string): Q.Promise<string>;
+  readQ(gameId: string): Q.Promise<Game>;
   readUsersGamesQ(userId: string): Q.Promise<Game[]>;
   readMyGamesQ(): Q.Promise<Game[]>;
   joinGameQ(gameId: string): Q.Promise<any>;

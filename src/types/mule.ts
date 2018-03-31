@@ -35,7 +35,7 @@ export interface Game {
   ruleBundleGameSettings: {
     customBoardSettings: any;
   };
-  turnProgressStyle: string;
+  turnProgressStyle: TurnProgressStyle;
   turnTimeLimit: number;
 }
 
@@ -47,8 +47,29 @@ export interface PlayersMap {
   };
 }
 
+export enum TurnProgressStyle {
+  WaitProgress = 'waitprogress', // waits for all players to submit turns
+  AutoProgress = 'autoprogress', // progresses after a timer
+  AutoBoot = 'autoboot', // never implemented
+}
+
 export interface RuleBundle {
+  _id: string;
   name: string;
+  turnSubmitStyle: TurnSubmitStyle;
+  canAutoProgress: boolean;
+  staticBoardSettings: {
+    boardStyle: string;
+  };
+  gameSettings: {
+    playerLimit: number;
+    customBoardSettings: any;
+  }
+}
+
+export enum TurnSubmitStyle {
+  RoundRobin = 'roundRobin', // p1 plays -> progressTurn(p1) -> p2 plays -> progressTurn(p2) -> progressRound -> repeat til winCondition is true
+  PlayByMail = 'playByMail', // wait til (p1 plays & p2 plays) -> progressRound -> repeat til winCondition is true
 }
 
 export interface GameBoardCache {
@@ -109,7 +130,7 @@ export interface History {
   };
   gameId: string;
   turnOrder: string[]; // string = playerNum (eg: p1, p2)
-  turnSubmitStyle: string;
+  turnSubmitStyle: TurnSubmitStyle;
   turns: {
     meta?: Turn[];
     [turnIndex: number]: Turn[];

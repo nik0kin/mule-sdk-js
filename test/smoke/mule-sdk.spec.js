@@ -14,7 +14,7 @@ describe('mule-sdk', () => {
     expect(SDK).toBeDefined();
   });
   
-  it('should depencies should work', () => {
+  it('should dependencies should work', () => {
     let i = 0;
     _.times(2, () => i++);
     expect(i).toBe(2);
