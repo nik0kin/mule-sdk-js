@@ -9,16 +9,18 @@ describe('mule-sdk', () => {
   });
 
   it('should create an SDK instance', () => {
-    var SDK = sdk('http://zion.tgp.io:313/webservices/');
+    let SDK = sdk('http://zion.tgp.io:313/webservices/');
     
     expect(SDK).toBeDefined();
   });
   
   it('should depencies should work', () => {
-    _.times(2, () => console.log('lol'));
+    let i = 0;
+    _.times(2, () => i++);
+    expect(i).toBe(2);
 
-    console.log(fetch)
-    console.log(Q)
+    expect(fetch).toBeDefined();
+    expect(Q).toBeDefined();
   });
   
 });

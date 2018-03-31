@@ -32,6 +32,9 @@ export interface Game {
     id: string;
     name: string;
   };
+  ruleBundleGameSettings: {
+    customBoardSettings: any;
+  };
   turnProgressStyle: string;
   turnTimeLimit: number;
 }
