@@ -18,7 +18,7 @@ Note: Dont use built stuff (see Example)
 
 https://github.com/Microsoft/TypeScriptSamples/tree/ac60a3cc89c731d44fc30d5a1b170f71f246e4c2/react-flux-babel-karma
 
-#### Example SDK Instantiation
+#### Example SDK Instantiation (in a Typescript project)
 
 ```
 import { sdk } from '../path-to/../src/mule-sdk';
