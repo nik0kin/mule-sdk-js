@@ -2,28 +2,17 @@
 
 ### Get Started
 
-To Use as a multifile AMD module
+Dev Watch Mode
 ```
-bower install
-./dodev.sh
-```
-then
-```
-define(['./path/to/src/mule-sdk'], function (sdk) {
-});
+npm run serve
 ```
 
-To Build into a minified AMD module
+To Build
 ```
 ./build.sh
 # builds to dist/
 ```
-then ```<script src="path/to/mule-sdk.min.js">``` after you load require.js
-then this will work
-```
-define(['mule-sdk'], function (sdk) {
-});
-```
+Note: Dont use built stuff (see Example)
 
 #### Gulp based on
 
@@ -32,13 +21,13 @@ https://github.com/Microsoft/TypeScriptSamples/tree/ac60a3cc89c731d44fc30d5a1b17
 #### Example SDK Instantiation
 
 ```
-define(['mule-sdk'], function (sdk) {
-  var yourMuleServicesUrl = "http://muleserver.com:313/";
+import { sdk } from '../path-to/../src/mule-sdk';
 
-  var SDK = sdk(yourMuleServicesUrl);
+let yourMuleServicesUrl = "http://muleserver.com:313/";
 
-  SDK.doStuff();
-});
+let SDK = sdk(yourMuleServicesUrl);
+
+SDK.doStuff();
 ```
 
 
