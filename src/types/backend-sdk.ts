@@ -1,7 +1,7 @@
 import {
   BoardSpace,
-  Piece,
-  Space,
+  PieceState,
+  SpaceState,
   Turn,
 } from './mule';
 
@@ -37,14 +37,14 @@ export interface MuleStateSdk { // aka M
   setPlayerVariable: (playerRel: string, key: string, value: any) => void;
   addToPlayerVariable: (playerRel: string, key: string, additionValue: number) => void;
 
-  getSpace: (locationId: string) => Space;
-  getSpaces: () => {[locationId: string]: Space};
-  setSpace: (spaceId: string, spaceObject: Space) => void;
+  getSpace: (locationId: string) => SpaceState;
+  getSpaces: () => {[locationId: string]: SpaceState};
+  setSpace: (spaceId: string, spaceObject: SpaceState) => void;
 
-  addPiece: (pieceObject: Piece) => void;
-  getPiece: (pieceId: string) => Piece;
-  getPieces: (_searchArgs: GetPiecesSearchArgs) => Piece[];
-  setPiece: (pieceId: string, pieceObject: Piece) => void;
+  addPiece: (pieceObject: PieceState) => void;
+  getPiece: (pieceId: string) => PieceState;
+  getPieces: (_searchArgs: GetPiecesSearchArgs) => PieceState[];
+  setPiece: (pieceId: string, pieceObject: PieceState) => void;
   deletePiece: (pieceId: string) => void;
   deletePieces: (pieceIds: string[]) => void;
 

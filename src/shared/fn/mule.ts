@@ -1,14 +1,14 @@
 
 import * as _ from 'lodash';
 
-import { GameBoard, GameState, Piece, History, Turn } from '../../types/mule';
+import { GameBoard, GameState, PieceState, History, Turn } from '../../types/mule';
 
 export interface MuleFnLibrary {
   getFullSpaceInfo(gameBoard: GameBoard, gameState: GameState, spaceId: string): Q.Promise<any>;
-  getPiecesOnSpace(gameState: GameState, spaceId: string): Piece[];
-  getPiecesByOwnerIdOnSpaceId(gameState: GameState, spaceId: string, ownerId: string): Piece[];
-  getPiecesFromId(gameState: GameState, pieceId: number): Piece[];
-  getClassesFromPieces(gameState: GameState, className: string): Piece[];
+  getPiecesOnSpace(gameState: GameState, spaceId: string): PieceState[];
+  getPiecesByOwnerIdOnSpaceId(gameState: GameState, spaceId: string, ownerId: string): PieceState[];
+  getPiecesFromId(gameState: GameState, pieceId: number): PieceState[];
+  getClassesFromPieces(gameState: GameState, className: string): PieceState[];
 
   markAllTurnsRead(history: History): void;
   getLastUnreadTurn(history: History): Turn | undefined;
@@ -39,8 +39,8 @@ export function getFullSpaceInfo(gameBoard: GameBoard, gameState: GameState, spa
   return foundSpace;
 }
 
-export function getPiecesOnSpace(gameState: GameState, spaceId: string): Piece[] {
-  const pieces: Piece[] = [];
+export function getPiecesOnSpace(gameState: GameState, spaceId: string): PieceState[] {
+  const pieces: PieceState[] = [];
 
   _.each(gameState.pieces, function (value) {
     if (value.locationId === spaceId) {
@@ -51,22 +51,22 @@ export function getPiecesOnSpace(gameState: GameState, spaceId: string): Piece[]
   return pieces;
 }
 
-export function getPiecesByOwnerIdOnSpaceId(gameState: GameState, spaceId: string, ownerId: string): Piece[] {
-  return _.filter(gameState.pieces, function (piece: Piece) {
+export function getPiecesByOwnerIdOnSpaceId(gameState: GameState, spaceId: string, ownerId: string): PieceState[] {
+  return _.filter(gameState.pieces, function (piece: PieceState) {
     return piece.locationId === spaceId && piece.ownerId === ownerId;
   });
 }
 
-export function getPiecesFromId(gameState: GameState, pieceId: number): Piece[] {
-  return _.filter(gameState.pieces, function (piece: Piece) {
+export function getPiecesFromId(gameState: GameState, pieceId: number): PieceState[] {
+  return _.filter(gameState.pieces, function (piece: PieceState) {
     return pieceId === piece.id;
   });
 }
 
-export function getClassesFromPieces(gameState: GameState, className: string): Piece[] {
-  const found: Piece[] = [];
+export function getClassesFromPieces(gameState: GameState, className: string): PieceState[] {
+  const found: PieceState[] = [];
 
-  _.each(gameState.pieces, function (value: Piece) {
+  _.each(gameState.pieces, function (value: PieceState) {
     if (value.class === className) {
       found.push(value);
     }

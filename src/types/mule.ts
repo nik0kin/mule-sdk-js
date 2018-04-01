@@ -99,14 +99,14 @@ export interface BoardSpace {
 
 export interface GameState {
   globalVariables: {[variable: string]: string | number | boolean};
-  pieces: Piece[];
+  pieces: PieceState[];
   playerVariables: {
     [playerNum: string]: {[variable: string]: string | number | boolean};
   };
-  spaces: Space[];
+  spaces: SpaceState[];
 }
 
-export interface Piece {
+export interface PieceState {
   _id: string;
   id: number;
   class: string;
@@ -114,7 +114,7 @@ export interface Piece {
   ownerId: string; // playerNum (eg. p1)
 }
 
-export interface Space {
+export interface SpaceState {
   _id: string;
   boardSpaceId: string;
   attributes: {[attribute: string]: string | number | boolean};
