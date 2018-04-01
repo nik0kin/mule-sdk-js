@@ -12,7 +12,7 @@ import { MockTurnsApi } from './frontendApi/models/Turns';
 import { MockUsersApi } from './frontendApi/models/Users';
 import { MockPlayTurnApi } from './frontendApi/methods/PlayTurn';
 
-import { setMockData } from './mockBackend/data';
+import { addMockData } from './mockBackend/data';
 
 export class MockSdk implements SDK {
 
@@ -36,5 +36,5 @@ export class MockSdk implements SDK {
 
 
   // special Mock SDK features 
-  public static setMockData = setMockData;
+  public static addMockData = addMockData;
 }

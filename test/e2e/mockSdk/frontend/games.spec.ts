@@ -9,7 +9,7 @@ describe('mock-frontend-sdk', () => {
       should be able to set a mock Game
       then load it with SDK.Games.readQ()
     `, () => {
-      MockSdk.setMockData({
+      MockSdk.addMockData({
         Games: [basicGame]
       });
 
