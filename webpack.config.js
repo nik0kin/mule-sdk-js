@@ -35,7 +35,25 @@ module.exports = {
   module: {
     rules: [{
       test: /\.ts$/,
-      exclude: /node_modules/,
+      exclude: [/node_modules/, /test/],
+      use: [
+        {
+          loader: 'istanbul-instrumenter-loader',
+          query: {
+            esModules: true
+          }
+        },
+        {
+          loader: 'babel-loader',
+          options: babelOptions
+        },
+        {
+          loader: 'ts-loader'
+        }
+      ]
+    }, {
+      test: /\.ts$/,
+      include: /test/,
       use: [
         {
           loader: 'babel-loader',

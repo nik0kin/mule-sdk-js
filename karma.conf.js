@@ -11,8 +11,11 @@ module.exports = function(config) {
     files: [
       // This ensures we have the es6 shims in place from babel and that angular and angular-mocks are loaded
       // and then loads all the tests
-      'test/main.js'
+      'test/main.js',
+    //  'src/**/*.js' // transpiled js
     ],
+
+    exclude: ['src/muleSdk/Spinal/index.js'],
 
     port: 9876,
 
@@ -47,19 +50,10 @@ module.exports = function(config) {
       }
     },
 
-    // // the default configuration
-    // junitReporter: {
-    //   outputDir: 'test-results', // results will be saved as $outputDir/$browserName.xml
-    //   outputFile: undefined, // if included, results will be saved as $outputDir/$browserName/$outputFile
-    //   suite: ''
-    // },
+    coverageIstanbulReporter: {
+      reports: ['html', 'text-summary'],
+      fixWebpackSourcePaths: true
+    },
 
-    coverageReporter: {
-      reporters:[
-        //{type: 'html', dir:'coverage/'},  // https://github.com/karma-runner/karma-coverage/issues/123
-        {type: 'text'},
-        {type: 'text-summary'}
-      ],
-    }
   });
 };

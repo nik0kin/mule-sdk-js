@@ -10,8 +10,15 @@ function runTests(options) {
     configFile: path.join(__dirname, '../karma.conf.js'),
     singleRun: !options.shouldWatch,
 
-    plugins: ['karma-webpack', 'karma-jasmine', 'karma-mocha-reporter', 'karma-sourcemap-loader', 'karma-phantomjs-launcher'],
-    reporters: ['mocha']
+    plugins: [
+      'karma-webpack',
+      'karma-jasmine',
+      'karma-mocha-reporter',
+      'karma-sourcemap-loader',
+      'karma-phantomjs-launcher',
+      'karma-coverage-istanbul-reporter'
+    ],
+    reporters: ['mocha', 'coverage-istanbul']
   };
 
   if (options.done) {
