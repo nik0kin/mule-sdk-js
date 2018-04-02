@@ -106,7 +106,8 @@ export function genericGetData<T extends Persistable>(type: DataModelTypes): (id
       return resolve(foundData);
     } else {
       return reject({
-        statusCode: 404
+        statusCode: 404,
+        statusMessage: 'Could not find type=' + type + ': ' + id,
       });
     }
   };
