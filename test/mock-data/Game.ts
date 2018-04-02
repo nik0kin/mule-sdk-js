@@ -11,7 +11,7 @@ export const basicGame: Game = {
       playerStatus: 'inGame'
     },
     'p2': {
-      playerId: 'playerId_103',
+      playerId: 'playerId_103special',
       playerStatus: 'inGame'
     },
   },
@@ -26,4 +26,28 @@ export const basicGame: Game = {
   },
   turnProgressStyle: TurnProgressStyle.WaitProgress,
   turnTimeLimit: -1,
+};
+
+export const anotherBasicGame: Game = {
+  _id: 'testId_105',
+  gameBoard: 'gameBoardId_106',
+  gameStatus: 'inprogress',
+  maxPlayers: 1,
+  players: {
+    'p1': {
+      playerId: 'playerId_103',
+      playerStatus: 'inGame'
+    },
+  },
+  name: 'lazy MuleSprawl',
+  nextTurnTime: new Date(),
+  ruleBundle: {
+    id: 'ruleBundleId_107',
+    name: 'MuleSprawl',
+  },
+  ruleBundleGameSettings: {
+    customBoardSettings: {},
+  },
+  turnProgressStyle: TurnProgressStyle.AutoProgress,
+  turnTimeLimit: 180, // 3min
 };

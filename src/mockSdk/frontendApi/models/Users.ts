@@ -1,36 +1,70 @@
 
-import * as Q from 'q';
+import { Promise, resolve, reject } from 'q';
+import * as _ from 'lodash';
 
-import { User, UserCache, MuleUserCreateResponse, MuleUserSessionResponse, MuleUserLoginResponse } from '../../../types/mule';
+import {
+  DataModelTypes,
+  User, UserCache,
+  MuleUserCreateResponse, MuleUserSessionResponse,
+  MuleUserLoginRequest, MuleUserLoginResponse
+} from '../../../types/mule';
 import { UsersApi } from '../../../types/sdk';
 
+import { database, genericGetData } from '../../mockBackend/data';
+
+export let loggedInUserId: string | undefined = undefined;
+
+export function setLoggedInUser(userId: string): void {
+  loggedInUserId = userId;
+}
+
 export class MockUsersApi implements UsersApi {
-  public getLoggedInUserId = (): number | undefined => {
-    return 1;
+  public getLoggedInUserId = (): string | undefined => {
+    return loggedInUserId;
   }
-  public indexQ = (): Q.Promise<User[]> => {
-    return Q.resolve([]);
+  public indexQ = (): Promise<User[]> => {
+    return resolve(database.Users);
   }
-  public createQ = (params: any): Q.Promise<MuleUserCreateResponse> => {
+  public createQ = (params: any): Promise<MuleUserCreateResponse> => {
     throw 'nyi ' + params;
   }
-  public readQ = (userId: string): Q.Promise<User> => {
-    throw 'nyi ' + userId;
+  public readQ: (userId: string) => Promise<User> = genericGetData<User>(DataModelTypes.Users);
+  public sessionQ = (): Promise<MuleUserSessionResponse> => {
+    if (loggedInUserId) {
+      return this.readQ(loggedInUserId);
+    } else {
+      return reject({ // TODO need to check how fetch would return that error
+        statusCode: 403
+      });
+    }
   }
-  public sessionQ = (): Q.Promise<MuleUserSessionResponse> => {
-    throw 'nyi ';
+  public loginQ = (params: MuleUserLoginRequest): Promise<MuleUserLoginResponse> => {
+    const user: User | undefined = _.find(database.Users, (user: User) => {
+      return user.username === params.username;
+    });
+
+    if (user) {
+      loggedInUserId = user._id;
+      return resolve({
+        userId: user._id,
+        username: user.username,
+      });
+    } else {
+      return reject({
+        statusCode: 401 // TODO double check
+      });
+    }
   }
-  public loginQ = (params: any): Q.Promise<MuleUserLoginResponse> => {
-    throw 'nyi ' + params;
-  }
-  public usersCache: UserCache;
-  public fakeCacheWrite = (result: User): void => {
+  public usersCache: UserCache; // dont user cache (no reason)
+  public cacheUser = (result: User): void => { // TODO why does a game frontend need to cache a user (un expose this)
     throw 'nyi ' + result;
   }
-  public readCacheQ = (userId: string): Q.Promise<User | undefined> => {
-    throw 'nyi ' + userId;
+  public readCacheQ = (userId: string): Promise<User | undefined> => {
+    return this.readQ(userId);
   }
-  public indexCacheQ = (force: boolean): Q.Promise<UserCache> => {
+  public indexCacheQ = (force: boolean): Promise<UserCache> => {
     throw 'nyi ' + force;
   }
 }
+
+export const usersApi: UsersApi = new MockUsersApi();

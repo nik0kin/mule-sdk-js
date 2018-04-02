@@ -1,6 +1,6 @@
 
 export interface User {
-  _id: number;
+  _id: string;
   username: string;
 }
 
@@ -8,20 +8,40 @@ export interface MuleUserCreateResponse {
   userId: string;
 };
 
-export interface MuleUserSessionResponse {
-  [s: string]: any;
+export type MuleUserSessionResponse = User;
+
+export interface MuleUserLoginRequest {
+  username: string;
+  password: string;
 };
 
 export interface MuleUserLoginResponse {
-  [s: string]: any;
+  userId: string;
+  username: string;
 };
 
 export interface UserCache {
   [userId: string]: User;
 }
 
-export interface Game {
+export enum DataModelTypes {
+  Games = 'Games',
+  GameBoards = 'GameBoards',
+  Historys = 'Historys',
+  RuleBundles = 'RuleBundles',
+  GameStates = 'GameStates',
+  PieceStates = 'PieceStates',
+  SpaceStates = 'SpaceStates',
+  Turns = 'Turns',
+  Users = 'Users',
+}
+
+// TODO better name 
+export interface Persistable {
   _id: string;
+}
+
+export interface Game extends Persistable {
   gameBoard: string; // id
   gameStatus: string;
   maxPlayers: number;
@@ -53,8 +73,7 @@ export enum TurnProgressStyle {
   AutoBoot = 'autoboot', // never implemented
 }
 
-export interface RuleBundle {
-  _id: string;
+export interface RuleBundle extends Persistable {
   name: string;
   turnSubmitStyle: TurnSubmitStyle;
   canAutoProgress: boolean;
@@ -76,8 +95,7 @@ export interface GameBoardCache {
   [gameBoardId: string]: GameBoard;
 }
 
-export interface GameBoard {
-  _id: string;
+export interface GameBoard extends Persistable {
   board: BoardSpace[];
   boardType: string;
   gameState: string; // id
@@ -97,7 +115,7 @@ export interface BoardSpace {
   edges: {id: string}[];
 }
 
-export interface GameState {
+export interface GameState extends Persistable {
   globalVariables: {[variable: string]: string | number | boolean};
   pieces: PieceState[];
   playerVariables: {
@@ -106,22 +124,20 @@ export interface GameState {
   spaces: SpaceState[];
 }
 
-export interface PieceState {
-  _id: string;
+export interface PieceState extends Persistable {
   id: number;
   class: string;
   locationId: string;
   ownerId: string; // playerNum (eg. p1)
 }
 
-export interface SpaceState {
+export interface SpaceState extends Persistable {
   _id: string;
   boardSpaceId: string;
   attributes: {[attribute: string]: string | number | boolean};
 }
 
-export interface History {
-  _id: string;
+export interface History extends Persistable {
   currentPlayerIndexTurn: number;
   currentRound: number;
   currentTurn: number;
@@ -137,8 +153,7 @@ export interface History {
    };
 }
 
-export interface Turn {
-  _id: string;
+export interface Turn extends Persistable {
   gameId: string;
   playerTurns: {
     [playerNum: string]: {

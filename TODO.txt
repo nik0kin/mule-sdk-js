@@ -2,3 +2,7 @@
 
 mockSdk should call Rule Bundle hooks, and pass an instance of M to them
 
+
+Cache Smarter
+
+Namespace for types?

@@ -1,40 +1,49 @@
 
-
-import { SDK } from '../types/sdk';
+import {
+  SDK,
+  UsersApi,
+  GamesApi, GameBoardsApi,
+  RuleBundlesApi, GameStatesApi,
+  HistorysApi, TurnsApi,
+} from '../types/sdk';
 import * as fn from '../shared/fn';
 
-import { MockGameBoardsApi } from './frontendApi/models/GameBoards';
-import { MockGamesApi } from './frontendApi/models/Games';
-import { MockGameStatesApi } from './frontendApi/models/GameStates';
-import { MockHistorysApi } from './frontendApi/models/Historys';
-import { MockRuleBundlesApi } from './frontendApi/models/RuleBundles';
-import { MockTurnsApi } from './frontendApi/models/Turns';
-import { MockUsersApi } from './frontendApi/models/Users';
+import { gameBoardsApi } from './frontendApi/models/GameBoards';
+import { gamesApi } from './frontendApi/models/Games';
+import { gameStatesApi } from './frontendApi/models/GameStates';
+import { historysApi } from './frontendApi/models/Historys';
+import { ruleBundlesApi } from './frontendApi/models/RuleBundles';
+import { turnsApi } from './frontendApi/models/Turns';
+import { setLoggedInUser, usersApi } from './frontendApi/models/Users';
 import { MockPlayTurnApi } from './frontendApi/methods/PlayTurn';
 
-import { addMockData } from './mockBackend/data';
+import { addMockData, resetMockData } from './mockBackend/data';
 
 export class MockSdk implements SDK {
 
-  constructor(contextPath?: string) {
-    console.log('MockSdk initialized with path: ' + contextPath);
+  public contextPath: string;
+
+  constructor(contextPath: string) {
+    this.contextPath = contextPath;
   }
 
   // expose util fn  
   public fn = fn.allFn;
 
-  // export mock apis
-  public Users = new MockUsersApi();
-  public Games = new MockGamesApi();
-  public RuleBundles = new MockRuleBundlesApi();
-  public GameBoards = new MockGameBoardsApi(); 
-  public GameStates = new MockGameStatesApi();
-  public Historys = new MockHistorysApi();
-  public Turns = new MockTurnsApi();
+  // expose mock apis
+  public Users: UsersApi = usersApi;
+  public Games: GamesApi = gamesApi;
+  public RuleBundles: RuleBundlesApi = ruleBundlesApi;
+  public GameBoards: GameBoardsApi = gameBoardsApi; 
+  public GameStates: GameStatesApi = gameStatesApi;
+  public Historys: HistorysApi = historysApi;
+  public Turns: TurnsApi = turnsApi;
 
   public PlayTurn = new MockPlayTurnApi();
 
 
   // special Mock SDK features 
   public static addMockData = addMockData;
+  public static resetMockData = resetMockData;
+  public static setLoggedInUser = setLoggedInUser;
 }

@@ -1,14 +1,16 @@
 
-import * as Q from 'q';
+import { Promise } from 'q';
 
-import { Turn } from '../../../types/mule';
+import { DataModelTypes, Turn } from '../../../types/mule';
 import { TurnsApi } from '../../../types/sdk';
 
+import { genericGetData } from '../../mockBackend/data';
+
 export class MockTurnsApi implements TurnsApi {
-  public readQ = (historyId: string): Q.Promise<Turn> => {
-    throw 'nyi ' + historyId;
-  }
-  public readGamesTurnQ = (gameId: string, turnNumber: number): Q.Promise<Turn> => {
+  public readQ: (turnId: string) => Promise<Turn> = genericGetData<Turn>(DataModelTypes.Turns);
+  public readGamesTurnQ = (gameId: string, turnNumber: number): Promise<Turn> => {
     throw 'nyi ' + gameId + turnNumber;
   }
 }
+
+export const turnsApi: TurnsApi = new MockTurnsApi();

@@ -1,20 +1,22 @@
 
-import * as Q from 'q';
+import { Promise, resolve } from 'q';
 
-import { History } from '../../../types/mule';
+import { DataModelTypes, History } from '../../../types/mule';
 import { HistorysApi } from '../../../types/sdk';
 
+import { database, genericGetData } from '../../mockBackend/data';
+
 export class MockHistorysApi implements HistorysApi {
-  public indexQ = (): Q.Promise<History[]> => {
-    return Q.resolve([]);
+  public indexQ = (): Promise<History[]> => {
+    return resolve(database.Historys);
   }
-  public readQ = (historyId: string): Q.Promise<History> => {
-    throw 'nyi ' + historyId;
-  }
-  public readGamesHistoryQ = (gameId: string): Q.Promise<History> => {
+  public readQ: (gameStateId: string) => Promise<History> = genericGetData<History>(DataModelTypes.Historys);
+  public readGamesHistoryQ = (gameId: string): Promise<History> => {
     throw 'nyi ' + gameId;
   }
-  public readGamesFullHistoryQ = (gameId: string): Q.Promise<History[]> => {
+  public readGamesFullHistoryQ = (gameId: string): Promise<History[]> => {
     throw 'nyi ' + gameId;
   }
 }
+
+export const historysApi: HistorysApi = new MockHistorysApi();

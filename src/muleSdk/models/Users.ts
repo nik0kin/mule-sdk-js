@@ -24,7 +24,7 @@ export function initUsersApi(contextPath: string): UsersApi {
     return http.post(contextPath + 'users', params)
       .then(function (result: MuleUserCreateResponse) {
         userId = result.userId;
-        that.fakeCacheWrite({_id: result.userId, username: params.username});
+        that.cacheUser({_id: result.userId, username: params.username});
         return result;
       });
   };
@@ -42,7 +42,7 @@ export function initUsersApi(contextPath: string): UsersApi {
     return http.post(contextPath + 'LoginAuth', params)
       .then(function (result: MuleUserLoginResponse) {
         userId = result.userId;
-        that.fakeCacheWrite({_id: result.userId, username: params.username});
+        that.cacheUser({_id: result.userId, username: params.username});
         return result;
       });
   };
@@ -51,7 +51,7 @@ export function initUsersApi(contextPath: string): UsersApi {
   let usersCache: UserCache = {};
   that.usersCache = usersCache;
 
-  that.fakeCacheWrite = function (result: User): void {
+  that.cacheUser = function (result: User): void {
     that.usersCache[result._id] = result;
   };
 

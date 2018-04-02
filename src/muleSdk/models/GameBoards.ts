@@ -18,7 +18,7 @@ export function initGameBoardsApi(contextPath: string): GameBoardsApi {
   that.readQ = function (gameBoardId: string): Q.Promise<GameBoard> {
     return http.get(contextPath + 'gameBoards/' + gameBoardId)
       .then(function (result) {
-        that.fakeCacheWrite(result);
+        that.cacheGameBoard(result);
         return result;
       });
   };
@@ -30,7 +30,7 @@ export function initGameBoardsApi(contextPath: string): GameBoardsApi {
   ////// CACHING //////
   that.gameBoardsCache = {};
 
-  that.fakeCacheWrite = function (result: GameBoard): void {
+  that.cacheGameBoard = function (result: GameBoard): void {
     that.gameBoardsCache[result._id] = result;
   };
 

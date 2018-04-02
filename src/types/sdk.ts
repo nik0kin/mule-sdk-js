@@ -1,9 +1,11 @@
 import {
-  User, UserCache, PlayersMap,
-  MuleUserCreateResponse, MuleUserSessionResponse, MuleUserLoginResponse,
+  User, PlayersMap,
+  // UserCache, 
+  MuleUserCreateResponse, MuleUserSessionResponse,
+  MuleUserLoginRequest, MuleUserLoginResponse,
   Game, RuleBundle,
   GameBoard, GameState,
-  GameBoardCache,
+  //GameBoardCache,
   History, Turn,
 } from './mule';
 
@@ -29,9 +31,9 @@ export interface GameBoardsApi {
   indexQ(): Q.Promise<GameBoard[]>;
   readQ(gameBoardId: string): Q.Promise<GameBoard>;
   readGamesBoardQ(gameId: string): Q.Promise<GameBoard>;
-  gameBoardsCache: GameBoardCache;
-  fakeCacheWrite(result: GameBoard): void;
-  readCacheQ(gameBoardId: string): Q.Promise<GameBoard>;
+  // gameBoardsCache: GameBoardCache;
+  // cacheGameBoard(result: GameBoard): void;
+  // readCacheQ(gameBoardId: string): Q.Promise<GameBoard>;
 }
 
 export interface GamesApi {
@@ -69,16 +71,16 @@ export interface TurnsApi {
 }
 
 export interface UsersApi {
-  getLoggedInUserId(): number | undefined;
+  getLoggedInUserId(): string | undefined;
   indexQ(): Q.Promise<User[]>;
   createQ(params: any): Q.Promise<MuleUserCreateResponse>;
   readQ(userId: string): Q.Promise<User>;
   sessionQ(): Q.Promise<MuleUserSessionResponse>;
-  loginQ(params: any): Q.Promise<MuleUserLoginResponse>;
-  usersCache: UserCache;
-  fakeCacheWrite(result: User): void;
+  loginQ(params: MuleUserLoginRequest): Q.Promise<MuleUserLoginResponse>;
+  // usersCache: UserCache;
+  // cacheUser(result: User): void;
   readCacheQ(userId: string): Q.Promise<User | undefined>;
-  indexCacheQ(force: boolean): Q.Promise<UserCache>;
+  // indexCacheQ(force: boolean): Q.Promise<UserCache>;
 }
 
 export interface PlayTurnApi {

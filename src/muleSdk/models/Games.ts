@@ -44,7 +44,7 @@ export function initGamesApi(contextPath: string) {
 
   that.getPlayersMapQ = function (game: Game): Q.Promise<PlayersMap> {
     var map: PlayersMap = _.clone(game.players),
-      promiseArray: Q.Promise<any>[] = [];
+      promiseArray: Q.Promise<void>[] = [];
 
     _.each(map, function (player, playerRel) {
       promiseArray.push(usersApi.readCacheQ(player.playerId)

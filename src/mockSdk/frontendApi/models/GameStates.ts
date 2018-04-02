@@ -1,17 +1,19 @@
 
-import * as Q from 'q';
+import { Promise, resolve } from 'q';
 
-import { GameState } from '../../../types/mule';
+import { DataModelTypes, GameState } from '../../../types/mule';
 import { GameStatesApi } from '../../../types/sdk';
 
+import { database, genericGetData } from '../../mockBackend/data';
+
 export class MockGameStatesApi implements GameStatesApi {
-  indexQ = (): Q.Promise<GameState[]> => {
-    return Q.resolve([]);
+  public indexQ = (): Promise<GameState[]> => {
+    return resolve(database.GameStates);
   }
-  createQ = (params: any): Q.Promise<any> => {
+  public createQ = (params: any): Promise<any> => {
     throw 'nyi ' + params;
   }
-  readQ = (gameStateId: string): Q.Promise<GameState> => {
-    throw 'nyi ' + gameStateId;
-  }
+  public readQ: (gameStateId: string) => Promise<GameState> = genericGetData<GameState>(DataModelTypes.GameStates);
 }
+
+export const gameStatesApi: GameStatesApi = new MockGameStatesApi();

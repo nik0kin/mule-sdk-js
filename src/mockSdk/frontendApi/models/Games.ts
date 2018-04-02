@@ -1,34 +1,54 @@
-
-import * as Q from 'q';
+import { Promise, all, resolve } from 'q';
 import * as _ from 'lodash';
 
-import { Game, PlayersMap } from '../../../types/mule';
+import { DataModelTypes, Game, PlayersMap, User } from '../../../types/mule';
 import { GamesApi } from '../../../types/sdk';
 
-import { database } from '../../mockBackend/data';
+import { usersApi } from '../models/Users';
+import { database, genericGetData } from '../../mockBackend/data';
 
 export class MockGamesApi implements GamesApi {
-  public indexQ = (): Q.Promise<Game[]> => {
-    return Q.resolve(database.Games);
+
+  public indexQ = (): Promise<Game[]> => {
+    return resolve(database.Games);
   }
-  public createQ = (params: any): Q.Promise<any> => {
+  public createQ = (params: any): Promise<any> => {
     throw 'nyi ' + params;
   }
-  public readQ = (gameId: string): Q.Promise<Game> => {
-    return Q.resolve(_.find(database.Games, (game: Game) => {
-      return game._id === gameId;
+  public readQ: (gameId: string) => Promise<Game> = genericGetData<Game>(DataModelTypes.Games);
+  public readUsersGamesQ = (userId: string): Promise<Game[]> => {
+    return resolve(_.filter(database.Games, (game: Game) => {
+      return !!_.find(game.players, (player) => {
+        return player.playerId === userId;
+      })
     }));
   }
-  public readUsersGamesQ = (userId: string): Q.Promise<Game[]> => {
-    throw 'nyi ' + userId;
-  }
-  public readMyGamesQ = (): Q.Promise<Game[]> => {
+  public readMyGamesQ = (): Promise<Game[]> => {
     throw 'nyi';
   }
-  public joinGameQ = (gameId: string): Q.Promise<any> => {
+  public joinGameQ = (gameId: string): Promise<any> => {
     throw 'nyi ' + gameId;
   }
-  public getPlayersMapQ = (game: Game): Q.Promise<PlayersMap> => {
-    throw 'nyi ' + game;
+
+  // TODO rename this?
+  //  the code is a copy/paste from muleSdk
+  public getPlayersMapQ = (game: Game): Promise<PlayersMap> => {
+    var map: PlayersMap = _.clone(game.players),
+      promiseArray: Promise<void>[] = [];
+
+    _.each(map, (player, playerRel) => {
+      promiseArray.push(usersApi.readQ(player.playerId)
+        .then((user?: User) => {
+          if (user) {
+            map[playerRel].name = user.username;
+          }
+        })
+      );
+    });
+
+    return all(promiseArray)
+      .then(() => map);
   }
 }
+
+export const gamesApi: GamesApi = new MockGamesApi();
