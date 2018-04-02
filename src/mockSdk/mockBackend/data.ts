@@ -55,6 +55,9 @@ export function addMockData(data: MockData) {
   if (data.Games) {
     database.Games = database.Games.concat(data.Games);
   }
+  if (data.GameBoards) {
+    database.GameBoards = database.GameBoards.concat(data.GameBoards);
+  }
   if (data.Historys) {
     database.Historys = database.Historys.concat(data.Historys);
   }

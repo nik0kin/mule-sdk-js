@@ -109,10 +109,10 @@ export interface GameBoard extends Persistable {
 export interface BoardSpace {
   id: string;
   class: string;
-  attributes: {
+  attributes?: {
     [attribute: string]: string;
   };
-  edges: {id: string}[];
+  edges: {id: string, moveableBy: string}[];
 }
 
 export interface GameState extends Persistable {

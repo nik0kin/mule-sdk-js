@@ -19,9 +19,6 @@ export class MockGameBoardsApi implements GameBoardsApi {
   public cacheGameBoard = (result: GameBoard): void => {
     this.gameBoardsCache[result._id] = result;
   }
-  public readCacheQ = (gameBoardId: string): Promise<GameBoard> => {
-    return this.readQ(gameBoardId);
-  }
 }
 
 export const gameBoardsApi: GameBoardsApi = new MockGameBoardsApi();

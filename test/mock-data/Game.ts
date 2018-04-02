@@ -15,11 +15,11 @@ export const basicGame: Game = {
       playerStatus: 'inGame'
     },
   },
-  name: 'Checkers 1v1 - noobs only',
+  name: 'BackGammon 1v1 - noobs only',
   nextTurnTime: new Date(),
   ruleBundle: {
     id: 'ruleBundleId_104',
-    name: 'Checkers',
+    name: 'Backgammon',
   },
   ruleBundleGameSettings: {
     customBoardSettings: {},
