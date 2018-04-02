@@ -18,20 +18,14 @@ var babelOptions = {
 
 module.exports = {
   cache: true,
-  entry: {
-    // main: ['./src/muleSdk/mule-sdk.ts', './src/mockSdk/mock-sdk.ts'],
-    main: ['./src/index.ts'],
-    vendor: [
-      // 'babel-polyfill',
-      'lodash',
-      'q',
-      'whatwg-fetch'
-    ]
-  },
+  entry: './src/index.ts',
+  // currently bundling q/lodash into index.js
+  // TODO use externals: https://webpack.js.org/guides/author-libraries/
   output: {
-    path: path.resolve(__dirname, './dist/scripts'),
-    filename: '[name].js',
-    chunkFilename: '[chunkhash].js'
+    path: path.resolve(__dirname, './dist'),
+    filename: 'index.js',
+    library: 'mule-sdk-js',
+    libraryTarget: 'umd'
   },
   module: {
     rules: [{

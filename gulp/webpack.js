@@ -19,7 +19,7 @@ function buildProduction(done) {
               'NODE_ENV': JSON.stringify('production')
          }
       }),
-      new webpack.optimize.CommonsChunkPlugin({ name: 'vendor', filename: 'vendor.[hash].js' }),
+    //  new webpack.optimize.CommonsChunkPlugin({ name: 'vendor', filename: 'vendor.[hash].js' }),
       new webpack.optimize.UglifyJsPlugin({
          compress: {
             warnings: true
@@ -45,7 +45,7 @@ function createDevCompiler() {
    myDevConfig.devtool = 'inline-source-map';
 
    myDevConfig.plugins = myDevConfig.plugins.concat(
-      new webpack.optimize.CommonsChunkPlugin({ name: 'vendor', filename: 'vendor.js' }),
+    //  new webpack.optimize.CommonsChunkPlugin({ name: 'vendor', filename: 'vendor.js' }),
       new WebpackNotifierPlugin({ title: 'Webpack build', excludeWarnings: true })
    );
 
