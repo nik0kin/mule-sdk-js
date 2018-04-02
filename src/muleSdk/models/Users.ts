@@ -1,5 +1,5 @@
 
-import * as Q from 'q';
+import { Promise, resolve } from 'q';
 import * as _ from 'lodash';
 
 import { User, UserCache, MuleUserCreateResponse, MuleUserSessionResponse, MuleUserLoginResponse } from '../../types/mule';
@@ -16,11 +16,11 @@ export function initUsersApi(contextPath: string): UsersApi {
     return userId;
   };
 
-  that.indexQ = function (): Q.Promise<User[]> {
+  that.indexQ = function (): Promise<User[]> {
     return http.get(contextPath + 'users');
   };
 
-  that.createQ = function (params: any): Q.Promise<MuleUserCreateResponse> {
+  that.createQ = function (params: any): Promise<MuleUserCreateResponse> {
     return http.post(contextPath + 'users', params)
       .then(function (result: MuleUserCreateResponse) {
         userId = result.userId;
@@ -29,16 +29,16 @@ export function initUsersApi(contextPath: string): UsersApi {
       });
   };
 
-  that.readQ = function (userId: number): Q.Promise<User> {
-    return http.get(contextPath + 'users/' + userId);
+  that.readQ = function (_userId: string): Promise<User> {
+    return http.get(contextPath + 'users/' + _userId);
   };
 
   ////// USER SERVICES //////
-  that.sessionQ = function (): Q.Promise<MuleUserSessionResponse> {
+  that.sessionQ = function (): Promise<MuleUserSessionResponse> {
     return http.get(contextPath + 'session');
   };
 
-  that.loginQ = function (params: any): Q.Promise<MuleUserLoginResponse> {
+  that.loginQ = function (params: any): Promise<MuleUserLoginResponse> {
     return http.post(contextPath + 'LoginAuth', params)
       .then(function (result: MuleUserLoginResponse) {
         userId = result.userId;
@@ -55,34 +55,31 @@ export function initUsersApi(contextPath: string): UsersApi {
     that.usersCache[result._id] = result;
   };
 
-  that.readCacheQ = function (userId: number): Q.Promise<User | undefined> {
-    return Q.Promise(function (resolve, reject) {
-      if (that.usersCache[userId]) {
-        resolve(that.usersCache[userId]);
-      } else {
-        that.readQ(userId)
-          .then(function (result: User) {
-              that.usersCache[result._id] = result;
-              resolve(result);
-          })
-          .catch(reject);
-      }
-    });
+  that.readCacheQ = function (_userId: string): Promise<User | undefined> {
+    if (that.usersCache[_userId]) {
+      return resolve(that.usersCache[_userId]);
+    } else {
+      return that.readQ(_userId)
+        .then(function (result: User) {
+            that.usersCache[result._id] = result;
+            return result;
+        });
+    }
   };
 
-  that.indexCacheQ = function (force: boolean): Q.Promise<UserCache> {
+  that.indexCacheQ = function (force: boolean): Promise<UserCache> {
     if (!force && _.isEmpty(usersCache)) {
       return that.indexQ()
         .then(function (result: User[]) {
           _.each(result, function (value: User) {
             usersCache[value._id] = value;
           });
-          return Q(usersCache);
+          return resolve(usersCache);
         });
     } else {
-      return Q(usersCache);
+      return resolve(usersCache);
     }
   };
 
   return that as UsersApi;
-};
+}

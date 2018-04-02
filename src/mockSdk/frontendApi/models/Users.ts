@@ -8,7 +8,7 @@ import {
   MuleUserCreateResponse, MuleUserSessionResponse,
   MuleUserLoginRequest, MuleUserLoginResponse
 } from '../../../types/mule';
-import { UsersApi } from '../../../types/sdk';
+import { UsersApi, UnknownType } from '../../../types/sdk';
 
 import { database, genericGetData } from '../../mockBackend/data';
 
@@ -25,7 +25,7 @@ export class MockUsersApi implements UsersApi {
   public indexQ = (): Promise<User[]> => {
     return resolve(database.Users);
   }
-  public createQ = (params: any): Promise<MuleUserCreateResponse> => {
+  public createQ = (params: UnknownType): Promise<MuleUserCreateResponse> => {
     throw 'nyi ' + params;
   }
   public readQ: (userId: string) => Promise<User> = genericGetData<User>(DataModelTypes.Users);
@@ -39,15 +39,15 @@ export class MockUsersApi implements UsersApi {
     }
   }
   public loginQ = (params: MuleUserLoginRequest): Promise<MuleUserLoginResponse> => {
-    const user: User | undefined = _.find(database.Users, (user: User) => {
+    const foundUser: User | undefined = _.find(database.Users, (user: User) => {
       return user.username === params.username;
     });
 
-    if (user) {
-      loggedInUserId = user._id;
+    if (foundUser) {
+      loggedInUserId = foundUser._id;
       return resolve({
-        userId: user._id,
-        username: user.username,
+        userId: foundUser._id,
+        username: foundUser.username,
       });
     } else {
       return reject({

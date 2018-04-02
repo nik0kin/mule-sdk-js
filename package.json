@@ -1,9 +1,9 @@
 {
   "name": "mule-sdk-js",
   "version": "0.3.0-dev",
-  "main": "src/index.ts",
+  "main": "dist/scripts/main.js",
   "module": "src/index.ts",
-  "types": "dist/index.d.ts",
+  "types": "dist/scripts/src/index.d.ts",
   "private": true,
   "devDependencies": {
     "@types/jasmine": "^2.8.6",
@@ -41,7 +41,8 @@
     "karma-webpack": "^2.0.2",
     "phantomjs-prebuilt": "^2.1.4",
     "ts-loader": "^2.0.1",
-    "typescript": "^2.1.4",
+    "tslint": "^5.9.1",
+    "typescript": "^2.8.1",
     "webpack": "^2.2.1",
     "webpack-fail-plugin": "^1.0.4",
     "webpack-notifier": "1.6.0"

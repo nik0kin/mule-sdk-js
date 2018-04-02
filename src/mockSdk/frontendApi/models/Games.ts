@@ -2,7 +2,7 @@ import { Promise, all, resolve } from 'q';
 import * as _ from 'lodash';
 
 import { DataModelTypes, Game, PlayersMap, User } from '../../../types/mule';
-import { GamesApi } from '../../../types/sdk';
+import { GamesApi, UnknownType } from '../../../types/sdk';
 
 import { usersApi } from '../models/Users';
 import { database, genericGetData } from '../../mockBackend/data';
@@ -12,21 +12,21 @@ export class MockGamesApi implements GamesApi {
   public indexQ = (): Promise<Game[]> => {
     return resolve(database.Games);
   }
-  public createQ = (params: any): Promise<any> => {
+  public createQ = (params: UnknownType): Promise<UnknownType> => {
     throw 'nyi ' + params;
-  }
+  }  
   public readQ: (gameId: string) => Promise<Game> = genericGetData<Game>(DataModelTypes.Games);
   public readUsersGamesQ = (userId: string): Promise<Game[]> => {
     return resolve(_.filter(database.Games, (game: Game) => {
       return !!_.find(game.players, (player) => {
         return player.playerId === userId;
-      })
+      });
     }));
   }
   public readMyGamesQ = (): Promise<Game[]> => {
     throw 'nyi';
   }
-  public joinGameQ = (gameId: string): Promise<any> => {
+  public joinGameQ = (gameId: string): Promise<UnknownType> => {
     throw 'nyi ' + gameId;
   }
 

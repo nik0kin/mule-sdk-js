@@ -5,11 +5,14 @@ import {
   MuleUserLoginRequest, MuleUserLoginResponse,
   Game, RuleBundle,
   GameBoard, GameState,
-  //GameBoardCache,
+  // GameBoardCache,
   History, Turn,
 } from './mule';
 
 import { FnLibrary } from '../shared/fn';
+
+export interface UnknownType {} // TODO;
+export interface UnknownErrorType {} // TODO;
 
 export interface SDK {
   fn: FnLibrary; // functional function library
@@ -38,17 +41,17 @@ export interface GameBoardsApi {
 
 export interface GamesApi {
   indexQ(): Q.Promise<Game[]>;
-  createQ(params: any): Q.Promise<any>;
+  createQ(params: UnknownType): Q.Promise<UnknownType>;
   readQ(gameId: string): Q.Promise<Game>;
   readUsersGamesQ(userId: string): Q.Promise<Game[]>;
   readMyGamesQ(): Q.Promise<Game[]>;
-  joinGameQ(gameId: string): Q.Promise<any>;
+  joinGameQ(gameId: string): Q.Promise<UnknownType>;
   getPlayersMapQ(game: Game): Q.Promise<PlayersMap>;
 }
 
 export interface GameStatesApi {
   indexQ(): Q.Promise<GameState[]>;
-  createQ(params: any): Q.Promise<any>;
+  createQ(params: UnknownType): Q.Promise<UnknownType>;
   readQ(gameStateId: string): Q.Promise<GameState>;
 }
 
@@ -61,7 +64,7 @@ export interface HistorysApi {
 
 export interface RuleBundlesApi {
   indexQ(): Q.Promise<RuleBundle[]>;
-  createQ(params: any): Q.Promise<any>;
+  createQ(params: UnknownType): Q.Promise<UnknownType>;
   readQ(ruleBundleId: string): Q.Promise<RuleBundle>;
 }
 
@@ -73,7 +76,7 @@ export interface TurnsApi {
 export interface UsersApi {
   getLoggedInUserId(): string | undefined;
   indexQ(): Q.Promise<User[]>;
-  createQ(params: any): Q.Promise<MuleUserCreateResponse>;
+  createQ(params: UnknownType): Q.Promise<MuleUserCreateResponse>;
   readQ(userId: string): Q.Promise<User>;
   sessionQ(): Q.Promise<MuleUserSessionResponse>;
   loginQ(params: MuleUserLoginRequest): Q.Promise<MuleUserLoginResponse>;
@@ -84,6 +87,6 @@ export interface UsersApi {
 }
 
 export interface PlayTurnApi {
-  sendQ(params: any): Q.Promise<any>;
-  sendGameTurnQ(gameId: string, params: any): Q.Promise<any>;
+  sendQ(params: UnknownType): Q.Promise<UnknownType>;
+  sendGameTurnQ(gameId: string, params: UnknownType): Q.Promise<UnknownType>;
 }

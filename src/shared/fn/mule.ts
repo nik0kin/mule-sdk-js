@@ -1,10 +1,10 @@
 
-import * as _ from 'lodash';
+import { clone, each, filter, find  } from 'lodash';
 
-import { GameBoard, GameState, PieceState, History, Turn } from '../../types/mule';
+import { GameBoard, GameState, PieceState, History, Turn, BoardSpace, SpaceState } from '../../types/mule';
 
 export interface MuleFnLibrary {
-  getFullSpaceInfo(gameBoard: GameBoard, gameState: GameState, spaceId: string): Q.Promise<any>;
+  getFullSpaceInfo(gameBoard: GameBoard, gameState: GameState, spaceId: string): BoardSpace;
   getPiecesOnSpace(gameState: GameState, spaceId: string): PieceState[];
   getPiecesByOwnerIdOnSpaceId(gameState: GameState, spaceId: string, ownerId: string): PieceState[];
   getPiecesFromId(gameState: GameState, pieceId: number): PieceState[];
@@ -16,23 +16,20 @@ export interface MuleFnLibrary {
   getWhosTurnIsIt(history: History): string;
 }
 
-//combines gameboard.board and gameboard.spaces (really just adds attributes)
-export function getFullSpaceInfo(gameBoard: GameBoard, gameState: GameState, spaceId: string): Q.Promise<any> {
-  var foundSpace: any;
+// combines gameboard.board and gameboard.spaces (really just adds attributes)
+export function getFullSpaceInfo(gameBoard: GameBoard, gameState: GameState, spaceId: string): BoardSpace {
 
-  _.each(gameBoard.board, function (value) {
-    if (value.id === spaceId) {
-      foundSpace = _.clone(value);
-    }
-  });
+  const foundSpace: BoardSpace | undefined = clone(find(gameBoard.board, (boardSpace: BoardSpace) => {
+    return boardSpace.id === spaceId;
+  }));
 
   if (!foundSpace) {
     throw 'bad id ' + spaceId;
   }
 
-  _.each(gameState.spaces, function (value) {
-    if (value.boardSpaceId === spaceId) {
-      foundSpace.attributes = value.attributes;
+  gameState.spaces.forEach((spaceState: SpaceState) => {
+    if (spaceState.boardSpaceId === spaceId) {
+      foundSpace.attributes = spaceState.attributes; // TODO should we combine here (what if the Board.board (BoardSpace[]) attributes contain something that the SpaceState doesnt)
     }
   });
 
@@ -42,9 +39,9 @@ export function getFullSpaceInfo(gameBoard: GameBoard, gameState: GameState, spa
 export function getPiecesOnSpace(gameState: GameState, spaceId: string): PieceState[] {
   const pieces: PieceState[] = [];
 
-  _.each(gameState.pieces, function (value) {
-    if (value.locationId === spaceId) {
-      pieces.push(value);
+  each(gameState.pieces, function (pieceState: PieceState) {
+    if (pieceState.locationId === spaceId) {
+      pieces.push(pieceState);
     }
   });
 
@@ -52,13 +49,13 @@ export function getPiecesOnSpace(gameState: GameState, spaceId: string): PieceSt
 }
 
 export function getPiecesByOwnerIdOnSpaceId(gameState: GameState, spaceId: string, ownerId: string): PieceState[] {
-  return _.filter(gameState.pieces, function (piece: PieceState) {
+  return filter(gameState.pieces, function (piece: PieceState) {
     return piece.locationId === spaceId && piece.ownerId === ownerId;
   });
 }
 
 export function getPiecesFromId(gameState: GameState, pieceId: number): PieceState[] {
-  return _.filter(gameState.pieces, function (piece: PieceState) {
+  return filter(gameState.pieces, function (piece: PieceState) {
     return pieceId === piece.id;
   });
 }
@@ -66,7 +63,7 @@ export function getPiecesFromId(gameState: GameState, pieceId: number): PieceSta
 export function getClassesFromPieces(gameState: GameState, className: string): PieceState[] {
   const found: PieceState[] = [];
 
-  _.each(gameState.pieces, function (value: PieceState) {
+  each(gameState.pieces, function (value: PieceState) {
     if (value.class === className) {
       found.push(value);
     }
@@ -79,33 +76,30 @@ export function getClassesFromPieces(gameState: GameState, className: string): P
 /////////// START SHIT hacky way for turns read by client
 // TODO please get rid of or rewrite with new History/Turn relationship
 
-var turnsRead: any;
+var turnsRead: {[playerRel: string]: boolean[]};
 
 export function markAllTurnsRead(history: History): void {
   if (!history.turns[0].length) throw 'only use markAllTurnsRead() with Full-ish History';
 
   turnsRead = {};
-  _.each(history.turns, function (playerTurns: any, player) {
+  each(history.turns, function (playerTurns: Turn[], player: string) {
     turnsRead[player] = [];
-    _.each(playerTurns, function (/*turn*/) {
+    each(playerTurns, function (/*turn*/) {
       turnsRead[player].push(true);
     });
   });
-  console.log(turnsRead);
 }
 
 export function getLastUnreadTurn(history: History): Turn | undefined {
   let _turn: Turn | undefined = undefined;
 
-  _.each(history.turnOrder, function (value: string, playerIndex: number) {
+  each(history.turnOrder, function (value: string, playerIndex: number) {
     if (_turn || value === 'meta') return;
 
-    var lastTurnNumber = turnsRead[value].length;
-    console.log('las ' + lastTurnNumber)
+    const lastTurnNumber = turnsRead[value].length;
     if (history.turns[playerIndex][lastTurnNumber]) {
       _turn = history.turns[playerIndex][lastTurnNumber];
       turnsRead[value].push(true);
-      console.log('read ' + value + '\'s turn: ' + lastTurnNumber)
     }
 
   });

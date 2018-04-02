@@ -27,6 +27,8 @@ export const database: MockDatabase = {
   Users: [],
 };
 
+export type DatabaseKeys = keyof MockDatabase;
+
 export interface MockDatabase {
   Games: Game[];
   GameBoards: GameBoard[];
@@ -95,7 +97,7 @@ export function resetMockData() {
 export function genericGetData<T extends Persistable>(type: DataModelTypes): (id: string) => Promise<T> {
   
   return (id: string) => {
-    const dataArray: Persistable[] = (database as any)[type];
+    const dataArray: Persistable[] = database[type];
     const foundData: T | undefined = find(dataArray as T[], (data: T) => {
       return data._id === id;
     });

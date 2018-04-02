@@ -2,10 +2,15 @@ import * as _ from 'lodash';
 import * as Q from 'q';
 
 import { MockSdk } from '../../src/mockSdk/mock-sdk';
+import { MockSdk as MockSdk2 } from '../../src/';
 
 describe('mock-sdk', () => {
   it('should expose sdk', () => {
     expect(MockSdk).toBeDefined();
+  });
+
+  it('should expose sdk', () => {
+    expect(MockSdk2).toBeDefined();
   });
 
   it('should create an SDK instance', () => {

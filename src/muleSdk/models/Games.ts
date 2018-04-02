@@ -46,7 +46,7 @@ export function initGamesApi(contextPath: string) {
     var map: PlayersMap = _.clone(game.players),
       promiseArray: Q.Promise<void>[] = [];
 
-    _.each(map, function (player, playerRel) {
+    _.each(map, function (player: {playerId: string}, playerRel: string) {
       promiseArray.push(usersApi.readCacheQ(player.playerId)
         .then(function (user?: User) {
           if (user) {
@@ -61,4 +61,4 @@ export function initGamesApi(contextPath: string) {
   };
 
   return that as GamesApi;
-};
+}

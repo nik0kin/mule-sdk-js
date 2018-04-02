@@ -22,4 +22,4 @@ export function initGameStatesApi(contextPath: string): GameStatesApi {
   };
 
   return that as GameStatesApi;
-};
+}

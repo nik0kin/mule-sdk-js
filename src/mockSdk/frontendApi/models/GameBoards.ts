@@ -1,5 +1,5 @@
 
-import { Promise, resolve} from 'q';
+import { Promise, resolve } from 'q';
 
 import { DataModelTypes, GameBoard, GameBoardCache } from '../../../types/mule';
 import { GameBoardsApi } from '../../../types/sdk';
@@ -15,7 +15,7 @@ export class MockGameBoardsApi implements GameBoardsApi {
   public readGamesBoardQ = (gameId: string): Promise<GameBoard> => {
     throw 'nyi ' + gameId;
   }
-  public gameBoardsCache: GameBoardCache = {}
+  public gameBoardsCache: GameBoardCache = {};
   public cacheGameBoard = (result: GameBoard): void => {
     this.gameBoardsCache[result._id] = result;
   }

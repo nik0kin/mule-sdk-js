@@ -6,19 +6,19 @@ export interface User {
 
 export interface MuleUserCreateResponse {
   userId: string;
-};
+}
 
 export type MuleUserSessionResponse = User;
 
 export interface MuleUserLoginRequest {
   username: string;
   password: string;
-};
+}
 
 export interface MuleUserLoginResponse {
   userId: string;
   username: string;
-};
+}
 
 export interface UserCache {
   [userId: string]: User;
@@ -53,7 +53,7 @@ export interface Game extends Persistable {
     name: string;
   };
   ruleBundleGameSettings: {
-    customBoardSettings: any;
+    customBoardSettings: VariableMap; // TODO I believe this is a simplification that is wrong
   };
   turnProgressStyle: TurnProgressStyle;
   turnTimeLimit: number;
@@ -82,8 +82,8 @@ export interface RuleBundle extends Persistable {
   };
   gameSettings: {
     playerLimit: number;
-    customBoardSettings: any;
-  }
+    customBoardSettings: VariableMap;
+  };
 }
 
 export enum TurnSubmitStyle {
@@ -103,23 +103,21 @@ export interface GameBoard extends Persistable {
   ruleBundle: {
     id: string;
     name: string;
-  }
+  };
 }
 
 export interface BoardSpace {
   id: string;
   class: string;
-  attributes?: {
-    [attribute: string]: string;
-  };
+  attributes?: VariableMap;
   edges: {id: string, moveableBy: string}[];
 }
 
 export interface GameState extends Persistable {
-  globalVariables: {[variable: string]: string | number | boolean};
+  globalVariables: VariableMap;
   pieces: PieceState[];
   playerVariables: {
-    [playerNum: string]: {[variable: string]: string | number | boolean};
+    [playerNum: string]: VariableMap;
   };
   spaces: SpaceState[];
 }
@@ -134,7 +132,7 @@ export interface PieceState extends Persistable {
 export interface SpaceState extends Persistable {
   _id: string;
   boardSpaceId: string;
-  attributes: {[attribute: string]: string | number | boolean};
+  attributes: VariableMap;
 }
 
 export interface History extends Persistable {
@@ -157,9 +155,17 @@ export interface Turn extends Persistable {
   gameId: string;
   playerTurns: {
     [playerNum: string]: {
-      actions: any[];
+      actions: Action[];
       dateSubmitted: Date;
     }
-  }
+  };
 }
 
+export interface Action {
+
+}
+
+// this could use a better name
+export interface VariableMap {
+  [variableName: string]: string | number | boolean;
+}

@@ -28,5 +28,5 @@ export function sdk(contextPath: string): SDK {
     PlayTurn: initPlayTurnApi(contextPath),
 
     // Spinal: initSpinalApi(sdk),
-  }
+  };
 }
