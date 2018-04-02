@@ -1,5 +1,5 @@
 {
-  "name": "mule-js-sdk",
+  "name": "mule-sdk-js",
   "version": "0.3.0-dev",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
