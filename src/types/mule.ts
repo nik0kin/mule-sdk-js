@@ -168,5 +168,5 @@ export interface Action {
 
 // this could use a better name
 export interface VariableMap {
-  [variableName: string]: string | number | boolean | object;
+  [variableName: string]: string | number | boolean | object | undefined;
 }

@@ -145,5 +145,5 @@ export interface Turn extends Persistable {
 export interface Action {
 }
 export interface VariableMap {
-    [variableName: string]: string | number | boolean | object;
+    [variableName: string]: string | number | boolean | object | undefined;
 }
