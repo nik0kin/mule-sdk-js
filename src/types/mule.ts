@@ -123,10 +123,11 @@ export interface GameState extends Persistable {
 }
 
 export interface PieceState extends Persistable {
-  id: number;
+  id: number; // TODO delete
   class: string;
   locationId: string;
   ownerId: string; // playerNum (eg. p1)
+  attributes: VariableMap; 
 }
 
 export interface SpaceState extends Persistable {
@@ -167,5 +168,5 @@ export interface Action {
 
 // this could use a better name
 export interface VariableMap {
-  [variableName: string]: string | number | boolean;
+  [variableName: string]: string | number | boolean | object;
 }

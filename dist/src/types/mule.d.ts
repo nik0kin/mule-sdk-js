@@ -111,6 +111,7 @@ export interface PieceState extends Persistable {
     class: string;
     locationId: string;
     ownerId: string;
+    attributes: VariableMap;
 }
 export interface SpaceState extends Persistable {
     _id: string;
@@ -144,5 +145,5 @@ export interface Turn extends Persistable {
 export interface Action {
 }
 export interface VariableMap {
-    [variableName: string]: string | number | boolean;
+    [variableName: string]: string | number | boolean | object;
 }
