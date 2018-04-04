@@ -13,7 +13,7 @@ import { initTurnsApi } from './models/Turns';
 import { initPlayTurnApi } from './methods/PlayTurn';
 
 
-export function sdk(contextPath: string): SDK {
+export function initializeMuleSdk(contextPath: string): SDK {
   return {
     fn: fn.allFn,
 
