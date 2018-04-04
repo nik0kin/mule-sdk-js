@@ -5,7 +5,7 @@ import { GameBoardsApi } from '../../../types/sdk';
 export declare class MockGameBoardsApi implements GameBoardsApi {
     indexQ: () => Promise<GameBoard[]>;
     readQ: (userId: string) => Promise<GameBoard>;
-    readGamesBoardQ: (gameId: string) => Promise<GameBoard>;
+    readGamesBoardQ(gameId: string): Promise<GameBoard>;
     gameBoardsCache: GameBoardCache;
     cacheGameBoard: (result: GameBoard) => void;
 }
