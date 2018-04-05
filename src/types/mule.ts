@@ -84,6 +84,10 @@ export interface RuleBundle extends Persistable {
     playerLimit: number;
     customBoardSettings: VariableMap;
   };
+  rules: {
+    dynamicBoard: boolean; // if true, pass rules to generateGameBoard hook
+    // TODO other stuff, see v general.json
+  };
 }
 
 export enum TurnSubmitStyle {

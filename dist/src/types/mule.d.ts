@@ -71,6 +71,9 @@ export interface RuleBundle extends Persistable {
         playerLimit: number;
         customBoardSettings: VariableMap;
     };
+    rules: {
+        dynamicBoard: boolean;
+    };
 }
 export declare enum TurnSubmitStyle {
     RoundRobin = "roundRobin",

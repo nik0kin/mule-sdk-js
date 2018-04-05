@@ -1,10 +1,18 @@
 import { BoardSpace, PieceState, SpaceState, Turn } from './mule';
 export interface BundleCode {
+    customBoardSettingsValidator?: Function;
     boardGenerator?: Function;
     gameStart?: Function;
     progressTurn?: Function;
     progressRound?: Function;
     winCondition?: Function;
+    actions: {
+        [actionName: string]: ActionCode;
+    };
+}
+export interface ActionCode {
+    validateQ: Function;
+    doQ: Function;
 }
 export interface MuleStateSdk {
     getPlayerRels: () => string[];
