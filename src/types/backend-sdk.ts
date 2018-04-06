@@ -13,26 +13,33 @@ export interface BundleCode {
 
   progressTurn?: ProgressTurnHook;
   progressRound?: ProgressRoundHook;
-  winCondition?: Function;
+  winCondition?: WinConditionHook;
 
   actions: {[actionName: string]: ActionCode};
 }
 
 export interface ActionCode {
-  validateQ: Function;
-  doQ: Function;
+  validateQ: ActionValidateHook;
+  doQ: ActionExecuteHook;
 }
 
-export type CustomBoardSettingsValidatorHook
-  = (customBoardSettings: VariableMap) => VariableMap; // TODO a type for customBoardSettings
+export type CustomBoardSettingsValidatorHook // TODO a type for customBoardSettings
+  = (customBoardSettings: VariableMap) => VariableMap; // invalid settings are returned
 
 export type BoardGeneratorHook
   = (customBoardSettings: VariableMap, ruleBundleRules: VariableMap) => Promise<BoardSpace[]>;
 
 export type GameStartHook = (M: MuleStateSdk) => Promise<void>;
 
-export type ProgressTurnHook =  (M: MuleStateSdk) => Promise<void>;
-export type ProgressRoundHook =  (M: MuleStateSdk) => Promise<void>;
+export type ProgressTurnHook = (M: MuleStateSdk) => Promise<VariableMap>; // metadata is returned
+export type ProgressRoundHook = (M: MuleStateSdk) => Promise<VariableMap>;
+
+export type WinConditionHook = (M: MuleStateSdk) => Promise<string | null>; // winner's playerRel?, 'tie', or null
+
+export type ActionValidateHook
+  = (M: MuleStateSdk, playerRel: string, actionParams: VariableMap) => Promise<void>;
+export type ActionExecuteHook
+  = (M: MuleStateSdk, playerRel: string, actionParams: VariableMap) => Promise<void>;
 
 export interface MuleStateSdk { // aka M
   // Game

@@ -1,19 +1,27 @@
-import { BoardSpace, PieceState, SpaceState, Turn } from './mule';
+import { BoardSpace, PieceState, SpaceState, Turn, VariableMap } from './mule';
 export interface BundleCode {
-    customBoardSettingsValidator?: Function;
-    boardGenerator?: Function;
-    gameStart?: Function;
-    progressTurn?: Function;
-    progressRound?: Function;
-    winCondition?: Function;
+    customBoardSettingsValidator?: CustomBoardSettingsValidatorHook;
+    boardGenerator?: BoardGeneratorHook;
+    gameStart?: GameStartHook;
+    progressTurn?: ProgressTurnHook;
+    progressRound?: ProgressRoundHook;
+    winCondition?: WinConditionHook;
     actions: {
         [actionName: string]: ActionCode;
     };
 }
 export interface ActionCode {
-    validateQ: Function;
-    doQ: Function;
+    validateQ: ActionValidateHook;
+    doQ: ActionExecuteHook;
 }
+export declare type CustomBoardSettingsValidatorHook = (customBoardSettings: VariableMap) => VariableMap;
+export declare type BoardGeneratorHook = (customBoardSettings: VariableMap, ruleBundleRules: VariableMap) => Promise<BoardSpace[]>;
+export declare type GameStartHook = (M: MuleStateSdk) => Promise<void>;
+export declare type ProgressTurnHook = (M: MuleStateSdk) => Promise<VariableMap>;
+export declare type ProgressRoundHook = (M: MuleStateSdk) => Promise<VariableMap>;
+export declare type WinConditionHook = (M: MuleStateSdk) => Promise<string | null>;
+export declare type ActionValidateHook = (M: MuleStateSdk, playerRel: string, actionParams: VariableMap) => Promise<void>;
+export declare type ActionExecuteHook = (M: MuleStateSdk, playerRel: string, actionParams: VariableMap) => Promise<void>;
 export interface MuleStateSdk {
     getPlayerRels: () => string[];
     getBoardDefinition: () => BoardSpace[];
