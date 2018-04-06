@@ -3,15 +3,16 @@ import {
   PieceState,
   SpaceState,
   Turn,
+  VariableMap,
 } from './mule';
 
 export interface BundleCode {
-  customBoardSettingsValidator?: Function;
-  boardGenerator?: Function;
-  gameStart?: Function;
+  customBoardSettingsValidator?: CustomBoardSettingsValidatorHook;
+  boardGenerator?: BoardGeneratorHook;
+  gameStart?: GameStartHook;
 
-  progressTurn?: Function;
-  progressRound?: Function;
+  progressTurn?: ProgressTurnHook;
+  progressRound?: ProgressRoundHook;
   winCondition?: Function;
 
   actions: {[actionName: string]: ActionCode};
@@ -21,6 +22,17 @@ export interface ActionCode {
   validateQ: Function;
   doQ: Function;
 }
+
+export type CustomBoardSettingsValidatorHook
+  = (customBoardSettings: VariableMap) => VariableMap; // TODO a type for customBoardSettings
+
+export type BoardGeneratorHook
+  = (customBoardSettings: VariableMap, ruleBundleRules: VariableMap) => Promise<BoardSpace[]>;
+
+export type GameStartHook = (M: MuleStateSdk) => Promise<void>;
+
+export type ProgressTurnHook =  (M: MuleStateSdk) => Promise<void>;
+export type ProgressRoundHook =  (M: MuleStateSdk) => Promise<void>;
 
 export interface MuleStateSdk { // aka M
   // Game
