@@ -2,18 +2,6 @@ export interface User {
     _id: string;
     username: string;
 }
-export interface MuleUserCreateResponse {
-    userId: string;
-}
-export declare type MuleUserSessionResponse = User;
-export interface MuleUserLoginRequest {
-    username: string;
-    password: string;
-}
-export interface MuleUserLoginResponse {
-    userId: string;
-    username: string;
-}
 export interface UserCache {
     [userId: string]: User;
 }
@@ -49,7 +37,7 @@ export interface Game extends Persistable {
     turnTimeLimit: number;
 }
 export interface PlayersMap {
-    [playerNum: string]: {
+    [playerRel: string]: {
         playerId: string;
         playerStatus: string;
         name?: string;
@@ -105,7 +93,7 @@ export interface GameState extends Persistable {
     globalVariables: VariableMap;
     pieces: PieceState[];
     playerVariables: {
-        [playerNum: string]: VariableMap;
+        [playerRel: string]: VariableMap;
     };
     spaces: SpaceState[];
 }
@@ -126,26 +114,28 @@ export interface History extends Persistable {
     currentRound: number;
     currentTurn: number;
     currentTurnStatus: {
-        [playerNum: string]: boolean;
+        [playerRel: string]: boolean;
     };
     gameId: string;
     turnOrder: string[];
     turnSubmitStyle: TurnSubmitStyle;
     turns: {
         meta?: Turn[];
-        [turnIndex: number]: Turn[];
+        [turnNumber: number]: Turn[];
     };
 }
 export interface Turn extends Persistable {
     gameId: string;
     playerTurns: {
-        [playerNum: string]: {
+        [playerRel: string]: {
             actions: Action[];
             dateSubmitted: Date;
         };
     };
 }
 export interface Action {
+    type: string;
+    params: VariableMap;
 }
 export interface VariableMap {
     [variableName: string]: string | number | boolean | object | undefined;

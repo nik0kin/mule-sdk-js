@@ -1,13 +1,17 @@
 import {
   User, PlayersMap,
-  // UserCache, 
-  MuleUserCreateResponse, MuleUserSessionResponse,
-  MuleUserLoginRequest, MuleUserLoginResponse,
+  // UserCache,
   Game, RuleBundle,
   GameBoard, GameState,
   // GameBoardCache,
   History, Turn,
 } from './mule';
+
+import {
+  MuleUserCreateResponse, MuleUserSessionResponse,
+  MuleUserLoginRequest, MuleUserLoginResponse,
+  MuleGamesPlayTurnRequest, MulePlayTurnRequest, MulePlayTurnResponse,
+} from './mule-http';
 
 import { FnLibrary } from '../shared/fn';
 
@@ -87,6 +91,6 @@ export interface UsersApi {
 }
 
 export interface PlayTurnApi {
-  sendQ(params: UnknownType): Q.Promise<UnknownType>;
-  sendGameTurnQ(gameId: string, params: UnknownType): Q.Promise<UnknownType>;
+  sendQ(params: MuleGamesPlayTurnRequest): Q.Promise<MulePlayTurnResponse>;
+  sendGameTurnQ(gameId: string, params: MulePlayTurnRequest): Q.Promise<MulePlayTurnResponse>;
 }

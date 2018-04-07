@@ -94,13 +94,18 @@ export function resetMockData() {
   database.Users = [];
 }
 
+export function genericGet<T extends Persistable>(type: DataModelTypes, id: string): T | undefined {
+  const dataArray: Persistable[] = database[type];
+  const foundData: T | undefined = find(dataArray as T[], (data: T) => {
+    return data._id === id;
+  });
+  return foundData;
+}
+
 export function genericGetData<T extends Persistable>(type: DataModelTypes): (id: string) => Promise<T> {
   
   return (id: string) => {
-    const dataArray: Persistable[] = database[type];
-    const foundData: T | undefined = find(dataArray as T[], (data: T) => {
-      return data._id === id;
-    });
+    const foundData: T | undefined = genericGet<T>(type, id);
 
     if (foundData) {
       return resolve(foundData);

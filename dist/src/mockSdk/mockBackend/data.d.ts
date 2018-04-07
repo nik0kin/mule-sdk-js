@@ -27,4 +27,5 @@ export interface MockData {
 }
 export declare function addMockData(data: MockData): void;
 export declare function resetMockData(): void;
+export declare function genericGet<T extends Persistable>(type: DataModelTypes, id: string): T | undefined;
 export declare function genericGetData<T extends Persistable>(type: DataModelTypes): (id: string) => Promise<T>;

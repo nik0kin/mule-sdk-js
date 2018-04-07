@@ -17,6 +17,7 @@ import { turnsApi } from './frontendApi/models/Turns';
 import { setLoggedInUser, usersApi } from './frontendApi/models/Users';
 import { MockPlayTurnApi } from './frontendApi/methods/PlayTurn';
 
+import { addBundleCode } from './mockBackend/brain';
 import { addMockData, resetMockData } from './mockBackend/data';
 
 export class MockSdk implements SDK {
@@ -43,6 +44,7 @@ export class MockSdk implements SDK {
 
 
   // special Mock SDK features 
+  public static addBundleCode = addBundleCode;
   public static addMockData = addMockData;
   public static resetMockData = resetMockData;
   public static setLoggedInUser = setLoggedInUser;

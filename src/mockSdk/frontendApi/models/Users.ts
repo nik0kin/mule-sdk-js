@@ -5,9 +5,8 @@ import * as _ from 'lodash';
 import {
   DataModelTypes,
   User, UserCache,
-  MuleUserCreateResponse, MuleUserSessionResponse,
-  MuleUserLoginRequest, MuleUserLoginResponse
 } from '../../../types/mule';
+import { MuleUserCreateResponse, MuleUserSessionResponse, MuleUserLoginRequest, MuleUserLoginResponse } from '../../../types/mule-http';
 import { UsersApi, UnknownType } from '../../../types/sdk';
 
 import { database, genericGetData } from '../../mockBackend/data';

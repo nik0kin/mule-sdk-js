@@ -4,22 +4,6 @@ export interface User {
   username: string;
 }
 
-export interface MuleUserCreateResponse {
-  userId: string;
-}
-
-export type MuleUserSessionResponse = User;
-
-export interface MuleUserLoginRequest {
-  username: string;
-  password: string;
-}
-
-export interface MuleUserLoginResponse {
-  userId: string;
-  username: string;
-}
-
 export interface UserCache {
   [userId: string]: User;
 }
@@ -60,7 +44,7 @@ export interface Game extends Persistable {
 }
 
 export interface PlayersMap {
-  [playerNum: string]: { //  'p1'
+  [playerRel: string]: { //  'p1'
     playerId: string;
     playerStatus: string;
     name?: string; // added by getPlayersMapQ()
@@ -81,7 +65,7 @@ export interface RuleBundle extends Persistable {
     boardStyle: string;
   };
   gameSettings: {
-    playerLimit: number;
+    playerLimit: number; // TODO this should be a range right?
     customBoardSettings: VariableMap;
   };
   rules: {
@@ -121,7 +105,7 @@ export interface GameState extends Persistable {
   globalVariables: VariableMap;
   pieces: PieceState[];
   playerVariables: {
-    [playerNum: string]: VariableMap;
+    [playerRel: string]: VariableMap;
   };
   spaces: SpaceState[];
 }
@@ -130,7 +114,7 @@ export interface PieceState extends Persistable {
   id: number; // TODO delete
   class: string;
   locationId: string;
-  ownerId: string; // playerNum (eg. p1)
+  ownerId: string; // playerRel (eg. p1)
   attributes: VariableMap; 
 }
 
@@ -145,21 +129,21 @@ export interface History extends Persistable {
   currentRound: number;
   currentTurn: number;
   currentTurnStatus: {
-    [playerNum: string]: boolean; 
+    [playerRel: string]: boolean; 
   };
-  gameId: string;
-  turnOrder: string[]; // string = playerNum (eg: p1, p2)
+  gameId: string; // TODO deprecate (why is it needed?)
+  turnOrder: string[]; // string = playerRel (eg: [p1, p2])
   turnSubmitStyle: TurnSubmitStyle;
   turns: {
     meta?: Turn[];
-    [turnIndex: number]: Turn[];
+    [turnNumber: number]: Turn[];
    };
 }
 
 export interface Turn extends Persistable {
   gameId: string;
   playerTurns: {
-    [playerNum: string]: {
+    [playerRel: string]: {
       actions: Action[];
       dateSubmitted: Date;
     }
@@ -167,7 +151,8 @@ export interface Turn extends Persistable {
 }
 
 export interface Action {
-
+  type: string;
+  params: VariableMap;
 }
 
 // this could use a better name

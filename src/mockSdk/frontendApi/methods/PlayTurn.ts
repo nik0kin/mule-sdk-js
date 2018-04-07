@@ -1,12 +1,17 @@
-import * as Q from 'q';
+import { Promise } from 'q';
 
-import { PlayTurnApi, UnknownType } from '../../../types/sdk';
+import {
+  MuleGamesPlayTurnRequest, MulePlayTurnRequest, MulePlayTurnResponse
+} from '../../../types/mule-http';
+import { PlayTurnApi } from '../../../types/sdk';
+
+import { playTurn } from '../../mockBackend/brain';
 
 export class MockPlayTurnApi implements PlayTurnApi {
-  public sendQ = (params: UnknownType): Q.Promise<UnknownType> => {
-    throw 'nyi' + params;
+  public sendQ = (params: MuleGamesPlayTurnRequest): Promise<MulePlayTurnResponse> => {
+    return playTurn(params.gameId, params);
   }
-  public sendGameTurnQ = (gameId: string, params: UnknownType): Q.Promise<UnknownType> => {
-    throw 'nyi ' + gameId + ' ' + params;
+  public sendGameTurnQ = (gameId: string, params: MulePlayTurnRequest): Promise<MulePlayTurnResponse> => {
+    return playTurn(gameId, params);
   }
 }

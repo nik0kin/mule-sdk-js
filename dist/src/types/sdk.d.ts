@@ -1,5 +1,6 @@
 /// <reference types="q" />
-import { User, PlayersMap, MuleUserCreateResponse, MuleUserSessionResponse, MuleUserLoginRequest, MuleUserLoginResponse, Game, RuleBundle, GameBoard, GameState, History, Turn } from './mule';
+import { User, PlayersMap, Game, RuleBundle, GameBoard, GameState, History, Turn } from './mule';
+import { MuleUserCreateResponse, MuleUserSessionResponse, MuleUserLoginRequest, MuleUserLoginResponse, MuleGamesPlayTurnRequest, MulePlayTurnRequest, MulePlayTurnResponse } from './mule-http';
 import { FnLibrary } from '../shared/fn';
 export interface UnknownType {
 }
@@ -60,6 +61,6 @@ export interface UsersApi {
     readCacheQ(userId: string): Q.Promise<User | undefined>;
 }
 export interface PlayTurnApi {
-    sendQ(params: UnknownType): Q.Promise<UnknownType>;
-    sendGameTurnQ(gameId: string, params: UnknownType): Q.Promise<UnknownType>;
+    sendQ(params: MuleGamesPlayTurnRequest): Q.Promise<MulePlayTurnResponse>;
+    sendGameTurnQ(gameId: string, params: MulePlayTurnRequest): Q.Promise<MulePlayTurnResponse>;
 }

@@ -2,7 +2,8 @@
 import { Promise, resolve } from 'q';
 import * as _ from 'lodash';
 
-import { User, UserCache, MuleUserCreateResponse, MuleUserSessionResponse, MuleUserLoginResponse } from '../../types/mule';
+import { User, UserCache } from '../../types/mule';
+import { MuleUserCreateResponse, MuleUserSessionResponse, MuleUserLoginResponse } from '../../types/mule-http';
 import { UsersApi } from '../../types/sdk';
 
 import { http } from '../utils/http';

@@ -1,6 +1,7 @@
 /// <reference types="q" />
 import { Promise } from 'q';
-import { User, UserCache, MuleUserCreateResponse, MuleUserLoginRequest, MuleUserLoginResponse } from '../../../types/mule';
+import { User, UserCache } from '../../../types/mule';
+import { MuleUserCreateResponse, MuleUserLoginRequest, MuleUserLoginResponse } from '../../../types/mule-http';
 import { UsersApi, UnknownType } from '../../../types/sdk';
 export declare let loggedInUserId: string | undefined;
 export declare function setLoggedInUser(userId: string): void;
