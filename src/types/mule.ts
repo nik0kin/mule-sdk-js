@@ -1,3 +1,4 @@
+import { UnknownType } from './sdk';
 
 export interface User {
   _id: string;
@@ -135,14 +136,18 @@ export interface History extends Persistable {
   gameId: string; // TODO deprecate (why is it needed?)
   turnOrder: string[]; // string = playerRel (eg: [p1, p2])
   turnSubmitStyle: TurnSubmitStyle;
-  turns: {
-    meta?: Turn[];
-    [turnNumber: number]: Turn[];
-   };
+  turns: HistoryTurns;
+}
+
+export interface HistoryTurns {
+  meta?: Turn[];
+  [turnNumber: number]: string[]; // string = turnId
 }
 
 export interface Turn extends Persistable {
   gameId: string;
+  turnNumber: number;
+  metaTurn?: UnknownType[]; // TODO unsure if optional
   playerTurns: {
     [playerRel: string]: {
       actions: Action[];
@@ -153,10 +158,11 @@ export interface Turn extends Persistable {
 
 export interface Action {
   type: string;
+  metadata?: VariableMap; // TODO unsure if optional
   params: VariableMap;
 }
 
 // this could use a better name
 export interface VariableMap {
-  [variableName: string]: string | number | boolean | object | undefined;
+  [variableName: string]: string | number | boolean | object | Array<any> | undefined;
 }

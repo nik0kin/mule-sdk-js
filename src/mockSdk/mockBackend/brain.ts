@@ -2,14 +2,14 @@ import { findKey } from 'lodash';
 import { Promise } from 'q';
 
 import {
-  Game, GameBoard, GameState, PlayersMapPlayer,
-  TurnSubmitStyle, DataModelTypes, RuleBundle, History
+  Game, GameBoard, PlayersMapPlayer,
+  TurnSubmitStyle, DataModelTypes, RuleBundle, History, Turn
 } from '../../types/mule';
 import { MulePlayTurnRequest, MulePlayTurnResponse } from '../../types/mule-http';
 
-import { genericGet } from './data';
+import { genericCreate, genericGet } from './data';
 import * as roundRobin from './roundRobin';
-
+import { validateActions } from './actionsHelper';
 
 export class BackendMockBrain {
 
@@ -49,8 +49,23 @@ export function playTurn(gameId: string, params: MulePlayTurnRequest): Promise<M
     throw 'invalid playerId: ' + params.playerId;
   }
 
+  // check actions
+  validateActions(gameId, ruleBundle.name, params.actions);
+
   // get TurnSubmitStyle
   const turnSubmitStyle: TurnSubmitStyle = ruleBundle.turnSubmitStyle;
+
+  // save turn
+  const newTurn: Turn = genericCreate<Turn>(DataModelTypes.Turns, {
+    gameId,
+    turnNumber: history.currentTurn,
+    playerTurns: {
+      [playerRel]: {
+        dateSubmitted: new Date(),
+        actions: params.actions,
+      }
+    }
+  });
 
   if (turnSubmitStyle === TurnSubmitStyle.RoundRobin) {
     // return robinRobin.playTurn
@@ -58,12 +73,15 @@ export function playTurn(gameId: string, params: MulePlayTurnRequest): Promise<M
       throw 'not players turn: ' + params.playerId;
     }
 
+    // save history/turn
+    roundRobin.addTurnAndSaveHistory(newTurn, playerRel, history);
+
+    return roundRobin.playTurn(gameId, ruleBundle.name, playerRel, newTurn, history);
+
   } else if (turnSubmitStyle === TurnSubmitStyle.PlayByMail) {
     throw 'nyi';
   } else {
     throw 'wtf unknown submitstyle';
   }
-
-  throw 'nyi';
 }
 

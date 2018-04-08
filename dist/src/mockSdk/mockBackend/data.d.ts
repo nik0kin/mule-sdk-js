@@ -29,3 +29,5 @@ export declare function addMockData(data: MockData): void;
 export declare function resetMockData(): void;
 export declare function genericGet<T extends Persistable>(type: DataModelTypes, id: string): T | undefined;
 export declare function genericGetData<T extends Persistable>(type: DataModelTypes): (id: string) => Promise<T>;
+export declare function genericCreate<T extends Persistable>(type: DataModelTypes, pT: Partial<T>): T;
+export declare function genericSave<T extends Persistable>(type: DataModelTypes, _t: T): T;

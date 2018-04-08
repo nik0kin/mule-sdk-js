@@ -1,3 +1,4 @@
+import { UnknownType } from './sdk';
 export interface User {
     _id: string;
     username: string;
@@ -120,13 +121,16 @@ export interface History extends Persistable {
     gameId: string;
     turnOrder: string[];
     turnSubmitStyle: TurnSubmitStyle;
-    turns: {
-        meta?: Turn[];
-        [turnNumber: number]: Turn[];
-    };
+    turns: HistoryTurns;
+}
+export interface HistoryTurns {
+    meta?: Turn[];
+    [turnNumber: number]: string[];
 }
 export interface Turn extends Persistable {
     gameId: string;
+    turnNumber: number;
+    metaTurn?: UnknownType[];
     playerTurns: {
         [playerRel: string]: {
             actions: Action[];
@@ -136,8 +140,9 @@ export interface Turn extends Persistable {
 }
 export interface Action {
     type: string;
+    metadata?: VariableMap;
     params: VariableMap;
 }
 export interface VariableMap {
-    [variableName: string]: string | number | boolean | object | undefined;
+    [variableName: string]: string | number | boolean | object | Array<any> | undefined;
 }

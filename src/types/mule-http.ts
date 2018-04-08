@@ -27,5 +27,5 @@ export interface MulePlayTurnRequest {
 
 export interface MulePlayTurnResponse {
   msg: string;
-  turnNumber: number;
+  turnNumber: number; // next turn (ie currentTurn after the successful playTurn )
 }

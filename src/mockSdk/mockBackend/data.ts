@@ -1,4 +1,4 @@
-import { find } from 'lodash';
+import { assign, find, findIndex } from 'lodash';
 import { Promise, resolve, reject } from 'q';
 
 import {
@@ -116,4 +116,31 @@ export function genericGetData<T extends Persistable>(type: DataModelTypes): (id
       });
     }
   };
+}
+
+let newIdIterator: number = 1000;
+function getNewId(type: DataModelTypes) {
+  return type + 'Id_' + newIdIterator++;
+}
+
+export function genericCreate<T extends Persistable>(type: DataModelTypes, pT: Partial<T>): T {
+  const dataArray: Persistable[] = database[type];
+  const newT: T = assign({}, {_id: getNewId(type)}, pT) as T;
+
+  dataArray.push(newT);
+
+  return newT;
+}
+
+export function genericSave<T extends Persistable>(type: DataModelTypes, _t: T): T {
+  const dataArray: Persistable[] = database[type];
+  const foundKey: number | undefined = findIndex(dataArray as T[], (data: T) => {
+    return data._id === _t._id;
+  });
+  if (foundKey === -1) {
+    throw 'please create before attempting to save ';
+  }
+  dataArray[foundKey] = _t;
+
+  return _t;
 }
