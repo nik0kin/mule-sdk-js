@@ -48,7 +48,7 @@ describe('MockSdk E2E API', () => {
     const SDK = initSDK();
 
     const turnParams: MulePlayTurnRequest = {
-      playerId: basicUsers[0]._id,
+      playerId: basicUsers[1]._id,
       actions: [{
         type: 'testAction',
         params: {

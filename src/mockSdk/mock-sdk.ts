@@ -17,7 +17,7 @@ import { turnsApi } from './frontendApi/models/Turns';
 import { setLoggedInUser, usersApi } from './frontendApi/models/Users';
 import { MockPlayTurnApi } from './frontendApi/methods/PlayTurn';
 
-import { addBundleCode } from './mockBackend/brain';
+import { addBundleCode } from './mockBackend/hookApi';
 import { addMockData, resetMockData } from './mockBackend/data';
 
 export class MockSdk implements SDK {

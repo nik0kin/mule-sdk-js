@@ -44,11 +44,12 @@ export interface Game extends Persistable {
 }
 
 export interface PlayersMap {
-  [playerRel: string]: { //  'p1'
-    playerId: string;
-    playerStatus: string;
-    name?: string; // added by getPlayersMapQ()
-  };
+  [playerRel: string]: PlayersMapPlayer; // playerRel = 'p1'
+}
+export interface PlayersMapPlayer {
+  playerId: string;
+  playerStatus: string;
+  name?: string; // added by getPlayersMapQ()
 }
 
 export enum TurnProgressStyle {

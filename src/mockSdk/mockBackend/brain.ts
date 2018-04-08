@@ -1,8 +1,8 @@
+import { findKey } from 'lodash';
 import { Promise } from 'q';
 
-import { BundleCode } from '../../types/backend-sdk';
 import {
-  Game, GameBoard, GameState,
+  Game, GameBoard, GameState, PlayersMapPlayer,
   TurnSubmitStyle, DataModelTypes, RuleBundle, History
 } from '../../types/mule';
 import { MulePlayTurnRequest, MulePlayTurnResponse } from '../../types/mule-http';
@@ -10,7 +10,6 @@ import { MulePlayTurnRequest, MulePlayTurnResponse } from '../../types/mule-http
 import { genericGet } from './data';
 import * as roundRobin from './roundRobin';
 
-const bundleCodes: {[name: string]: BundleCode} = {};
 
 export class BackendMockBrain {
 
@@ -28,7 +27,7 @@ export function playTurn(gameId: string, params: MulePlayTurnRequest): Promise<M
     throw 'invalid ruleBundleId ' + game.ruleBundle.id;
   }
 
-  const gameBoard: GameBoard | undefined = genericGet<GameBoard>(DataModelTypes.GameStates, game.gameBoard);
+  const gameBoard: GameBoard | undefined = genericGet<GameBoard>(DataModelTypes.GameBoards, game.gameBoard);
   if (!gameBoard) {
     throw 'invalid gameboardId ' + game.gameBoard;
   }
@@ -43,12 +42,19 @@ export function playTurn(gameId: string, params: MulePlayTurnRequest): Promise<M
     throw 'invalid historyId ' + gameBoard.history;
   }
 
+  const playerRel: string | undefined = findKey(game.players, (player: PlayersMapPlayer) => {
+    return player.playerId === params.playerId;
+  });
+  if (!playerRel) {
+    throw 'invalid playerId: ' + params.playerId;
+  }
+
   // get TurnSubmitStyle
   const turnSubmitStyle: TurnSubmitStyle = ruleBundle.turnSubmitStyle;
 
   if (turnSubmitStyle === TurnSubmitStyle.RoundRobin) {
     // return robinRobin.playTurn
-    if (!roundRobin.isPlayersTurn(params.playerId, history)) {
+    if (!roundRobin.isPlayersTurn(playerRel, history)) {
       throw 'not players turn: ' + params.playerId;
     }
 
@@ -61,6 +67,3 @@ export function playTurn(gameId: string, params: MulePlayTurnRequest): Promise<M
   throw 'nyi';
 }
 
-export function addBundleCode(ruleBundleName: string, bundleCode: BundleCode): void {
-  bundleCodes[ruleBundleName] = bundleCode;
-}

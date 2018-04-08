@@ -37,11 +37,12 @@ export interface Game extends Persistable {
     turnTimeLimit: number;
 }
 export interface PlayersMap {
-    [playerRel: string]: {
-        playerId: string;
-        playerStatus: string;
-        name?: string;
-    };
+    [playerRel: string]: PlayersMapPlayer;
+}
+export interface PlayersMapPlayer {
+    playerId: string;
+    playerStatus: string;
+    name?: string;
 }
 export declare enum TurnProgressStyle {
     WaitProgress = "waitprogress",

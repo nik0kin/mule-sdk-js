@@ -2,7 +2,7 @@ import { SDK, UsersApi, GamesApi, GameBoardsApi, RuleBundlesApi, GameStatesApi, 
 import * as fn from '../shared/fn';
 import { setLoggedInUser } from './frontendApi/models/Users';
 import { MockPlayTurnApi } from './frontendApi/methods/PlayTurn';
-import { addBundleCode } from './mockBackend/brain';
+import { addBundleCode } from './mockBackend/hookApi';
 import { addMockData, resetMockData } from './mockBackend/data';
 export declare class MockSdk implements SDK {
     contextPath: string;

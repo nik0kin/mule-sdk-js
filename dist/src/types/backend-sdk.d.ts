@@ -1,4 +1,5 @@
 import { BoardSpace, PieceState, SpaceState, Turn, VariableMap } from './mule';
+export declare type BundleHooks = 'customBoardSettingsValidator' | 'boardGenerator' | 'gameStart' | 'progressTurn' | 'progressRound' | 'winCondition';
 export interface BundleCode {
     customBoardSettingsValidator?: CustomBoardSettingsValidatorHook;
     boardGenerator?: BoardGeneratorHook;

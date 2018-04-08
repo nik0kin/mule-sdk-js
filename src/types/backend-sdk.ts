@@ -6,6 +6,9 @@ import {
   VariableMap,
 } from './mule';
 
+export type BundleHooks
+  = 'customBoardSettingsValidator' | 'boardGenerator' | 'gameStart' | 'progressTurn' | 'progressRound' | 'winCondition';
+
 export interface BundleCode {
   customBoardSettingsValidator?: CustomBoardSettingsValidatorHook;
   boardGenerator?: BoardGeneratorHook;
