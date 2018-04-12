@@ -6,7 +6,7 @@
 */
 
 import { MockSdk } from '../../../src/mockSdk/mock-sdk';
-import { PlayersMap } from '../../../src/types/mule';
+import { History, PlayersMap, User, Turn } from '../../../src/types/mule';
 import { MulePlayTurnRequest } from '../../../src/types/mule-http';
 
 import { basicGame, anotherBasicGame } from '../../mock-data/Game';
@@ -47,8 +47,14 @@ fdescribe('MockSdk E2E API', () => {
     });
     const SDK = initSDK();
 
+    const playerUser: User = basicUsers[1];
+    const currentRound: number = basicRoundRobinHistory.currentRound;
+    const playerRel: string = 'p1';
+    const playerTurnIndex: number = 0; // could get from basicRoundRobinHistory.turnOrder w/ playerRel
+    let savedTurnId: string;
+
     const turnParams: MulePlayTurnRequest = {
-      playerId: basicUsers[1]._id,
+      playerId: playerUser._id,
       actions: [{
         type: 'testAction',
         params: {
@@ -57,16 +63,32 @@ fdescribe('MockSdk E2E API', () => {
       }],
     };
 
+    expect(basicRoundRobinHistory.turns[currentRound - 1][playerTurnIndex]).not.toBeDefined();
+    expect(basicRoundRobinHistory.currentTurn).toEqual(1);
+
     SDK.PlayTurn.sendGameTurnQ(basicGame._id, turnParams)
-      .then(
-        (result) => {
-          expect(result).toBeDefined();
-          done();
-        },
-        () => {
-          expect('expect this not to be called').toBeUndefined();
-        }
-      );
+      .then((result) => {
+        expect(result).toBeDefined();
+
+        // verify history has progressed
+        return SDK.Historys.readQ(basicGameBoard.history);
+      })
+      .then((history: History) => {
+        expect(history.turns[currentRound - 1][playerTurnIndex]).toBeDefined();
+        savedTurnId = history.turns[currentRound - 1][playerTurnIndex];
+        // expect(history.currentTurn).toEqual(2); // TODO
+
+        return SDK.Turns.readQ(savedTurnId);
+      })
+      .then((turn: Turn) => {
+        expect(turn.gameId).toEqual(basicGame._id);
+        expect(turn.playerTurns[playerRel].actions[0].params.test).toEqual(true);
+
+        done();
+      })
+      .catch(() => {
+        expect('expect this not to be called').toBeUndefined();
+      });
 
   });
 /*

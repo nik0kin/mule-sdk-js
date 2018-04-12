@@ -26,7 +26,8 @@ export function playTurn(gameId: string, ruleBundleName: string, playerRel: stri
 }
 
 export function addTurnAndSaveHistory(newTurn: Turn, playerRel: string, history: History): History {
-  return genericSave<History>(DataModelTypes.Historys, getAddedTurnToHistory(newTurn, playerRel, history));
+  const newHistory: History = getAddedTurnToHistory(newTurn, playerRel, history);
+  return genericSave<History>(DataModelTypes.Historys, newHistory);
 }
 
 function getAddedTurnToHistory(newTurn: Turn, playerRel: string, history: History): History {
