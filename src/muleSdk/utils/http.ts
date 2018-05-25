@@ -7,7 +7,9 @@ import { Promise, resolve, reject } from 'q';
 
 function get(url: string/*, data: any, opts: any*/): Promise<any> {
   return resolve()
-    .then(() => fetch(url))
+    .then(() => fetch(url, {
+      credentials: 'include'
+    }))
     .then((response) => response.json());
 }
 
