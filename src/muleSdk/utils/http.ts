@@ -17,6 +17,7 @@ function post(url: string, data: any/*, opts: any*/): Promise<any> {
   return resolve()
     .then(() => fetch(url, {
       method: 'POST',
+      credentials: 'include',
       headers: [
         ['Content-Type', 'application/json']
       ],
