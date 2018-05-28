@@ -4,6 +4,7 @@ export interface BundleCode {
     customBoardSettingsValidator?: CustomBoardSettingsValidatorHook;
     boardGenerator?: BoardGeneratorHook;
     gameStart?: GameStartHook;
+    validateTurn: ValidateTurnHook;
     progressTurn?: ProgressTurnHook;
     progressRound?: ProgressRoundHook;
     winCondition?: WinConditionHook;
@@ -18,11 +19,12 @@ export interface ActionCode {
 export declare type CustomBoardSettingsValidatorHook = (customBoardSettings: VariableMap) => VariableMap;
 export declare type BoardGeneratorHook = (customBoardSettings: VariableMap, ruleBundleRules: VariableMap) => Promise<BoardSpace[]>;
 export declare type GameStartHook = (M: MuleStateSdk) => Promise<void>;
+export declare type ValidateTurnHook = (M: MuleStateSdk, lobbyPlayerId: string, actions: VariableMap[]) => Promise<void>;
 export declare type ProgressTurnHook = (M: MuleStateSdk) => Promise<VariableMap>;
 export declare type ProgressRoundHook = (M: MuleStateSdk) => Promise<VariableMap>;
 export declare type WinConditionHook = (M: MuleStateSdk) => Promise<string | null>;
-export declare type ActionValidateHook = (M: MuleStateSdk, playerRel: string, actionParams: VariableMap) => Promise<void>;
-export declare type ActionExecuteHook = (M: MuleStateSdk, playerRel: string, actionParams: VariableMap) => Promise<void>;
+export declare type ActionValidateHook = (M: MuleStateSdk, lobbyPlayerId: string, actionParams: VariableMap) => Promise<void>;
+export declare type ActionExecuteHook = (M: MuleStateSdk, lobbyPlayerId: string, actionParams: VariableMap) => Promise<void>;
 export interface MuleStateSdk {
     getPlayerRels: () => string[];
     getBoardDefinition: () => BoardSpace[];
@@ -34,10 +36,10 @@ export interface MuleStateSdk {
     getGlobalVariables: () => any;
     setGlobalVariable: (key: string, value: any) => void;
     addToGlobalVariable: (key: string, additionValue: number) => void;
-    getPlayerVariable: (playerRel: string, key: string) => any;
-    getPlayerVariables: (playerRel: string) => any;
-    setPlayerVariable: (playerRel: string, key: string, value: any) => void;
-    addToPlayerVariable: (playerRel: string, key: string, additionValue: number) => void;
+    getPlayerVariable: (lobbyPlayerId: string, key: string) => any;
+    getPlayerVariables: (lobbyPlayerId: string) => any;
+    setPlayerVariable: (lobbyPlayerId: string, key: string, value: any) => void;
+    addToPlayerVariable: (lobbyPlayerId: string, key: string, additionValue: number) => void;
     getSpace: (locationId: string) => SpaceState;
     getSpaces: () => {
         [locationId: string]: SpaceState;

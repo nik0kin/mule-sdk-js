@@ -14,6 +14,7 @@ export interface BundleCode {
   boardGenerator?: BoardGeneratorHook;
   gameStart?: GameStartHook;
 
+  validateTurn: ValidateTurnHook;
   progressTurn?: ProgressTurnHook;
   progressRound?: ProgressRoundHook;
   winCondition?: WinConditionHook;
@@ -34,15 +35,18 @@ export type BoardGeneratorHook
 
 export type GameStartHook = (M: MuleStateSdk) => Promise<void>;
 
+export type ValidateTurnHook
+ = (M: MuleStateSdk, lobbyPlayerId: string, actions: VariableMap[]) => Promise<void>; // throw Errors if Turn is invalid
+
 export type ProgressTurnHook = (M: MuleStateSdk) => Promise<VariableMap>; // metadata is returned
 export type ProgressRoundHook = (M: MuleStateSdk) => Promise<VariableMap>;
 
-export type WinConditionHook = (M: MuleStateSdk) => Promise<string | null>; // winner's playerRel?, 'tie', or null
+export type WinConditionHook = (M: MuleStateSdk) => Promise<string | null>; // winner's lobbyPlayerId, 'tie', or null
 
 export type ActionValidateHook
-  = (M: MuleStateSdk, playerRel: string, actionParams: VariableMap) => Promise<void>;
+  = (M: MuleStateSdk, lobbyPlayerId: string, actionParams: VariableMap) => Promise<void>; // throw Errors if Action is invalid
 export type ActionExecuteHook
-  = (M: MuleStateSdk, playerRel: string, actionParams: VariableMap) => Promise<void>;
+  = (M: MuleStateSdk, lobbyPlayerId: string, actionParams: VariableMap) => Promise<void>;
 
 export interface MuleStateSdk { // aka M
   // Game
@@ -62,10 +66,10 @@ export interface MuleStateSdk { // aka M
   getGlobalVariables: () => any; // map?
   setGlobalVariable: (key: string, value: any) => void;
   addToGlobalVariable: (key: string, additionValue: number) => void;
-  getPlayerVariable: (playerRel: string, key: string) => any;
-  getPlayerVariables: (playerRel: string) => any; // map
-  setPlayerVariable: (playerRel: string, key: string, value: any) => void;
-  addToPlayerVariable: (playerRel: string, key: string, additionValue: number) => void;
+  getPlayerVariable: (lobbyPlayerId: string, key: string) => any;
+  getPlayerVariables: (lobbyPlayerId: string) => any; // map
+  setPlayerVariable: (lobbyPlayerId: string, key: string, value: any) => void;
+  addToPlayerVariable: (lobbyPlayerId: string, key: string, additionValue: number) => void;
 
   getSpace: (locationId: string) => SpaceState;
   getSpaces: () => {[locationId: string]: SpaceState};
@@ -90,4 +94,4 @@ export interface GetPiecesSearchArgs {
   className?: string;
   class?: string;
   attrs: any; // map
-} 
+}
