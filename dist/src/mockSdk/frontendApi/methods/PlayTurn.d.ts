@@ -1,4 +1,3 @@
-/// <reference types="q" />
 import { Promise } from 'q';
 import { MuleGamesPlayTurnRequest, MulePlayTurnRequest, MulePlayTurnResponse } from '../../../types/mule-http';
 import { PlayTurnApi } from '../../../types/sdk';

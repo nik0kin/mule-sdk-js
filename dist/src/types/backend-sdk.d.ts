@@ -24,7 +24,7 @@ export declare type ProgressTurnHook = (M: MuleStateSdk) => Promise<VariableMap>
 export declare type ProgressRoundHook = (M: MuleStateSdk) => Promise<VariableMap>;
 export declare type WinConditionHook = (M: MuleStateSdk) => Promise<string | null>;
 export declare type ActionValidateHook = (M: MuleStateSdk, lobbyPlayerId: string, actionParams: VariableMap) => Promise<void>;
-export declare type ActionExecuteHook = (M: MuleStateSdk, lobbyPlayerId: string, actionParams: VariableMap) => Promise<void>;
+export declare type ActionExecuteHook = (M: MuleStateSdk, lobbyPlayerId: string, actionParams: VariableMap) => Promise<any>;
 export interface MuleStateSdk {
     getPlayerRels: () => string[];
     getBoardDefinition: () => BoardSpace[];
@@ -60,5 +60,5 @@ export interface GetPiecesSearchArgs {
     locationId?: string;
     className?: string;
     class?: string;
-    attrs: any;
+    attrs?: any;
 }

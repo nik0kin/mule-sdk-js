@@ -46,7 +46,7 @@ export type WinConditionHook = (M: MuleStateSdk) => Promise<string | null>; // w
 export type ActionValidateHook
   = (M: MuleStateSdk, lobbyPlayerId: string, actionParams: VariableMap) => Promise<void>; // throw Errors if Action is invalid
 export type ActionExecuteHook
-  = (M: MuleStateSdk, lobbyPlayerId: string, actionParams: VariableMap) => Promise<void>;
+  = (M: MuleStateSdk, lobbyPlayerId: string, actionParams: VariableMap) => Promise<any>; // returns actionMetaData: any
 
 export interface MuleStateSdk { // aka M
   // Game
@@ -93,5 +93,5 @@ export interface GetPiecesSearchArgs {
   locationId?: string;
   className?: string;
   class?: string;
-  attrs: any; // map
+  attrs?: any; // map
 }
