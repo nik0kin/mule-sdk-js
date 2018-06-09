@@ -20,7 +20,7 @@ export function initHistorysApi(contextPath: string): HistorysApi {
     return http.get(contextPath + 'games/' + gameId + '/history'/*, null, {responseType: 'json'}*/);
   };
 
-  that.readGamesFullHistoryQ = function (gameId: string): Q.Promise<History[]> {
+  that.readGamesFullHistoryQ = function (gameId: string): Q.Promise<History> {
     return http.get(contextPath + 'games/' + gameId + '/history/all');
   };
 

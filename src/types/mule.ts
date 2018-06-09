@@ -141,7 +141,7 @@ export interface History extends Persistable {
 
 export interface HistoryTurns {
   meta?: Turn[];
-  [turnNumber: number]: string[]; // string = turnId
+  [turnNumber: number]: string[] | Turn[]; // string = turnId
 }
 
 export interface Turn extends Persistable {

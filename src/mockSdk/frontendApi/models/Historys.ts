@@ -14,7 +14,7 @@ export class MockHistorysApi implements HistorysApi {
   public readGamesHistoryQ = (gameId: string): Promise<History> => {
     throw 'nyi ' + gameId;
   }
-  public readGamesFullHistoryQ = (gameId: string): Promise<History[]> => {
+  public readGamesFullHistoryQ = (gameId: string): Promise<History> => {
     throw 'nyi ' + gameId;
   }
 }

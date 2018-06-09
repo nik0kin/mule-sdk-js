@@ -90,15 +90,16 @@ export function markAllTurnsRead(history: History): void {
   });
 }
 
-export function getLastUnreadTurn(history: History): Turn | undefined {
+export function getLastUnreadTurn(fullHistory: History): Turn | undefined {
   let _turn: Turn | undefined = undefined;
 
-  each(history.turnOrder, function (value: string, playerIndex: number) {
+  each(fullHistory.turnOrder, function (value: string, playerIndex: number) {
     if (_turn || value === 'meta') return;
 
     const lastTurnNumber = turnsRead[value].length;
-    if (history.turns[playerIndex][lastTurnNumber]) {
-      _turn = history.turns[playerIndex][lastTurnNumber];
+    if (fullHistory.turns[playerIndex][lastTurnNumber]) {
+      const turnOrId: string | Turn = fullHistory.turns[playerIndex][lastTurnNumber]; 
+      _turn = (turnOrId as Turn)._id ? (turnOrId as Turn) : undefined;
       turnsRead[value].push(true);
     }
 

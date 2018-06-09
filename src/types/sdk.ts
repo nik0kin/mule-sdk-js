@@ -63,7 +63,7 @@ export interface HistorysApi {
   indexQ(): Q.Promise<History[]>;
   readQ(historyId: string): Q.Promise<History>;
   readGamesHistoryQ(gameId: string): Q.Promise<History>;
-  readGamesFullHistoryQ(gameId: string): Q.Promise<History[]>;
+  readGamesFullHistoryQ(gameId: string): Q.Promise<History>;
 }
 
 export interface RuleBundlesApi {

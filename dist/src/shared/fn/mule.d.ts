@@ -16,6 +16,6 @@ export declare function getPiecesByOwnerIdOnSpaceId(gameState: GameState, spaceI
 export declare function getPiecesFromId(gameState: GameState, pieceId: number): PieceState[];
 export declare function getClassesFromPieces(gameState: GameState, className: string): PieceState[];
 export declare function markAllTurnsRead(history: History): void;
-export declare function getLastUnreadTurn(history: History): Turn | undefined;
+export declare function getLastUnreadTurn(fullHistory: History): Turn | undefined;
 export declare function getLastRoundMeta(history: History): Turn | undefined;
 export declare function getWhosTurnIsIt(history: History): string;
