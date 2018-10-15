@@ -116,7 +116,7 @@ export interface PieceState extends Persistable {
   id: number; // TODO delete
   class: string;
   locationId: string;
-  ownerId: string; // playerRel (eg. p1)
+  ownerId: string; // lobbyPlayerId
   attributes: VariableMap; 
 }
 
@@ -134,9 +134,10 @@ export interface History extends Persistable {
     [playerRel: string]: boolean; 
   };
   gameId: string; // TODO deprecate (why is it needed?)
-  turnOrder: string[]; // string = playerRel (eg: [p1, p2])
+  turnOrder: string[]; // string = lobbyPlayerId
   turnSubmitStyle: TurnSubmitStyle;
   turns: HistoryTurns;
+  winner: string | undefined; // lobbyPlayerId or 'tie'
 }
 
 export interface HistoryTurns {

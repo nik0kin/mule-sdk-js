@@ -122,6 +122,7 @@ export interface History extends Persistable {
     turnOrder: string[];
     turnSubmitStyle: TurnSubmitStyle;
     turns: HistoryTurns;
+    winner: string | undefined;
 }
 export interface HistoryTurns {
     meta?: Turn[];
