@@ -15,7 +15,7 @@ export declare enum DataModelTypes {
     PieceStates = "PieceStates",
     SpaceStates = "SpaceStates",
     Turns = "Turns",
-    Users = "Users",
+    Users = "Users"
 }
 export interface Persistable {
     _id: string;
@@ -48,7 +48,7 @@ export interface PlayersMapPlayer {
 export declare enum TurnProgressStyle {
     WaitProgress = "waitprogress",
     AutoProgress = "autoprogress",
-    AutoBoot = "autoboot",
+    AutoBoot = "autoboot"
 }
 export interface RuleBundle extends Persistable {
     name: string;
@@ -58,7 +58,12 @@ export interface RuleBundle extends Persistable {
         boardStyle: string;
     };
     gameSettings: {
-        playerLimit: number;
+        playerLimit: number | // maximum amount of players (1-x)
+        number[] | // a set of allowed player amounts eg [2, 4, 6]
+        {
+            min: number;
+            max: number;
+        };
         customBoardSettings: VariableMap;
     };
     rules: {
@@ -67,7 +72,7 @@ export interface RuleBundle extends Persistable {
 }
 export declare enum TurnSubmitStyle {
     RoundRobin = "roundRobin",
-    PlayByMail = "playByMail",
+    PlayByMail = "playByMail"
 }
 export interface GameBoardCache {
     [gameBoardId: string]: GameBoard;
@@ -111,7 +116,7 @@ export interface SpaceState extends Persistable {
     boardSpaceId: string;
     attributes: VariableMap;
 }
-export interface History extends Persistable {
+export interface History<T> extends Persistable {
     currentPlayerIndexTurn: number;
     currentRound: number;
     currentTurn: number;
@@ -121,13 +126,16 @@ export interface History extends Persistable {
     gameId: string;
     turnOrder: string[];
     turnSubmitStyle: TurnSubmitStyle;
-    turns: HistoryTurns;
+    turns: HistoryTurns<T>;
     winner: string | undefined;
 }
-export interface HistoryTurns {
+export declare type LiteHistory = HistoryTurns<TurnId>;
+export declare type FullHistory = HistoryTurns<Turn>;
+export interface HistoryTurns<T> {
     meta?: Turn[];
-    [turnNumber: number]: string[] | Turn[];
+    [turnNumber: number]: T[];
 }
+export declare type TurnId = string;
 export interface Turn extends Persistable {
     gameId: string;
     turnNumber: number;
