@@ -1,3 +1,4 @@
+/// <reference types="q" />
 import { Promise } from 'q';
 import { GameState } from '../../../types/mule';
 import { GameStatesApi, UnknownType } from '../../../types/sdk';

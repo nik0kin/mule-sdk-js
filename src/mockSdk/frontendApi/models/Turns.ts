@@ -9,7 +9,7 @@ import { genericGetData } from '../../mockBackend/data';
 export class MockTurnsApi implements TurnsApi {
   public readQ: (turnId: string) => Promise<Turn> = genericGetData<Turn>(DataModelTypes.Turns);
   public readGamesTurnQ = (gameId: string, turnNumber: number): Promise<Turn> => {
-    throw 'nyi ' + gameId + turnNumber;
+    throw new Error('nyi ' + gameId + ' ' + turnNumber);
   }
 }
 

@@ -17,7 +17,7 @@ import { backgammonRuleBundle } from '../../mock-data/RuleBundle';
 import { basicUsers } from '../../mock-data/User';
 
 
-fdescribe('MockSdk E2E API', () => {
+describe('MockSdk E2E API', () => {
 
   function initSDK(): MockSdk {
     return new MockSdk('http://zion.tgp.io:313/webservices/');

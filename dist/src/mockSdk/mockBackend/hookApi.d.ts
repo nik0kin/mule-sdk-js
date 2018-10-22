@@ -1,3 +1,4 @@
+/// <reference types="q" />
 import { Promise } from 'q';
 import { BundleCode } from '../../types/backend-sdk';
 export declare function addBundleCode(ruleBundleName: string, bundleCode: BundleCode): void;

@@ -26,7 +26,7 @@ define(['../lib/q', '../utils/index'], function (Q, utils) {
       that.initQ = function (params) {
         config = {
           turnSubmitStyle: params.turnSubmitStyle,
-          gameId: params.gameId, 
+          gameId: params.gameId,
           gameIdUrlKey: params.gameIdUrlKey || false,
           refreshTime: params.refreshTime || 10000, //ms
           userId: params.userId,
@@ -48,7 +48,7 @@ define(['../lib/q', '../utils/index'], function (Q, utils) {
         }
 
         if (!gameId) {
-          throw 'gameId required for initQ';
+          throw new Error('gameId required for initQ');
         }
 
         // Determine userId
@@ -72,7 +72,7 @@ define(['../lib/q', '../utils/index'], function (Q, utils) {
               // if this was q in node, this would 'catch'
               //   maybe its something with jquery promises?
             });
-            
+
         }
 
         // Fetch Game
@@ -80,7 +80,7 @@ define(['../lib/q', '../utils/index'], function (Q, utils) {
           .then(function () {
             return SDK.Games.readQ(gameId)
               .catch(function () {
-                throw 'invalid gameId';
+                throw new Error('invalid gameId');
               })
               .then(function (game) {
                 cachedGame = game;

@@ -25,7 +25,7 @@ export class MockUsersApi implements UsersApi {
     return resolve(database.Users);
   }
   public createQ = (params: UnknownType): Promise<MuleUserCreateResponse> => {
-    throw 'nyi ' + params;
+    throw new Error('nyi ' + params);
   }
   public readQ: (userId: string) => Promise<User> = genericGetData<User>(DataModelTypes.Users);
   public sessionQ = (): Promise<MuleUserSessionResponse> => {
@@ -56,13 +56,13 @@ export class MockUsersApi implements UsersApi {
   }
   public usersCache: UserCache; // dont user cache (no reason)
   public cacheUser = (result: User): void => { // TODO why does a game frontend need to cache a user (un expose this)
-    throw 'nyi ' + result;
+    throw new Error('nyi ' + result);
   }
   public readCacheQ = (userId: string): Promise<User | undefined> => {
     return this.readQ(userId);
   }
   public indexCacheQ = (force: boolean): Promise<UserCache> => {
-    throw 'nyi ' + force;
+    throw new Error('nyi ' + force);
   }
 }
 

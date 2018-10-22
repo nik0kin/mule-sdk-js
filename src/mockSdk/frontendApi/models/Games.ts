@@ -13,8 +13,8 @@ export class MockGamesApi implements GamesApi {
     return resolve(database.Games);
   }
   public createQ = (params: UnknownType): Promise<UnknownType> => {
-    throw 'nyi ' + params;
-  }  
+    throw new Error('nyi ' + params);
+  }
   public readQ: (gameId: string) => Promise<Game> = genericGetData<Game>(DataModelTypes.Games);
   public readUsersGamesQ = (userId: string): Promise<Game[]> => {
     return resolve(_.filter(database.Games, (game: Game) => {
@@ -24,10 +24,10 @@ export class MockGamesApi implements GamesApi {
     }));
   }
   public readMyGamesQ = (): Promise<Game[]> => {
-    throw 'nyi';
+    throw new Error('nyi');
   }
   public joinGameQ = (gameId: string): Promise<UnknownType> => {
-    throw 'nyi ' + gameId;
+    throw new Error('nyi ' + gameId);
   }
 
   // TODO rename this?

@@ -103,7 +103,7 @@ export function genericGet<T extends Persistable>(type: DataModelTypes, id: stri
 }
 
 export function genericGetData<T extends Persistable>(type: DataModelTypes): (id: string) => Promise<T> {
-  
+
   return (id: string) => {
     const foundData: T | undefined = genericGet<T>(type, id);
 
@@ -138,7 +138,7 @@ export function genericSave<T extends Persistable>(type: DataModelTypes, _t: T):
     return data._id === _t._id;
   });
   if (foundKey === -1) {
-    throw 'please create before attempting to save ';
+    throw new Error('please create before attempting to save ');
   }
   dataArray[foundKey] = _t;
 

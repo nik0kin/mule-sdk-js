@@ -1,3 +1,4 @@
+/// <reference types="q" />
 import { Promise } from 'q';
 import { DataModelTypes, Game, GameBoard, History, RuleBundle, GameState, PieceState, SpaceState, Turn, User, Persistable } from '../../types/mule';
 export declare const database: MockDatabase;

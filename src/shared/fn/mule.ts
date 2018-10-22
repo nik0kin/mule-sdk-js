@@ -24,7 +24,7 @@ export function getFullSpaceInfo(gameBoard: GameBoard, gameState: GameState, spa
   }));
 
   if (!foundSpace) {
-    throw 'bad id ' + spaceId;
+    throw new Error('bad id ' + spaceId);
   }
 
   gameState.spaces.forEach((spaceState: SpaceState) => {
@@ -79,7 +79,7 @@ export function getClassesFromPieces(gameState: GameState, className: string): P
 var turnsRead: {[playerRel: string]: boolean[]};
 
 export function markAllTurnsRead(history: History): void {
-  if (!history.turns[0].length) throw 'only use markAllTurnsRead() with Full-ish History';
+  if (!history.turns[0].length) throw new Error('only use markAllTurnsRead() with Full-ish History');
 
   turnsRead = {};
   each(history.turns, function (playerTurns: Turn[], player: string) {

@@ -11,7 +11,7 @@ export class MockGameStatesApi implements GameStatesApi {
     return resolve(database.GameStates);
   }
   public createQ = (params: UnknownType): Promise<UnknownType> => {
-    throw 'nyi ' + params;
+    throw new Error('nyi ' + params);
   }
   public readQ: (gameStateId: string) => Promise<GameState> = genericGetData<GameState>(DataModelTypes.GameStates);
 }

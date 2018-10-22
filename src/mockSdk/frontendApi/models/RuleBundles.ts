@@ -11,7 +11,7 @@ export class MockRuleBundlesApi implements RuleBundlesApi {
     return resolve(database.RuleBundles);
   }
   public createQ = (params: UnknownType): Promise<UnknownType> => {
-    throw 'nyi' + params;
+    throw new Error('nyi' + params);
   }
   public readQ: (ruleBundleId: string) => Promise<RuleBundle> = genericGetData<RuleBundle>(DataModelTypes.RuleBundles);
 }

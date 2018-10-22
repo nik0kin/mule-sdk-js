@@ -19,34 +19,34 @@ export class BackendMockBrain {
 export function playTurn(gameId: string, params: MulePlayTurnRequest): Promise<MulePlayTurnResponse> {
   const game: Game | undefined = genericGet<Game>(DataModelTypes.Games, gameId);
   if (!game) {
-    throw 'invalid gameId ' + gameId; 
+    throw new Error('invalid gameId ' + gameId);
   }
 
   const ruleBundle: RuleBundle | undefined = genericGet<RuleBundle>(DataModelTypes.RuleBundles, game.ruleBundle.id);
   if (!ruleBundle) {
-    throw 'invalid ruleBundleId ' + game.ruleBundle.id;
+    throw new Error('invalid ruleBundleId ' + game.ruleBundle.id);
   }
 
   const gameBoard: GameBoard | undefined = genericGet<GameBoard>(DataModelTypes.GameBoards, game.gameBoard);
   if (!gameBoard) {
-    throw 'invalid gameboardId ' + game.gameBoard;
+    throw new Error('invalid gameboardId ' + game.gameBoard);
   }
 
   // const gameState: GameState | undefined = genericGet<GameState>(DataModelTypes.GameStates, gameBoard.gameState);
   // if (!gameState) {
-  //   throw 'invalid historyId ' + gameBoard.gameState;
+  //   throw new Error('invalid historyId ' + gameBoard.gameState);
   // }
-  
+
   const history: History | undefined = genericGet<History>(DataModelTypes.Historys, gameBoard.history);
   if (!history) {
-    throw 'invalid historyId ' + gameBoard.history;
+    throw new Error('invalid historyId ' + gameBoard.history);
   }
 
   const playerRel: string | undefined = findKey(game.players, (player: PlayersMapPlayer) => {
     return player.playerId === params.playerId;
   });
   if (!playerRel) {
-    throw 'invalid playerId: ' + params.playerId;
+    throw new Error('invalid playerId: ' + params.playerId);
   }
 
   // check actions
@@ -70,7 +70,7 @@ export function playTurn(gameId: string, params: MulePlayTurnRequest): Promise<M
   if (turnSubmitStyle === TurnSubmitStyle.RoundRobin) {
     // return robinRobin.playTurn
     if (!roundRobin.isPlayersTurn(playerRel, history)) {
-      throw 'not players turn: ' + params.playerId;
+      throw new Error('not players turn: ' + params.playerId);
     }
 
     // save history/turn
@@ -79,9 +79,9 @@ export function playTurn(gameId: string, params: MulePlayTurnRequest): Promise<M
     return roundRobin.playTurn(gameId, ruleBundle.name, playerRel, newTurn, history);
 
   } else if (turnSubmitStyle === TurnSubmitStyle.PlayByMail) {
-    throw 'nyi';
+    throw new Error('nyi');
   } else {
-    throw 'wtf unknown submitstyle';
+    throw new Error('wtf unknown submitstyle');
   }
 }
 

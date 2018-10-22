@@ -12,10 +12,10 @@ export class MockHistorysApi implements HistorysApi {
   }
   public readQ: (gameStateId: string) => Promise<History> = genericGetData<History>(DataModelTypes.Historys);
   public readGamesHistoryQ = (gameId: string): Promise<History> => {
-    throw 'nyi ' + gameId;
+    throw new Error('nyi ' + gameId);
   }
   public readGamesFullHistoryQ = (gameId: string): Promise<History> => {
-    throw 'nyi ' + gameId;
+    throw new Error('nyi ' + gameId);
   }
 }
 

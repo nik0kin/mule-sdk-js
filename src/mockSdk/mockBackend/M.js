@@ -289,7 +289,7 @@ var createHelper = function (gso, _lastTurn, _debugPrefix) {
       var promise = PieceState.findByIdQ(pieceStateId)
         .then(function (foundPieceState) {
           if (!foundPieceState) {
-            throw 'persistQ: invalid pieceStateId' + pieceStateId;
+            throw new Error('persistQ: invalid pieceStateId' + pieceStateId);
           }
 
           // EFF this prob could be better
@@ -315,7 +315,7 @@ var createHelper = function (gso, _lastTurn, _debugPrefix) {
       var promise = SpaceState.findByIdQ(spaceStateId)
         .then(function (foundSpaceState) {
           if (!foundSpaceState) {
-            throw 'persistQ: invalid spaceStateId' + spaceStateId;
+            throw new Error('persistQ: invalid spaceStateId' + spaceStateId);
           }
 
           var newSpace = spacesByLocationId[foundSpaceState.boardSpaceId];
