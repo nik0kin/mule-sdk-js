@@ -21,7 +21,7 @@ export enum DataModelTypes {
   Users = 'Users',
 }
 
-// TODO better name 
+// TODO better name
 export interface Persistable {
   _id: string;
 }
@@ -67,7 +67,10 @@ export interface RuleBundle extends Persistable {
     boardStyle: string;
   };
   gameSettings: {
-    playerLimit: number; // TODO this should be a range right?
+    playerLimit:
+      number | // maximum amount of players (1-x)
+      number[] | // a set of allowed player amounts eg [2, 4, 6]
+      {min: number, max: number}; // range of players amount
     customBoardSettings: VariableMap;
   };
   rules: {
@@ -114,10 +117,11 @@ export interface GameState extends Persistable {
 
 export interface PieceState extends Persistable {
   id: number; // TODO delete
+  // ^ why delete?
   class: string;
   locationId: string;
   ownerId: string; // lobbyPlayerId
-  attributes: VariableMap; 
+  attributes: VariableMap;
 }
 
 export interface SpaceState extends Persistable {
@@ -126,24 +130,29 @@ export interface SpaceState extends Persistable {
   attributes: VariableMap;
 }
 
-export interface History extends Persistable {
+export interface History<T> extends Persistable {
   currentPlayerIndexTurn: number;
   currentRound: number;
   currentTurn: number;
   currentTurnStatus: {
-    [playerRel: string]: boolean; 
+    [playerRel: string]: boolean;
   };
   gameId: string; // TODO deprecate (why is it needed?)
   turnOrder: string[]; // string = lobbyPlayerId
   turnSubmitStyle: TurnSubmitStyle;
-  turns: HistoryTurns;
+  turns: HistoryTurns<T>;
   winner: string | undefined; // lobbyPlayerId or 'tie'
 }
 
-export interface HistoryTurns {
+export type LiteHistory = HistoryTurns<TurnId>;
+export type FullHistory = HistoryTurns<Turn>;
+
+export interface HistoryTurns<T> {
   meta?: Turn[];
-  [turnNumber: number]: string[] | Turn[]; // string = turnId
+  [turnNumber: number]: T[];
 }
+
+export type TurnId = string; // mongo id
 
 export interface Turn extends Persistable {
   gameId: string;
