@@ -4,7 +4,7 @@ import {
   Game, RuleBundle,
   GameBoard, GameState,
   // GameBoardCache,
-  History, Turn,
+  FullHistory, LiteHistory, Turn,
 } from './mule';
 
 import {
@@ -60,10 +60,10 @@ export interface GameStatesApi {
 }
 
 export interface HistorysApi {
-  indexQ(): Q.Promise<History[]>;
-  readQ(historyId: string): Q.Promise<History>;
-  readGamesHistoryQ(gameId: string): Q.Promise<History>;
-  readGamesFullHistoryQ(gameId: string): Q.Promise<History>;
+  indexQ(): Q.Promise<LiteHistory[]>;
+  readQ(historyId: string): Q.Promise<LiteHistory>;
+  readGamesHistoryQ(gameId: string): Q.Promise<LiteHistory>;
+  readGamesFullHistoryQ(gameId: string): Q.Promise<FullHistory>;
 }
 
 export interface RuleBundlesApi {

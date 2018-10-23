@@ -1,3 +1,4 @@
+/// <reference types="q" />
 import { Promise } from 'q';
 import { GameBoard, GameBoardCache } from '../../../types/mule';
 import { GameBoardsApi } from '../../../types/sdk';

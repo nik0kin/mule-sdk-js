@@ -1,8 +1,9 @@
 import { Promise, resolve } from 'q';
 
-import { BundleCode, BundleHooks } from '../../types/backend-sdk';
+import { BundleCode, BundleHooks, MuleStateSdk } from '../../types/backend-sdk';
 
-import { createMQ } from './M';
+// import createMQ from './M';
+const createMQ: any = () => null; // temp while mockBackend is under construction
 
 const bundleCodes: {[name: string]: BundleCode} = {};
 
@@ -15,7 +16,7 @@ function getBundleCode(ruleBundleName: string): BundleCode {
 }
 
 function getBundleCodeHook(ruleBundleName: string, hookName: string): Function | undefined {
-  const hookKey: BundleHooks = hookName as BundleHooks; 
+  const hookKey: BundleHooks = hookName as BundleHooks;
   return getBundleCode(ruleBundleName)[hookKey];
 }
 
@@ -40,16 +41,16 @@ function baseHook(ruleBundleName: string, gameId: string, hookName: string, para
   const hookQ: Function | undefined = getBundleCodeHook(ruleBundleName, hookName);
 
   if (hookQ) {
-    return mLib.createMQ(gameId, hookName)
-      .then(function (M) {
+    return createMQ(gameId, hookName)
+      .then(function (M: MuleStateSdk) {
         console.log('[START] ' + hookName, gameId);
         return hookQ(M, param1, param2);
       })
-      .then(function (result) {
+      .then(function (result: any) {
         console.log('[END] ' + hookName, gameId);
         return result;
       })
-      .fail(function (err) {
+      .fail(function (err: any) {
         var errorMsg = '[ERROR] '  + hookName + ': ' + err;
         console.log(errorMsg, gameId, err);
         throw errorMsg;
@@ -58,4 +59,4 @@ function baseHook(ruleBundleName: string, gameId: string, hookName: string, para
     console.log(hookName + ' Hook Not Implemented', gameId);
     return resolve();
   }
-};
+}

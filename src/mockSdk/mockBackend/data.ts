@@ -5,7 +5,7 @@ import {
   DataModelTypes,
   Game,
   GameBoard,
-  History,
+  LiteHistory,
   RuleBundle,
   GameState,
   PieceState,
@@ -32,7 +32,7 @@ export type DatabaseKeys = keyof MockDatabase;
 export interface MockDatabase {
   Games: Game[];
   GameBoards: GameBoard[];
-  Historys: History[];
+  Historys: LiteHistory[];
   RuleBundles: RuleBundle[];
   GameStates: GameState[];
   PieceStates: PieceState[];
@@ -44,7 +44,7 @@ export interface MockDatabase {
 export interface MockData {
   Games?: Game[];
   GameBoards?: GameBoard[];
-  Historys?: History[];
+  Historys?: LiteHistory[];
   GameStates?: GameState[];
   RuleBundles?: RuleBundle[];
   PieceStates?: PieceState[];

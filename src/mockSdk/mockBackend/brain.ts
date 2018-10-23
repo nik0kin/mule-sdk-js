@@ -2,8 +2,8 @@ import { findKey } from 'lodash';
 import { Promise } from 'q';
 
 import {
-  Game, GameBoard, PlayersMapPlayer,
-  TurnSubmitStyle, DataModelTypes, RuleBundle, History, Turn
+  Game, GameBoard, LiteHistory, PlayersMapPlayer,
+  TurnSubmitStyle, DataModelTypes, RuleBundle, Turn
 } from '../../types/mule';
 import { MulePlayTurnRequest, MulePlayTurnResponse } from '../../types/mule-http';
 
@@ -37,7 +37,7 @@ export function playTurn(gameId: string, params: MulePlayTurnRequest): Promise<M
   //   throw new Error('invalid historyId ' + gameBoard.gameState);
   // }
 
-  const history: History | undefined = genericGet<History>(DataModelTypes.Historys, gameBoard.history);
+  const history: LiteHistory | undefined = genericGet<LiteHistory>(DataModelTypes.Historys, gameBoard.history);
   if (!history) {
     throw new Error('invalid historyId ' + gameBoard.history);
   }

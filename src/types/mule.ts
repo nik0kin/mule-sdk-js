@@ -144,8 +144,8 @@ export interface History<T> extends Persistable {
   winner: string | undefined; // lobbyPlayerId or 'tie'
 }
 
-export type LiteHistory = HistoryTurns<TurnId>;
-export type FullHistory = HistoryTurns<Turn>;
+export type LiteHistory = History<TurnId>;
+export type FullHistory = History<Turn>;
 
 export interface HistoryTurns<T> {
   meta?: Turn[];

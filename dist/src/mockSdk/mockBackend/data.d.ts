@@ -1,11 +1,12 @@
+/// <reference types="q" />
 import { Promise } from 'q';
-import { DataModelTypes, Game, GameBoard, History, RuleBundle, GameState, PieceState, SpaceState, Turn, User, Persistable } from '../../types/mule';
+import { DataModelTypes, Game, GameBoard, LiteHistory, RuleBundle, GameState, PieceState, SpaceState, Turn, User, Persistable } from '../../types/mule';
 export declare const database: MockDatabase;
 export declare type DatabaseKeys = keyof MockDatabase;
 export interface MockDatabase {
     Games: Game[];
     GameBoards: GameBoard[];
-    Historys: History[];
+    Historys: LiteHistory[];
     RuleBundles: RuleBundle[];
     GameStates: GameState[];
     PieceStates: PieceState[];
@@ -16,7 +17,7 @@ export interface MockDatabase {
 export interface MockData {
     Games?: Game[];
     GameBoards?: GameBoard[];
-    Historys?: History[];
+    Historys?: LiteHistory[];
     GameStates?: GameState[];
     RuleBundles?: RuleBundle[];
     PieceStates?: PieceState[];

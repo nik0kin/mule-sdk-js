@@ -1,3 +1,4 @@
+/// <reference types="q" />
 import { Promise } from 'q';
 import { RuleBundle } from '../../../types/mule';
 import { RuleBundlesApi, UnknownType } from '../../../types/sdk';
