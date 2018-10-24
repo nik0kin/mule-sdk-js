@@ -1,7 +1,7 @@
 'use strict';
 
 var del = require('del');
-var gutil = require('gulp-util');
+var log = require('fancy-log');
 var fs = require('fs');
 
 function run(done) {
@@ -13,11 +13,11 @@ function run(done) {
     else {
       del(['./dist'], { force: true })
         .then(function(paths) {
-          gutil.log('Deleted files/folders:\n', paths.join('\n'));
+          log('Deleted files/folders:\n', paths.join('\n'));
           done();
         })
         .catch(function(error) {
-          gutil.log('Problem deleting:\n', error);
+          log('Problem deleting:\n', error);
           done();
         });
     }

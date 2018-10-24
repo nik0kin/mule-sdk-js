@@ -1,10 +1,10 @@
 'use strict';
 
 var gulp = require('gulp');
-var gutil = require('gulp-util');
+var PluginError = require('plugin-error');
+var log = require('fancy-log');
 var webpack = require('webpack');
 var WebpackNotifierPlugin = require('webpack-notifier');
-var failPlugin = require('webpack-fail-plugin');
 var webpackConfig = require('../webpack.config.js');
 var packageJson = require('../package.json');
 
@@ -24,14 +24,13 @@ function buildProduction(done) {
          compress: {
             warnings: true
          }
-      }),
-      failPlugin
+      })
    );
 
    // run webpack
    webpack(myProdConfig, function (err, stats) {
-      if (err) { throw new gutil.PluginError('webpack:build', err); }
-      gutil.log('[webpack:build]', stats.toString({
+      if (err) { throw new PluginError('webpack:build', err); }
+      log('[webpack:build]', stats.toString({
          colors: true
       }));
 
@@ -78,7 +77,7 @@ function watch() {
                firstBuildDone = true;
                reject(err);
             }
-            throw new gutil.PluginError('webpack:build-dev', err);
+            throw new PluginError('webpack:build-dev', err);
          } else {
             if (!firstBuildDone) {
                firstBuildDone = true;
@@ -86,7 +85,7 @@ function watch() {
             }
          }
 
-         gutil.log('[webpack:build-dev]', stats.toString({
+         log('[webpack:build-dev]', stats.toString({
             chunks: false,
             colors: true
          }));

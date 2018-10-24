@@ -2,7 +2,7 @@
 
 var Server = require('karma').Server;
 var path = require('path');
-var gutil = require('gulp-util');
+var log = require('fancy-log');
 
 function runTests(options) {
   // Documentation: https://karma-runner.github.io/0.13/dev/public-api.html
@@ -34,9 +34,9 @@ function runTests(options) {
   function karmaCompleted(exitCode) {
     if (options.done) {
       if (exitCode === 1) {
-        gutil.log('Karma: tests failed with code ' + exitCode);
+        log('Karma: tests failed with code ' + exitCode);
       } else {
-        gutil.log('Karma completed!');
+        log('Karma completed!');
       }
       options.done();
     }

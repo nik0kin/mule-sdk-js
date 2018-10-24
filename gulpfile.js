@@ -2,61 +2,43 @@
 'use strict';
 
 var gulp = require('gulp');
-var gutil = require('gulp-util');
+var log = require('fancy-log');
 var eslint = require('gulp-eslint');
 var webpack = require('./gulp/webpack');
-var staticFiles = require('./gulp/staticFiles');
 var tests = require('./gulp/tests');
 var clean = require('./gulp/clean');
-var inject = require('./gulp/inject');
 
 var lintSrcs = ['./gulp/**/*.js'];
 
-gulp.task('delete-dist', function (done) {
+gulp.task('delete-dist', function(done) {
   clean.run(done);
 });
 
-gulp.task('build-js', ['delete-dist'], function(done) {
+gulp.task('build-js', gulp.series('delete-dist', function webpackBuild(done) {
   webpack.build().then(function() { done(); });
-});
+}));
 
-gulp.task('build-other', ['delete-dist'], function() {
-  staticFiles.build();
-});
-
-gulp.task('build', ['build-js', 'build-other', 'lint'], function () {
-  inject.build();
-});
-
-gulp.task('lint', function () {
+function lint() { // lint gulp code loool!!
   return gulp.src(lintSrcs)
     .pipe(eslint())
     .pipe(eslint.format());
-});
+}
 
-gulp.task('watch', ['delete-dist'], function(done) {
+gulp.task('lint', lint);
+
+gulp.task('build', gulp.series('build-js', lint));
+
+gulp.task('watch', gulp.series('delete-dist', function webpackWatch(done) {
   process.env.NODE_ENV = 'development';
   Promise.all([
-    webpack.watch()//,
-    //less.watch()
+    webpack.watch()
   ]).then(function() {
-    gutil.log('Now that initial assets (js and css) are generated inject will start...');
-    inject.watch();
+    log('Initial assets (js and css) are generated...');
     done();
   }).catch(function(error) {
-    gutil.log('Problem generating initial assets (js and css)', error);
+    log('Problem generating initial assets (js and css)', error);
   });
 
-  gulp.watch(lintSrcs, ['lint']);
-  staticFiles.watch();
+  gulp.watch(lintSrcs, gulp.series(lint));
   tests.watch();
-});
-
-gulp.task('watch-and-serve', ['watch'], function() {
-  // local as not required for build
-  var express = require('express')
-  var app = express()
-
-  app.use(express.static('dist', {'index': 'index.html'}))
-  app.listen(8080);
-});
+}));
