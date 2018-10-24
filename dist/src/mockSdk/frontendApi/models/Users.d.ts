@@ -1,4 +1,3 @@
-/// <reference types="q" />
 import { Promise } from 'q';
 import { User, UserCache } from '../../../types/mule';
 import { MuleUserCreateResponse, MuleUserLoginRequest, MuleUserLoginResponse } from '../../../types/mule-http';

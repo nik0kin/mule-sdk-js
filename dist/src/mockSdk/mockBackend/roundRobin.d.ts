@@ -1,4 +1,3 @@
-/// <reference types="q" />
 import { Promise } from 'q';
 import { History, Turn, TurnId, LiteHistory } from '../../types/mule';
 import { MulePlayTurnResponse } from '../../types/mule-http';

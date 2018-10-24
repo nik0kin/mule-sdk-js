@@ -15,7 +15,7 @@ export declare enum DataModelTypes {
     PieceStates = "PieceStates",
     SpaceStates = "SpaceStates",
     Turns = "Turns",
-    Users = "Users",
+    Users = "Users"
 }
 export interface Persistable {
     _id: string;
@@ -48,7 +48,7 @@ export interface PlayersMapPlayer {
 export declare enum TurnProgressStyle {
     WaitProgress = "waitprogress",
     AutoProgress = "autoprogress",
-    AutoBoot = "autoboot",
+    AutoBoot = "autoboot"
 }
 export interface RuleBundle extends Persistable {
     name: string;
@@ -58,7 +58,9 @@ export interface RuleBundle extends Persistable {
         boardStyle: string;
     };
     gameSettings: {
-        playerLimit: number | number[] | {
+        playerLimit: number | // maximum amount of players (1-x)
+        number[] | // a set of allowed player amounts eg [2, 4, 6]
+        {
             min: number;
             max: number;
         };
@@ -70,7 +72,7 @@ export interface RuleBundle extends Persistable {
 }
 export declare enum TurnSubmitStyle {
     RoundRobin = "roundRobin",
-    PlayByMail = "playByMail",
+    PlayByMail = "playByMail"
 }
 export interface GameBoardCache {
     [gameBoardId: string]: GameBoard;

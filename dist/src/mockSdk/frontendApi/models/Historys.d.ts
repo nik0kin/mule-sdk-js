@@ -1,4 +1,3 @@
-/// <reference types="q" />
 import { Promise } from 'q';
 import { History, Turn, LiteHistory } from '../../../types/mule';
 import { HistorysApi } from '../../../types/sdk';
