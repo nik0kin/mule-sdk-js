@@ -45,7 +45,7 @@ export interface MuleStateSdk {
         [locationId: string]: SpaceState;
     };
     setSpace: (spaceId: string, spaceObject: SpaceState) => void;
-    addPiece: (pieceObject: PieceState) => void;
+    addPiece: (pieceObject: PieceState) => number;
     getPiece: (pieceId: string) => PieceState;
     getPieces: (_searchArgs: GetPiecesSearchArgs) => PieceState[];
     setPiece: (pieceId: string, pieceObject: PieceState) => void;
