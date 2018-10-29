@@ -1,13 +1,16 @@
 import { assign, invert } from 'lodash';
 import { Promise, resolve } from 'q';
 
-import { History, HistoryTurns, Turn, TurnId, DataModelTypes, LiteHistory } from '../../types/mule';
+import {
+  RoundRobinHistory, RoundRobinHistoryTurns, LiteRoundRobinHistory,
+  Turn, TurnId, DataModelTypes, LiteHistory
+} from '../../types/mule';
 import { MulePlayTurnResponse } from '../../types/mule-http';
 
 import { genericSave } from './data';
 import { doActionsAndSaveMeta } from './actionsHelper';
 
-export function isPlayersTurn(playerId: string, history: History<Turn | TurnId>): boolean {
+export function isPlayersTurn(playerId: string, history: RoundRobinHistory): boolean {
   return playerId === history.turnOrder[history.currentPlayerIndexTurn];
 }
 
@@ -25,22 +28,22 @@ export function playTurn(gameId: string, ruleBundleName: string, playerRel: stri
   });
 }
 
-export function addTurnAndSaveHistory(newTurn: Turn, playerRel: string, history: LiteHistory): LiteHistory {
-  const newHistory: LiteHistory = getAddedTurnToHistory(newTurn, playerRel, history);
-  return genericSave<LiteHistory>(DataModelTypes.Historys, newHistory);
+export function addTurnAndSaveHistory(newTurn: Turn, playerRel: string, history: LiteRoundRobinHistory): LiteRoundRobinHistory {
+  const newHistory: LiteRoundRobinHistory = getAddedTurnToHistory(newTurn, playerRel, history);
+  return genericSave<LiteRoundRobinHistory>(DataModelTypes.Historys, newHistory);
 }
 
-function getAddedTurnToHistory(newTurn: Turn, playerRel: string, history: LiteHistory): LiteHistory {
+function getAddedTurnToHistory(newTurn: Turn, playerRel: string, history: LiteRoundRobinHistory): LiteRoundRobinHistory {
   return assign({}, history, {
     turns: getTurnsWithAddedTurnId(history.turns, newTurn._id, history.currentRound, getPlayersOrderIndex(playerRel, history)),
   });
 }
 
-function getPlayersOrderIndex(playerRel: string, history: History<Turn | TurnId>): number {
+function getPlayersOrderIndex(playerRel: string, history: RoundRobinHistory): number {
   return Number(invert(history.turnOrder)[playerRel]); // from mule-models/History
 }
 
-function getTurnsWithAddedTurnId(turns: HistoryTurns<TurnId>, newTurnId: string, round: number, playerOrderIndex: number): HistoryTurns<TurnId> {
+function getTurnsWithAddedTurnId(turns: RoundRobinHistoryTurns<TurnId>, newTurnId: string, round: number, playerOrderIndex: number): RoundRobinHistoryTurns<TurnId> {
   const roundTurnIds: TurnId[] = turns[round - 1];
   const newRoundTurnIds: TurnId[] = [...roundTurnIds];
   newRoundTurnIds[playerOrderIndex] = newTurnId;

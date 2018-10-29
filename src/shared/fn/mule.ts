@@ -1,7 +1,10 @@
 
 import { clone, each, filter, find  } from 'lodash';
 
-import { GameBoard, GameState, PieceState, History, FullHistory, Turn, BoardSpace, SpaceState, TurnId } from '../../types/mule';
+import {
+  GameBoard, GameState, PieceState, History,
+  FullRoundRobinHistory, RoundRobinHistory, FullHistory, Turn, BoardSpace, SpaceState, TurnId
+} from '../../types/mule';
 
 export interface MuleFnLibrary {
   getFullSpaceInfo(gameBoard: GameBoard, gameState: GameState, spaceId: string): BoardSpace;
@@ -11,8 +14,8 @@ export interface MuleFnLibrary {
   getClassesFromPieces(gameState: GameState, className: string): PieceState[];
 
   markAllTurnsRead(history: FullHistory): void;
-  getLastUnreadTurn(history: History<Turn | TurnId>): Turn | undefined;
-  getLastRoundMeta(history: History<Turn | TurnId>): Turn | undefined;
+  getLastUnreadTurn(history: RoundRobinHistory): Turn | undefined;
+  getLastRoundMeta(history: FullHistory): Turn | undefined;
   getWhosTurnIsIt(history: History<Turn | TurnId>): string;
 }
 
@@ -78,8 +81,8 @@ export function getClassesFromPieces(gameState: GameState, className: string): P
 
 var turnsRead: {[playerRel: string]: boolean[]};
 
-export function markAllTurnsRead(history: FullHistory): void {
-  if (!history.turns[0].length) throw new Error('only use markAllTurnsRead() with Full-ish History');
+export function markAllTurnsRead(history: FullRoundRobinHistory): void {
+  if (!history.turns[0].length) throw new Error('only use markAllTurnsRead() with Full-ish RoundRobin History');
 
   turnsRead = {};
   each(history.turns, function (playerTurns: Turn[], player: string) {
@@ -90,7 +93,9 @@ export function markAllTurnsRead(history: FullHistory): void {
   });
 }
 
-export function getLastUnreadTurn(fullHistory: History<Turn | TurnId>): Turn | undefined {
+// TODO is this guy for Turns or TurnIds? variable name is fullHistory?
+//   ^^ who uses this?
+export function getLastUnreadTurn(fullHistory: RoundRobinHistory): Turn | undefined {
   let _turn: Turn | undefined = undefined;
 
   each(fullHistory.turnOrder, function (value: string, playerIndex: number) {
@@ -109,7 +114,7 @@ export function getLastUnreadTurn(fullHistory: History<Turn | TurnId>): Turn | u
 }
 
 // TODO what's this used for?
-export function getLastRoundMeta(history: History<Turn | TurnId>): Turn | undefined {
+export function getLastRoundMeta(history: FullHistory): Turn | undefined {
   if (!history.turns.meta) return undefined;
 
   return history.turns.meta[history.currentRound - 2];

@@ -130,7 +130,7 @@ export interface SpaceState extends Persistable {
   attributes: VariableMap;
 }
 
-export interface History<T> extends Persistable {
+export interface History<THistoryTurns> extends Persistable {
   currentPlayerIndexTurn: number;
   currentRound: number;
   currentTurn: number;
@@ -140,16 +140,29 @@ export interface History<T> extends Persistable {
   gameId: string; // TODO deprecate (why is it needed?)
   turnOrder: string[]; // string = lobbyPlayerId
   turnSubmitStyle: TurnSubmitStyle;
-  turns: HistoryTurns<T>;
+  turns: THistoryTurns;
   winner: string | undefined; // lobbyPlayerId or 'tie'
 }
 
-export type LiteHistory = History<TurnId>;
-export type FullHistory = History<Turn>;
+export type FullHistory = FullRoundRobinHistory | FullPlayByMailHistory;
+export type LiteHistory = LiteRoundRobinHistory | LitePlayByMailHistory;
 
-export interface HistoryTurns<T> {
+export type RoundRobinHistory = LiteRoundRobinHistory | FullRoundRobinHistory;
+export type PlayByMailHistory = LitePlayByMailHistory | FullPlayByMailHistory;
+
+export type LiteRoundRobinHistory = History<RoundRobinHistoryTurns<TurnId>>;
+export type FullRoundRobinHistory = History<RoundRobinHistoryTurns<Turn>>;
+export type LitePlayByMailHistory = History<PlayByMailHistoryTurns<TurnId>>;
+export type FullPlayByMailHistory = History<PlayByMailHistoryTurns<Turn>>;
+
+export interface RoundRobinHistoryTurns<T> {
   meta?: Turn[];
   [turnNumber: number]: T[];
+}
+
+export interface PlayByMailHistoryTurns<T> {
+  meta?: Turn[];
+  [turnNumber: number]: T;
 }
 
 export type TurnId = string; // mongo id

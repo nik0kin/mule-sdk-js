@@ -1,10 +1,10 @@
 import { Promise } from 'q';
-import { History, Turn, LiteHistory } from '../../../types/mule';
+import { FullHistory, LiteHistory } from '../../../types/mule';
 import { HistorysApi } from '../../../types/sdk';
 export declare class MockHistorysApi implements HistorysApi {
-    indexQ: () => Promise<History<string>[]>;
+    indexQ: () => Promise<LiteHistory[]>;
     readQ: (gameStateId: string) => Promise<LiteHistory>;
-    readGamesHistoryQ: (gameId: string) => Promise<History<string>>;
-    readGamesFullHistoryQ: (gameId: string) => Promise<History<Turn>>;
+    readGamesHistoryQ: (gameId: string) => Promise<LiteHistory>;
+    readGamesFullHistoryQ: (gameId: string) => Promise<FullHistory>;
 }
 export declare const historysApi: HistorysApi;

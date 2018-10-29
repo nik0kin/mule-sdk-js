@@ -116,7 +116,7 @@ export interface SpaceState extends Persistable {
     boardSpaceId: string;
     attributes: VariableMap;
 }
-export interface History<T> extends Persistable {
+export interface History<THistoryTurns> extends Persistable {
     currentPlayerIndexTurn: number;
     currentRound: number;
     currentTurn: number;
@@ -126,14 +126,24 @@ export interface History<T> extends Persistable {
     gameId: string;
     turnOrder: string[];
     turnSubmitStyle: TurnSubmitStyle;
-    turns: HistoryTurns<T>;
+    turns: THistoryTurns;
     winner: string | undefined;
 }
-export declare type LiteHistory = History<TurnId>;
-export declare type FullHistory = History<Turn>;
-export interface HistoryTurns<T> {
+export declare type FullHistory = FullRoundRobinHistory | FullPlayByMailHistory;
+export declare type LiteHistory = LiteRoundRobinHistory | LitePlayByMailHistory;
+export declare type RoundRobinHistory = LiteRoundRobinHistory | FullRoundRobinHistory;
+export declare type PlayByMailHistory = LitePlayByMailHistory | FullPlayByMailHistory;
+export declare type LiteRoundRobinHistory = History<RoundRobinHistoryTurns<TurnId>>;
+export declare type FullRoundRobinHistory = History<RoundRobinHistoryTurns<Turn>>;
+export declare type LitePlayByMailHistory = History<PlayByMailHistoryTurns<TurnId>>;
+export declare type FullPlayByMailHistory = History<PlayByMailHistoryTurns<Turn>>;
+export interface RoundRobinHistoryTurns<T> {
     meta?: Turn[];
     [turnNumber: number]: T[];
+}
+export interface PlayByMailHistoryTurns<T> {
+    meta?: Turn[];
+    [turnNumber: number]: T;
 }
 export declare type TurnId = string;
 export interface Turn extends Persistable {

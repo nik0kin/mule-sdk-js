@@ -2,7 +2,7 @@ import { findKey } from 'lodash';
 import { Promise } from 'q';
 
 import {
-  Game, GameBoard, LiteHistory, PlayersMapPlayer,
+  Game, GameBoard, LiteHistory, LiteRoundRobinHistory, PlayersMapPlayer,
   TurnSubmitStyle, DataModelTypes, RuleBundle, Turn
 } from '../../types/mule';
 import { MulePlayTurnRequest, MulePlayTurnResponse } from '../../types/mule-http';
@@ -69,12 +69,12 @@ export function playTurn(gameId: string, params: MulePlayTurnRequest): Promise<M
 
   if (turnSubmitStyle === TurnSubmitStyle.RoundRobin) {
     // return robinRobin.playTurn
-    if (!roundRobin.isPlayersTurn(playerRel, history)) {
+    if (!roundRobin.isPlayersTurn(playerRel, history as LiteRoundRobinHistory)) {
       throw new Error('not players turn: ' + params.playerId);
     }
 
     // save history/turn
-    roundRobin.addTurnAndSaveHistory(newTurn, playerRel, history);
+    roundRobin.addTurnAndSaveHistory(newTurn, playerRel, history as LiteRoundRobinHistory);
 
     return roundRobin.playTurn(gameId, ruleBundle.name, playerRel, newTurn, history);
 
