@@ -2,21 +2,18 @@
 import { clone, each, filter, find  } from 'lodash';
 
 import {
-  GameBoard, GameState, PieceState, History,
-  FullRoundRobinHistory, RoundRobinHistory, FullHistory, Turn, BoardSpace, SpaceState, TurnId
+  BoardSpace, GameBoard, GameState, PieceState,
+  RoundRobinHistory, SpaceState,
 } from '../../types/mule';
 
 export interface MuleFnLibrary {
   getFullSpaceInfo(gameBoard: GameBoard, gameState: GameState, spaceId: string): BoardSpace;
   getPiecesOnSpace(gameState: GameState, spaceId: string): PieceState[];
   getPiecesByOwnerIdOnSpaceId(gameState: GameState, spaceId: string, ownerId: string): PieceState[];
-  getPiecesFromId(gameState: GameState, pieceId: number): PieceState[];
+  getPiece(gameState: GameState, pieceId: number): PieceState[];
   getClassesFromPieces(gameState: GameState, className: string): PieceState[];
 
-  markAllTurnsRead(history: FullHistory): void;
-  getLastUnreadTurn(history: RoundRobinHistory): Turn | undefined;
-  getLastRoundMeta(history: FullHistory): Turn | undefined;
-  getWhosTurnIsIt(history: History<Turn | TurnId>): string;
+  getWhosTurnIsIt(history: RoundRobinHistory): string;
 }
 
 // combines gameboard.board and gameboard.spaces (really just adds attributes)
@@ -57,12 +54,13 @@ export function getPiecesByOwnerIdOnSpaceId(gameState: GameState, spaceId: strin
   });
 }
 
-export function getPiecesFromId(gameState: GameState, pieceId: number): PieceState[] {
+export function getPiece(gameState: GameState, pieceId: number): PieceState[] {
   return filter(gameState.pieces, function (piece: PieceState) {
     return pieceId === piece.id;
   });
 }
 
+// TODO rename
 export function getClassesFromPieces(gameState: GameState, className: string): PieceState[] {
   const found: PieceState[] = [];
 
@@ -75,54 +73,6 @@ export function getClassesFromPieces(gameState: GameState, className: string): P
   return found;
 }
 
-
-/////////// START SHIT hacky way for turns read by client
-// TODO please get rid of or rewrite with new History/Turn relationship
-
-var turnsRead: {[playerRel: string]: boolean[]};
-
-export function markAllTurnsRead(history: FullRoundRobinHistory): void {
-  if (!history.turns[0].length) throw new Error('only use markAllTurnsRead() with Full-ish RoundRobin History');
-
-  turnsRead = {};
-  each(history.turns, function (playerTurns: Turn[], player: string) {
-    turnsRead[player] = [];
-    each(playerTurns, function (/*turn*/) {
-      turnsRead[player].push(true);
-    });
-  });
-}
-
-// TODO is this guy for Turns or TurnIds? variable name is fullHistory?
-//   ^^ who uses this?
-export function getLastUnreadTurn(fullHistory: RoundRobinHistory): Turn | undefined {
-  let _turn: Turn | undefined = undefined;
-
-  each(fullHistory.turnOrder, function (value: string, playerIndex: number) {
-    if (_turn || value === 'meta') return;
-
-    const lastTurnNumber = turnsRead[value].length;
-    if (fullHistory.turns[playerIndex][lastTurnNumber]) {
-      const turnOrId: string | Turn = fullHistory.turns[playerIndex][lastTurnNumber];
-      _turn = (turnOrId as Turn)._id ? (turnOrId as Turn) : undefined;
-      turnsRead[value].push(true);
-    }
-
-  });
-
-  return _turn;
-}
-
-// TODO what's this used for?
-export function getLastRoundMeta(history: FullHistory): Turn | undefined {
-  if (!history.turns.meta) return undefined;
-
-  return history.turns.meta[history.currentRound - 2];
-}
-
-// END SHIT
-
-// for roundRobin
-export function getWhosTurnIsIt(history: History<Turn | TurnId>): string {
+export function getWhosTurnIsIt(history: RoundRobinHistory): string {
   return history.turnOrder[history.currentPlayerIndexTurn];
 }
