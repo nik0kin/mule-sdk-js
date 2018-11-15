@@ -44,13 +44,13 @@ export interface MuleStateSdk {
     getSpaces: () => {
         [locationId: string]: SpaceState;
     };
-    setSpace: (spaceId: string, spaceObject: SpaceState) => void;
+    setSpace: (locationId: string, spaceObject: SpaceState) => void;
     addPiece: (pieceObject: PieceState) => number;
-    getPiece: (pieceId: string) => PieceState;
+    getPiece: (pieceId: number) => PieceState;
     getPieces: (_searchArgs: GetPiecesSearchArgs) => PieceState[];
-    setPiece: (pieceId: string, pieceObject: PieceState) => void;
-    deletePiece: (pieceId: string) => void;
-    deletePieces: (pieceIds: string[]) => void;
+    setPiece: (pieceId: number, pieceObject: PieceState) => void;
+    deletePiece: (pieceId: number) => void;
+    deletePieces: (pieceIds: number[]) => void;
     persistQ: () => Promise<void>;
     log: (message: string) => void;
 }
