@@ -138,11 +138,9 @@ export declare type FullRoundRobinHistory = History<RoundRobinHistoryTurns<Turn>
 export declare type LitePlayByMailHistory = History<PlayByMailHistoryTurns<TurnId>>;
 export declare type FullPlayByMailHistory = History<PlayByMailHistoryTurns<Turn>>;
 export interface RoundRobinHistoryTurns<T> {
-    meta?: Turn[];
     [turnNumber: number]: T[];
 }
 export interface PlayByMailHistoryTurns<T> {
-    meta?: Turn[];
     [turnNumber: number]: T;
 }
 export declare type TurnId = string;

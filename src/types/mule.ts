@@ -156,12 +156,10 @@ export type LitePlayByMailHistory = History<PlayByMailHistoryTurns<TurnId>>;
 export type FullPlayByMailHistory = History<PlayByMailHistoryTurns<Turn>>;
 
 export interface RoundRobinHistoryTurns<T> {
-  meta?: Turn[];
   [turnNumber: number]: T[];
 }
 
 export interface PlayByMailHistoryTurns<T> {
-  meta?: Turn[];
   [turnNumber: number]: T;
 }
 
