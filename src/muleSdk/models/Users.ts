@@ -1,6 +1,6 @@
 
 import { Promise, resolve } from 'q';
-import * as _ from 'lodash';
+import { each, isEmpty } from 'lodash';
 
 import { User, UserCache } from '../../types/mule';
 import { MuleUserCreateResponse, MuleUserSessionResponse, MuleUserLoginResponse } from '../../types/mule-http';
@@ -69,10 +69,10 @@ export function initUsersApi(contextPath: string): UsersApi {
   };
 
   that.indexCacheQ = function (force: boolean): Promise<UserCache> {
-    if (!force && _.isEmpty(usersCache)) {
+    if (!force && isEmpty(usersCache)) {
       return that.indexQ()
         .then(function (result: User[]) {
-          _.each(result, function (value: User) {
+          each(result, function (value: User) {
             usersCache[value._id] = value;
           });
           return resolve(usersCache);

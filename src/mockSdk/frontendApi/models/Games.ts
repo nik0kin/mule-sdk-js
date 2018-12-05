@@ -1,7 +1,7 @@
 import { Promise, all, resolve } from 'q';
-import * as _ from 'lodash';
+import { clone, each, find } from 'lodash';
 
-import { DataModelTypes, Game, PlayersMap, User } from '../../../types/mule';
+import { DataModelTypes, Game, PlayersMap, User, PlayersMapPlayer } from '../../../types/mule';
 import { GamesApi, UnknownType } from '../../../types/sdk';
 
 import { usersApi } from '../models/Users';
@@ -17,8 +17,8 @@ export class MockGamesApi implements GamesApi {
   }
   public readQ: (gameId: string) => Promise<Game> = genericGetData<Game>(DataModelTypes.Games);
   public readUsersGamesQ = (userId: string): Promise<Game[]> => {
-    return resolve(_.filter(database.Games, (game: Game) => {
-      return !!_.find(game.players, (player) => {
+    return resolve(database.Games.filter((game: Game) => {
+      return !!find(game.players, (player: PlayersMapPlayer) => {
         return player.playerId === userId;
       });
     }));
@@ -33,10 +33,10 @@ export class MockGamesApi implements GamesApi {
   // TODO rename this?
   //  the code is a copy/paste from muleSdk
   public getPlayersMapQ = (game: Game): Promise<PlayersMap> => {
-    var map: PlayersMap = _.clone(game.players),
+    var map: PlayersMap = clone(game.players),
       promiseArray: Promise<void>[] = [];
 
-    _.each(map, (player, playerRel) => {
+    each(map, (player, playerRel) => {
       promiseArray.push(usersApi.readQ(player.playerId)
         .then((user?: User) => {
           if (user) {

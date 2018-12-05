@@ -1,6 +1,6 @@
 
 import * as Q from 'q';
-import * as _ from 'lodash';
+import { clone, each } from 'lodash';
 
 import { Game, PlayersMap, User } from '../../types/mule';
 import { GamesApi, UsersApi } from '../../types/sdk';
@@ -43,10 +43,10 @@ export function initGamesApi(contextPath: string) {
   ///// other //////
 
   that.getPlayersMapQ = function (game: Game): Q.Promise<PlayersMap> {
-    var map: PlayersMap = _.clone(game.players),
+    var map: PlayersMap = clone(game.players),
       promiseArray: Q.Promise<void>[] = [];
 
-    _.each(map, function (player: {playerId: string}, playerRel: string) {
+    each(map, function (player: {playerId: string}, playerRel: string) {
       promiseArray.push(usersApi.readCacheQ(player.playerId)
         .then(function (user?: User) {
           if (user) {

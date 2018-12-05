@@ -1,6 +1,6 @@
 
 import { Promise, resolve, reject } from 'q';
-import * as _ from 'lodash';
+import { find } from 'lodash';
 
 import {
   DataModelTypes,
@@ -38,7 +38,7 @@ export class MockUsersApi implements UsersApi {
     }
   }
   public loginQ = (params: MuleUserLoginRequest): Promise<MuleUserLoginResponse> => {
-    const foundUser: User | undefined = _.find(database.Users, (user: User) => {
+    const foundUser: User | undefined = find(database.Users, (user: User) => {
       return user.username === params.username;
     });
 
