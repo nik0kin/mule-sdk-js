@@ -2,8 +2,8 @@
 import { clone, each, filter, find  } from 'lodash';
 
 import {
-  BoardSpace, GameBoard, GameState, PieceState,
-  RoundRobinHistory, SpaceState,
+  BoardSpace, GameBoard, GameState, History, PieceState,
+  PlayByMailHistoryTurns, RoundRobinHistory, SpaceState,
 } from '../../types/mule';
 
 export interface MuleFnLibrary {
@@ -14,6 +14,7 @@ export interface MuleFnLibrary {
   getClassesFromPieces(gameState: GameState, className: string): PieceState[];
 
   getWhosTurnIsIt(history: RoundRobinHistory): string;
+  getPreviousTurnsFromPlayByMailHistory<T>(history: History<PlayByMailHistoryTurns<T>>): T[];
 }
 
 // combines gameboard.board and gameboard.spaces (really just adds attributes)
@@ -75,4 +76,8 @@ export function getClassesFromPieces(gameState: GameState, className: string): P
 
 export function getWhosTurnIsIt(history: RoundRobinHistory): string {
   return history.turnOrder[history.currentPlayerIndexTurn];
+}
+
+export function getPreviousTurnsFromPlayByMailHistory<T>(history: History<PlayByMailHistoryTurns<T>>): T[] {
+  return history.turns as T[];
 }

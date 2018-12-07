@@ -13,4 +13,8 @@ export function getUrlParameter(sParam: string): string | undefined {
     }
   }
   return;
+
+  // TODO add es???
+  // const params = new window.URLSearchParams(window.location.search);
+  // return params.get(sParam) || undefined;
 }

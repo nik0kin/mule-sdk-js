@@ -1,4 +1,4 @@
-import { BoardSpace, GameBoard, GameState, PieceState, RoundRobinHistory } from '../../types/mule';
+import { BoardSpace, GameBoard, GameState, History, PieceState, PlayByMailHistoryTurns, RoundRobinHistory } from '../../types/mule';
 export interface MuleFnLibrary {
     getFullSpaceInfo(gameBoard: GameBoard, gameState: GameState, spaceId: string): BoardSpace;
     getPiecesOnSpace(gameState: GameState, spaceId: string): PieceState[];
@@ -6,6 +6,7 @@ export interface MuleFnLibrary {
     getPiece(gameState: GameState, pieceId: number): PieceState[];
     getClassesFromPieces(gameState: GameState, className: string): PieceState[];
     getWhosTurnIsIt(history: RoundRobinHistory): string;
+    getPreviousTurnsFromPlayByMailHistory<T>(history: History<PlayByMailHistoryTurns<T>>): T[];
 }
 export declare function getFullSpaceInfo(gameBoard: GameBoard, gameState: GameState, spaceId: string): BoardSpace;
 export declare function getPiecesOnSpace(gameState: GameState, spaceId: string): PieceState[];
@@ -13,3 +14,4 @@ export declare function getPiecesByOwnerIdOnSpaceId(gameState: GameState, spaceI
 export declare function getPiece(gameState: GameState, pieceId: number): PieceState[];
 export declare function getClassesFromPieces(gameState: GameState, className: string): PieceState[];
 export declare function getWhosTurnIsIt(history: RoundRobinHistory): string;
+export declare function getPreviousTurnsFromPlayByMailHistory<T>(history: History<PlayByMailHistoryTurns<T>>): T[];
