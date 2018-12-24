@@ -1,6 +1,5 @@
-
-import { Promise, resolve, reject } from 'q';
 import { find } from 'lodash';
+import Promise from 'promise-polyfill';
 
 import {
   DataModelTypes,
@@ -22,7 +21,7 @@ export class MockUsersApi implements UsersApi {
     return loggedInUserId;
   }
   public indexQ = (): Promise<User[]> => {
-    return resolve(database.Users);
+    return Promise.resolve(database.Users);
   }
   public createQ = (params: UnknownType): Promise<MuleUserCreateResponse> => {
     throw new Error('nyi ' + params);
@@ -32,7 +31,7 @@ export class MockUsersApi implements UsersApi {
     if (loggedInUserId) {
       return this.readQ(loggedInUserId);
     } else {
-      return reject({ // TODO need to check how fetch would return that error
+      return Promise.reject({ // TODO need to check how fetch would return that error
         statusCode: 403
       });
     }
@@ -44,12 +43,12 @@ export class MockUsersApi implements UsersApi {
 
     if (foundUser) {
       loggedInUserId = foundUser._id;
-      return resolve({
+      return Promise.resolve({
         userId: foundUser._id,
         username: foundUser.username,
       });
     } else {
-      return reject({
+      return Promise.reject({
         statusCode: 401 // TODO double check
       });
     }

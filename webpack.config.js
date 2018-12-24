@@ -29,7 +29,7 @@ module.exports = {
   },
   module: {
     rules: [{
-      test: /\.ts$/,      
+      test: /\.ts$/,
       // test: /^(?!.*spec\.ts?$).*\.ts$/, // ghetto negative lookbehind to exclude .spec.ts https://stackoverflow.com/questions/38473025/regex-that-doesnt-match-spec-ts-and-spec-tsx-but-should-match-any-other-ts-and
       exclude: [/node_modules/, /test/],
       use: [
@@ -73,6 +73,6 @@ module.exports = {
   plugins: [
   ],
   resolve: {
-    extensions: ['.ts']
+    extensions: ['.ts', '.js'], // js to resolve promise-polyfill/src/finally.js
   },
 };

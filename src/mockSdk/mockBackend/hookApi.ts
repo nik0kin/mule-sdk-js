@@ -1,4 +1,4 @@
-import { Promise, resolve } from 'q';
+import Promise from 'promise-polyfill';
 
 import { BundleCode, BundleHooks, MuleStateSdk } from '../../types/backend-sdk';
 
@@ -57,6 +57,6 @@ function baseHook(ruleBundleName: string, gameId: string, hookName: string, para
       });
   } else {
     console.log(hookName + ' Hook Not Implemented', gameId);
-    return resolve();
+    return Promise.resolve();
   }
 }

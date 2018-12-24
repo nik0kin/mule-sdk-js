@@ -9,5 +9,3 @@ Namespace for types?
 
 webpack bundles - MuleSdk (slimmer) and MuleAndMockSdk
 
-
-get a promise polyfill (or get babel-polyfill working)

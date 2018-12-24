@@ -1,4 +1,3 @@
-import { Promise } from 'q';
 import { GameBoard, GameBoardCache } from '../../../types/mule';
 import { GameBoardsApi } from '../../../types/sdk';
 export declare class MockGameBoardsApi implements GameBoardsApi {

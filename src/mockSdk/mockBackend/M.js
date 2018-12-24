@@ -1,4 +1,4 @@
-var Q = require('q'),
+var Promise = require('promise-polyfill').default,
   _ = require('lodash');
 
 var brain = require('../turnSystem/brain'),
@@ -336,7 +336,7 @@ var createHelper = function (gso, _lastTurn, _debugPrefix) {
       statePromises.push(promise);
     });
 
-    return Q.all(statePromises)
+    return Promise.all(statePromises)
       .then(function () {
         var savePromises = [];
         // save big objects
@@ -372,7 +372,7 @@ var createHelper = function (gso, _lastTurn, _debugPrefix) {
           }));
         }
 
-        return Q.all(savePromises);
+        return Promise.all(savePromises);
       })
       .then(function () {
         logging.log('Persist Successful (' + dbObjectsChanged + ')', game._id);

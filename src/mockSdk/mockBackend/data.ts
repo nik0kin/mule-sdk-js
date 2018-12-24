@@ -1,5 +1,5 @@
 import { assign, find, findIndex } from 'lodash';
-import { Promise, resolve, reject } from 'q';
+import Promise from 'promise-polyfill';
 
 import {
   DataModelTypes,
@@ -108,9 +108,9 @@ export function genericGetData<T extends Persistable>(type: DataModelTypes): (id
     const foundData: T | undefined = genericGet<T>(type, id);
 
     if (foundData) {
-      return resolve(foundData);
+      return Promise.resolve(foundData);
     } else {
-      return reject({
+      return Promise.reject({
         statusCode: 404,
         statusMessage: 'Could not find type=' + type + ': ' + id,
       });

@@ -1,4 +1,3 @@
-import { Promise } from 'q';
 import { DataModelTypes, Game, GameBoard, LiteHistory, RuleBundle, GameState, PieceState, SpaceState, Turn, User, Persistable } from '../../types/mule';
 export declare const database: MockDatabase;
 export declare type DatabaseKeys = keyof MockDatabase;

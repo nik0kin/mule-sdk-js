@@ -1,11 +1,11 @@
-import { resolve } from 'q';
 import 'whatwg-fetch';
+import Promise from 'promise-polyfill';
 
 import { http } from './http';
 
 describe('muleSdk utils: http', () => {
   it('get() should work with json-response in string form', (done) => {
-    spyOn(window, 'fetch').and.callFake(() => resolve({
+    spyOn(window, 'fetch').and.callFake(() => Promise.resolve({
       json: () => '{}'
     }));
 
@@ -17,7 +17,7 @@ describe('muleSdk utils: http', () => {
   });
 
   it('get() should work with json-response in object form', (done) => {
-    spyOn(window, 'fetch').and.callFake(() => resolve({
+    spyOn(window, 'fetch').and.callFake(() => Promise.resolve({
       json: (): any => {
         return {};
       }
@@ -31,19 +31,19 @@ describe('muleSdk utils: http', () => {
   });
 
   it('get() should handle a parse error by rejecting', (done) => {
-    spyOn(window, 'fetch').and.callFake(() => resolve({
+    spyOn(window, 'fetch').and.callFake(() => Promise.resolve({
       json: () => '{{}'
     }));
 
     http.get('stuff.com')
-      .then(() => {}, (error) => {
+      .then(() => {/**/}, (error) => {
         expect(error).toBeDefined();
         done();
       });
   });
 
   it('post() should work', (done) => {
-    spyOn(window, 'fetch').and.callFake(() => resolve({
+    spyOn(window, 'fetch').and.callFake(() => Promise.resolve({
       json: (): any => {
         return {};
       }

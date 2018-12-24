@@ -1,5 +1,5 @@
 import { assign, invert } from 'lodash';
-import { Promise, resolve } from 'q';
+import Promise from 'promise-polyfill';
 
 import {
   RoundRobinHistory, RoundRobinHistoryTurns, LiteRoundRobinHistory,
@@ -22,7 +22,7 @@ export function playTurn(gameId: string, ruleBundleName: string, playerRel: stri
 
   // progressRound (if applicable)
 
-  return resolve({
+  return Promise.resolve({
     msg: 'Success',
     turnNumber: history.currentTurn, // 2
   });

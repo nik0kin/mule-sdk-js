@@ -1,4 +1,3 @@
-import { Promise } from 'q';
 import { FullHistory, LiteHistory } from '../../../types/mule';
 import { HistorysApi } from '../../../types/sdk';
 export declare class MockHistorysApi implements HistorysApi {

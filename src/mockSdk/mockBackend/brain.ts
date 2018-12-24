@@ -1,5 +1,4 @@
 import { findKey } from 'lodash';
-import { Promise } from 'q';
 
 import {
   Game, GameBoard, LiteHistory, LiteRoundRobinHistory, PlayersMapPlayer,

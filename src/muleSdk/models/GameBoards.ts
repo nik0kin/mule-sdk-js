@@ -1,5 +1,4 @@
-
-import { Promise, resolve } from 'q';
+import Promise from 'promise-polyfill';
 
 import { GameBoard } from '../../types/mule';
 import { GameBoardsApi, UnknownErrorType } from '../../types/sdk';
@@ -36,12 +35,12 @@ export function initGameBoardsApi(contextPath: string): GameBoardsApi {
 
   that.readCacheQ = function (gameBoardId: string): Promise<GameBoard> {
     if (that.gameBoardsCache[gameBoardId]) {
-      return resolve(that.gameBoardsCache[gameBoardId]);
+      return Promise.resolve(that.gameBoardsCache[gameBoardId]);
     } else {
       return that.readQ(gameBoardId)
         .then(function (result: GameBoard) {
           that.gameBoardsCache[result._id] = result;
-          resolve(result);
+          return result;
         })
         .catch(function (err: UnknownErrorType) {
           console.log('WTF');

@@ -1,6 +1,5 @@
-
-import { Promise, resolve } from 'q';
 import { each, isEmpty } from 'lodash';
+import Promise from 'promise-polyfill';
 
 import { User, UserCache } from '../../types/mule';
 import { MuleUserCreateResponse, MuleUserSessionResponse, MuleUserLoginResponse } from '../../types/mule-http';
@@ -58,7 +57,7 @@ export function initUsersApi(contextPath: string): UsersApi {
 
   that.readCacheQ = function (_userId: string): Promise<User | undefined> {
     if (that.usersCache[_userId]) {
-      return resolve(that.usersCache[_userId]);
+      return Promise.resolve(that.usersCache[_userId]);
     } else {
       return that.readQ(_userId)
         .then(function (result: User) {
@@ -75,10 +74,10 @@ export function initUsersApi(contextPath: string): UsersApi {
           each(result, function (value: User) {
             usersCache[value._id] = value;
           });
-          return resolve(usersCache);
+          return usersCache;
         });
     } else {
-      return resolve(usersCache);
+      return Promise.resolve(usersCache);
     }
   };
 

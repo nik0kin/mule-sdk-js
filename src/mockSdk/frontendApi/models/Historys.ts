@@ -1,5 +1,5 @@
 import { map } from 'lodash';
-import { Promise, resolve } from 'q';
+import Promise from 'promise-polyfill';
 
 import {
   DataModelTypes, Turn, FullHistory, LiteHistory, Game, GameBoard,
@@ -12,7 +12,7 @@ import { database, genericGetData, genericGet } from '../../mockBackend/data';
 
 export class MockHistorysApi implements HistorysApi {
   public indexQ = (): Promise<LiteHistory[]> => {
-    return resolve(database.Historys);
+    return Promise.resolve(database.Historys);
   }
   public readQ: (gameStateId: string) => Promise<LiteHistory> = genericGetData<LiteHistory>(DataModelTypes.Historys);
   public readGamesHistoryQ = (gameId: string): Promise<LiteHistory> => {

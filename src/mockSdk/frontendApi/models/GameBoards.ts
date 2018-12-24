@@ -1,5 +1,4 @@
-
-import { Promise, resolve } from 'q';
+import Promise from 'promise-polyfill';
 
 import { DataModelTypes, GameBoard, GameBoardCache } from '../../../types/mule';
 import { GameBoardsApi } from '../../../types/sdk';
@@ -9,9 +8,9 @@ import { database, genericGetData } from '../../mockBackend/data';
 import { gamesApi } from './Games';
 
 export class MockGameBoardsApi implements GameBoardsApi {
-  
+
   public indexQ = (): Promise<GameBoard[]> => {
-    return resolve(database.GameBoards);
+    return Promise.resolve(database.GameBoards);
   }
   public readQ: (userId: string) => Promise<GameBoard> = genericGetData<GameBoard>(DataModelTypes.GameBoards);
   public readGamesBoardQ (gameId: string): Promise<GameBoard> {

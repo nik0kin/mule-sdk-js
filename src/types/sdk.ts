@@ -35,62 +35,62 @@ export interface SDK {
 }
 
 export interface GameBoardsApi {
-  indexQ(): Q.Promise<GameBoard[]>;
-  readQ(gameBoardId: string): Q.Promise<GameBoard>;
-  readGamesBoardQ(gameId: string): Q.Promise<GameBoard>;
+  indexQ(): Promise<GameBoard[]>;
+  readQ(gameBoardId: string): Promise<GameBoard>;
+  readGamesBoardQ(gameId: string): Promise<GameBoard>;
   // gameBoardsCache: GameBoardCache;
   // cacheGameBoard(result: GameBoard): void;
-  // readCacheQ(gameBoardId: string): Q.Promise<GameBoard>;
+  // readCacheQ(gameBoardId: string): Promise<GameBoard>;
 }
 
 export interface GamesApi {
-  indexQ(): Q.Promise<Game[]>;
-  createQ(params: UnknownType): Q.Promise<UnknownType>;
-  readQ(gameId: string): Q.Promise<Game>;
-  readUsersGamesQ(userId: string): Q.Promise<Game[]>;
-  readMyGamesQ(): Q.Promise<Game[]>;
-  joinGameQ(gameId: string): Q.Promise<UnknownType>;
-  getPlayersMapQ(game: Game): Q.Promise<PlayersMap>;
+  indexQ(): Promise<Game[]>;
+  createQ(params: UnknownType): Promise<UnknownType>;
+  readQ(gameId: string): Promise<Game>;
+  readUsersGamesQ(userId: string): Promise<Game[]>;
+  readMyGamesQ(): Promise<Game[]>;
+  joinGameQ(gameId: string): Promise<UnknownType>;
+  getPlayersMapQ(game: Game): Promise<PlayersMap>;
 }
 
 export interface GameStatesApi {
-  indexQ(): Q.Promise<GameState[]>;
-  createQ(params: UnknownType): Q.Promise<UnknownType>;
-  readQ(gameStateId: string): Q.Promise<GameState>;
+  indexQ(): Promise<GameState[]>;
+  createQ(params: UnknownType): Promise<UnknownType>;
+  readQ(gameStateId: string): Promise<GameState>;
 }
 
 export interface HistorysApi {
-  indexQ(): Q.Promise<LiteHistory[]>;
-  readQ(historyId: string): Q.Promise<LiteHistory>;
-  readGamesHistoryQ(gameId: string): Q.Promise<LiteHistory>;
-  readGamesFullHistoryQ(gameId: string): Q.Promise<FullHistory>;
+  indexQ(): Promise<LiteHistory[]>;
+  readQ(historyId: string): Promise<LiteHistory>;
+  readGamesHistoryQ(gameId: string): Promise<LiteHistory>;
+  readGamesFullHistoryQ(gameId: string): Promise<FullHistory>;
 }
 
 export interface RuleBundlesApi {
-  indexQ(): Q.Promise<RuleBundle[]>;
-  createQ(params: UnknownType): Q.Promise<UnknownType>;
-  readQ(ruleBundleId: string): Q.Promise<RuleBundle>;
+  indexQ(): Promise<RuleBundle[]>;
+  createQ(params: UnknownType): Promise<UnknownType>;
+  readQ(ruleBundleId: string): Promise<RuleBundle>;
 }
 
 export interface TurnsApi {
-  readQ(historyId: string): Q.Promise<Turn>;
-  readGamesTurnQ(gameId: string, turnNumber: number): Q.Promise<Turn>;
+  readQ(historyId: string): Promise<Turn>;
+  readGamesTurnQ(gameId: string, turnNumber: number): Promise<Turn>;
 }
 
 export interface UsersApi {
   getLoggedInUserId(): string | undefined;
-  indexQ(): Q.Promise<User[]>;
-  createQ(params: UnknownType): Q.Promise<MuleUserCreateResponse>;
-  readQ(userId: string): Q.Promise<User>;
-  sessionQ(): Q.Promise<MuleUserSessionResponse>;
-  loginQ(params: MuleUserLoginRequest): Q.Promise<MuleUserLoginResponse>;
+  indexQ(): Promise<User[]>;
+  createQ(params: UnknownType): Promise<MuleUserCreateResponse>;
+  readQ(userId: string): Promise<User>;
+  sessionQ(): Promise<MuleUserSessionResponse>;
+  loginQ(params: MuleUserLoginRequest): Promise<MuleUserLoginResponse>;
   // usersCache: UserCache;
   // cacheUser(result: User): void;
-  readCacheQ(userId: string): Q.Promise<User | undefined>;
-  // indexCacheQ(force: boolean): Q.Promise<UserCache>;
+  readCacheQ(userId: string): Promise<User | undefined>;
+  // indexCacheQ(force: boolean): Promise<UserCache>;
 }
 
 export interface PlayTurnApi {
-  sendQ(params: MuleGamesPlayTurnRequest): Q.Promise<MulePlayTurnResponse>;
-  sendGameTurnQ(gameId: string, params: MulePlayTurnRequest): Q.Promise<MulePlayTurnResponse>;
+  sendQ(params: MuleGamesPlayTurnRequest): Promise<MulePlayTurnResponse>;
+  sendGameTurnQ(gameId: string, params: MulePlayTurnRequest): Promise<MulePlayTurnResponse>;
 }

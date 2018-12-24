@@ -1,6 +1,3 @@
-
-import { Promise } from 'q';
-
 import { DataModelTypes, Turn } from '../../../types/mule';
 import { TurnsApi } from '../../../types/sdk';
 

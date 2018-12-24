@@ -1,6 +1,5 @@
-
-import * as Q from 'q';
 import { clone, each } from 'lodash';
+import Promise from 'promise-polyfill';
 
 import { Game, PlayersMap, User } from '../../types/mule';
 import { GamesApi, UsersApi } from '../../types/sdk';
@@ -14,37 +13,37 @@ export function initGamesApi(contextPath: string) {
 
   const usersApi: UsersApi = initUsersApi(contextPath);
 
-  that.indexQ = function (): Q.Promise<Game[]> {
+  that.indexQ = function (): Promise<Game[]> {
     return http.get(contextPath + 'games');
   };
 
-  that.createQ = function (params: any): Q.Promise<any> {
+  that.createQ = function (params: any): Promise<any> {
     return http.post(contextPath + 'games', params);
   };
 
-  that.readQ = function (gameId: string): Q.Promise<string> {
+  that.readQ = function (gameId: string): Promise<string> {
     return http.get(contextPath + 'games/' + gameId);
   };
 
-  that.readUsersGamesQ = function (userId: string): Q.Promise<Game[]> {
+  that.readUsersGamesQ = function (userId: string): Promise<Game[]> {
     return http.get(contextPath + 'users/' + userId + '/games');
   };
 
-  that.readMyGamesQ = function (): Q.Promise<Game[]> {
+  that.readMyGamesQ = function (): Promise<Game[]> {
     return that.readUsersGamesQ(usersApi.getLoggedInUserId());
   };
 
   ////// GAME SERVICES //////
 
-  that.joinGameQ = function (gameId: string): Q.Promise<any> {
+  that.joinGameQ = function (gameId: string): Promise<any> {
     return http.post(contextPath + 'games/' + gameId + '/join');
   };
 
   ///// other //////
 
-  that.getPlayersMapQ = function (game: Game): Q.Promise<PlayersMap> {
+  that.getPlayersMapQ = function (game: Game): Promise<PlayersMap> {
     var map: PlayersMap = clone(game.players),
-      promiseArray: Q.Promise<void>[] = [];
+      promiseArray: Promise<void>[] = [];
 
     each(map, function (player: {playerId: string}, playerRel: string) {
       promiseArray.push(usersApi.readCacheQ(player.playerId)
@@ -56,7 +55,7 @@ export function initGamesApi(contextPath: string) {
       );
     });
 
-    return Q.all(promiseArray)
+    return Promise.all(promiseArray)
       .then(() => map);
   };
 

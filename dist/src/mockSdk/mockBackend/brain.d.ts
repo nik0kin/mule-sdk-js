@@ -1,4 +1,3 @@
-import { Promise } from 'q';
 import { MulePlayTurnRequest, MulePlayTurnResponse } from '../../types/mule-http';
 export declare class BackendMockBrain {
 }

@@ -1,5 +1,4 @@
-
-import { Promise, resolve } from 'q';
+import Promise from 'promise-polyfill';
 
 import { DataModelTypes, GameState } from '../../../types/mule';
 import { GameStatesApi, UnknownType } from '../../../types/sdk';
@@ -8,7 +7,7 @@ import { database, genericGetData } from '../../mockBackend/data';
 
 export class MockGameStatesApi implements GameStatesApi {
   public indexQ = (): Promise<GameState[]> => {
-    return resolve(database.GameStates);
+    return Promise.resolve(database.GameStates);
   }
   public createQ = (params: UnknownType): Promise<UnknownType> => {
     throw new Error('nyi ' + params);

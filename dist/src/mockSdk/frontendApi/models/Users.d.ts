@@ -1,4 +1,3 @@
-import { Promise } from 'q';
 import { User, UserCache } from '../../../types/mule';
 import { MuleUserCreateResponse, MuleUserLoginRequest, MuleUserLoginResponse } from '../../../types/mule-http';
 import { UsersApi, UnknownType } from '../../../types/sdk';

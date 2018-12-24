@@ -1,5 +1,3 @@
-import { Promise } from 'q';
-
 import {
   MuleGamesPlayTurnRequest, MulePlayTurnRequest, MulePlayTurnResponse
 } from '../../../types/mule-http';

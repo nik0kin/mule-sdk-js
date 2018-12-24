@@ -1,4 +1,3 @@
-import { Promise } from 'q';
 import { RoundRobinHistory, LiteRoundRobinHistory, Turn, LiteHistory } from '../../types/mule';
 import { MulePlayTurnResponse } from '../../types/mule-http';
 export declare function isPlayersTurn(playerId: string, history: RoundRobinHistory): boolean;

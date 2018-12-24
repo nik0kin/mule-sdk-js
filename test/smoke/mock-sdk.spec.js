@@ -1,5 +1,4 @@
 import * as _ from 'lodash';
-import * as Q from 'q';
 
 import { MockSdk } from '../../src/mockSdk/mock-sdk';
 import { MockSdk as MockSdk2 } from '../../src/';
@@ -15,7 +14,7 @@ describe('mock-sdk', () => {
 
   it('should create an SDK instance', () => {
     var SDK = new MockSdk('http://zion.tgp.io:313/webservices/');
-    
+
     expect(SDK).toBeDefined();
   });
 });

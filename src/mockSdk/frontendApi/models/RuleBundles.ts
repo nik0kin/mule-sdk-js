@@ -1,5 +1,4 @@
-
-import { Promise, resolve } from 'q';
+import Promise from 'promise-polyfill';
 
 import { DataModelTypes, RuleBundle } from '../../../types/mule';
 import { RuleBundlesApi, UnknownType } from '../../../types/sdk';
@@ -8,7 +7,7 @@ import { database, genericGetData } from '../../mockBackend/data';
 
 export class MockRuleBundlesApi implements RuleBundlesApi {
   public indexQ = (): Promise<RuleBundle[]> => {
-    return resolve(database.RuleBundles);
+    return Promise.resolve(database.RuleBundles);
   }
   public createQ = (params: UnknownType): Promise<UnknownType> => {
     throw new Error('nyi' + params);

@@ -1,5 +1,5 @@
-import { Promise, all, resolve } from 'q';
 import { clone, each, find } from 'lodash';
+import Promise from 'promise-polyfill';
 
 import { DataModelTypes, Game, PlayersMap, User, PlayersMapPlayer } from '../../../types/mule';
 import { GamesApi, UnknownType } from '../../../types/sdk';
@@ -10,14 +10,14 @@ import { database, genericGetData } from '../../mockBackend/data';
 export class MockGamesApi implements GamesApi {
 
   public indexQ = (): Promise<Game[]> => {
-    return resolve(database.Games);
+    return Promise.resolve(database.Games);
   }
   public createQ = (params: UnknownType): Promise<UnknownType> => {
     throw new Error('nyi ' + params);
   }
   public readQ: (gameId: string) => Promise<Game> = genericGetData<Game>(DataModelTypes.Games);
   public readUsersGamesQ = (userId: string): Promise<Game[]> => {
-    return resolve(database.Games.filter((game: Game) => {
+    return Promise.resolve(database.Games.filter((game: Game) => {
       return !!find(game.players, (player: PlayersMapPlayer) => {
         return player.playerId === userId;
       });
@@ -46,7 +46,7 @@ export class MockGamesApi implements GamesApi {
       );
     });
 
-    return all(promiseArray)
+    return Promise.all(promiseArray)
       .then(() => map);
   }
 }
