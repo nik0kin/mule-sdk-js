@@ -1,4 +1,4 @@
-import Promise from 'promise-polyfill';
+
 
 import { BundleCode, BundleHooks, MuleStateSdk } from '../../types/backend-sdk';
 

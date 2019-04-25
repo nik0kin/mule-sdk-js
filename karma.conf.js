@@ -1,12 +1,13 @@
-/* eslint-disable no-var, strict */
 'use strict';
 
 var webpackConfig = require('./webpack.config.js');
 
+process.env.CHROME_BIN = require('puppeteer').executablePath();
+
 module.exports = function(config) {
   // Documentation: https://karma-runner.github.io/0.13/config/configuration-file.html
   config.set({
-    browsers: [ 'PhantomJS' ],
+    browsers: [ 'ChromeHeadless' ],
 
     files: [
       // This ensures we have the es6 shims in place from babel and that angular and angular-mocks are loaded

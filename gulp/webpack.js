@@ -1,17 +1,15 @@
 'use strict';
 
-var gulp = require('gulp');
 var PluginError = require('plugin-error');
 var log = require('fancy-log');
 var webpack = require('webpack');
 var WebpackNotifierPlugin = require('webpack-notifier');
 var webpackConfig = require('../webpack.config.js');
-var packageJson = require('../package.json');
 
 function buildProduction(done) {
    // modify some webpack config options
    var myProdConfig = webpackConfig;
-   myProdConfig.output.filename = '[name].[hash].js';
+   myProdConfig.output.filename = 'index.js';
 
    myProdConfig.plugins = myProdConfig.plugins.concat(
       new webpack.DefinePlugin({

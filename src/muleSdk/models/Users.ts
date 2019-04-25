@@ -1,5 +1,5 @@
 import { each, isEmpty } from 'lodash';
-import Promise from 'promise-polyfill';
+
 
 import { User, UserCache } from '../../types/mule';
 import { MuleUserCreateResponse, MuleUserSessionResponse, MuleUserLoginResponse } from '../../types/mule-http';

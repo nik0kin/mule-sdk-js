@@ -1,5 +1,5 @@
 import { find } from 'lodash';
-import Promise from 'promise-polyfill';
+
 
 import {
   DataModelTypes,

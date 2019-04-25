@@ -4,6 +4,8 @@ var Server = require('karma').Server;
 var path = require('path');
 var log = require('fancy-log');
 
+process.env.CHROME_BIN = require('puppeteer').executablePath();
+
 function runTests(options) {
   // Documentation: https://karma-runner.github.io/0.13/dev/public-api.html
   var karmaConfig = {
@@ -15,19 +17,14 @@ function runTests(options) {
       'karma-jasmine',
       'karma-mocha-reporter',
       'karma-sourcemap-loader',
-      'karma-phantomjs-launcher',
+      'karma-chrome-launcher',
       'karma-coverage-istanbul-reporter'
     ],
     reporters: ['mocha', 'coverage-istanbul']
   };
 
-  if (options.done) {
-    karmaConfig.plugins.push('karma-junit-reporter');
-    karmaConfig.reporters.push('junit');
-  } else {
-    karmaConfig.plugins.push('karma-notify-reporter');
-    karmaConfig.reporters.push('notify');
-  }
+  karmaConfig.plugins.push('karma-notify-reporter');
+  karmaConfig.reporters.push('notify');
 
   new Server(karmaConfig, karmaCompleted).start();
 

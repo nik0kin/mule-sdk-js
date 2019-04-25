@@ -1,5 +1,5 @@
 import * as _ from 'lodash';
-import Promise from 'promise-polyfill';
+
 
 import { initializeMuleSdk } from '../../src/muleSdk/mule-sdk';
 

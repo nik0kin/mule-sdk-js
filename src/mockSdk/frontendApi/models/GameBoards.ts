@@ -1,4 +1,4 @@
-import Promise from 'promise-polyfill';
+
 
 import { DataModelTypes, GameBoard, GameBoardCache } from '../../../types/mule';
 import { GameBoardsApi } from '../../../types/sdk';

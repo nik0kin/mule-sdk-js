@@ -4,7 +4,7 @@
 
 Dev Watch Mode
 ```
-npm run serve
+yarn start
 ```
 
 To Build
@@ -14,20 +14,27 @@ To Build
 ```
 Note: Dont use built stuff (see Example)
 
+### Code Coverage
+
+```
+yarn test:coverage
+open coverage/index.html
+```
+
 #### Gulp based on
 
 https://github.com/Microsoft/TypeScriptSamples/tree/ac60a3cc89c731d44fc30d5a1b170f71f246e4c2/react-flux-babel-karma
 
-#### Example SDK Instantiation (in a Typescript project)
+#### Example SDK Instantiation
 
 ```
-import { sdk } from '../path-to/../src/mule-sdk';
+import { initializeMuleSdk } from 'mule-sdk-js';
 
 let yourMuleServicesUrl = "http://muleserver.com:313/";
 
-let SDK = sdk(yourMuleServicesUrl);
+let sdk = initializeMuleSdk(yourMuleServicesUrl);
 
-SDK.doStuff();
+sdk.doStuff();
 ```
 
 

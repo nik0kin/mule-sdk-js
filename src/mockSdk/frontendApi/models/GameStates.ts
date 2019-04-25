@@ -1,4 +1,4 @@
-import Promise from 'promise-polyfill';
+
 
 import { DataModelTypes, GameState } from '../../../types/mule';
 import { GameStatesApi, UnknownType } from '../../../types/sdk';

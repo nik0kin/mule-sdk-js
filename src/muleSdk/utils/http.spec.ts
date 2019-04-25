@@ -1,5 +1,5 @@
 import 'whatwg-fetch';
-import Promise from 'promise-polyfill';
+
 
 import { http } from './http';
 

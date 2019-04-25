@@ -1,5 +1,5 @@
 import { clone, each, find } from 'lodash';
-import Promise from 'promise-polyfill';
+
 
 import { DataModelTypes, Game, PlayersMap, User, PlayersMapPlayer } from '../../../types/mule';
 import { GamesApi, UnknownType } from '../../../types/sdk';

@@ -1,4 +1,4 @@
-import Promise from 'promise-polyfill';
+
 
 import { Action } from '../../types/mule';
 

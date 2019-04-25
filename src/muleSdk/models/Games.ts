@@ -1,5 +1,4 @@
 import { clone, each } from 'lodash';
-import Promise from 'promise-polyfill';
 
 import { Game, PlayersMap, User } from '../../types/mule';
 import { GamesApi, UsersApi } from '../../types/sdk';

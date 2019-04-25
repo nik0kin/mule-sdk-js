@@ -1,5 +1,5 @@
 import { map } from 'lodash';
-import Promise from 'promise-polyfill';
+
 
 import {
   DataModelTypes, Turn, FullHistory, LiteHistory, Game, GameBoard,

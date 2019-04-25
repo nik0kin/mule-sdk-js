@@ -1,4 +1,4 @@
-import Promise from 'promise-polyfill';
+
 
 import { DataModelTypes, RuleBundle } from '../../../types/mule';
 import { RuleBundlesApi, UnknownType } from '../../../types/sdk';

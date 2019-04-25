@@ -1,5 +1,5 @@
 import { assign, invert } from 'lodash';
-import Promise from 'promise-polyfill';
+
 
 import {
   RoundRobinHistory, RoundRobinHistoryTurns, LiteRoundRobinHistory,

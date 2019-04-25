@@ -3,7 +3,7 @@
 
 import 'whatwg-fetch';
 import { isObjectLike } from 'lodash';
-import Promise from 'promise-polyfill';
+
 
 function handleResponse(response: Response): any {
   if (response.status >= 400) {
