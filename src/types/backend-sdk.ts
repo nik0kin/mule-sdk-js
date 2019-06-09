@@ -1,4 +1,5 @@
 import {
+  Action,
   BoardSpace,
   PieceState,
   SpaceState,
@@ -36,7 +37,7 @@ export type BoardGeneratorHook
 export type GameStartHook = (M: MuleStateSdk) => Promise<void>;
 
 export type ValidateTurnHook
- = (M: MuleStateSdk, lobbyPlayerId: string, actions: VariableMap[]) => Promise<void>; // throw Errors if Turn is invalid
+ = (M: MuleStateSdk, lobbyPlayerId: string, actions: Action[]) => Promise<void>; // throw Errors if Turn is invalid
 
 export type ProgressTurnHook = (M: MuleStateSdk) => Promise<VariableMap>; // metadata is returned
 export type ProgressRoundHook = (M: MuleStateSdk) => Promise<VariableMap>;

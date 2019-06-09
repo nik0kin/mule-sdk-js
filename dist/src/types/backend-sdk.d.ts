@@ -1,4 +1,4 @@
-import { BoardSpace, PieceState, SpaceState, Turn, VariableMap } from './mule';
+import { Action, BoardSpace, PieceState, SpaceState, Turn, VariableMap } from './mule';
 export declare type BundleHooks = 'customBoardSettingsValidator' | 'boardGenerator' | 'gameStart' | 'progressTurn' | 'progressRound' | 'winCondition';
 export interface BundleCode {
     customBoardSettingsValidator?: CustomBoardSettingsValidatorHook;
@@ -19,7 +19,7 @@ export interface ActionCode {
 export declare type CustomBoardSettingsValidatorHook = (customBoardSettings: VariableMap) => VariableMap;
 export declare type BoardGeneratorHook = (customBoardSettings: VariableMap, ruleBundleRules: VariableMap) => Promise<BoardSpace[]>;
 export declare type GameStartHook = (M: MuleStateSdk) => Promise<void>;
-export declare type ValidateTurnHook = (M: MuleStateSdk, lobbyPlayerId: string, actions: VariableMap[]) => Promise<void>;
+export declare type ValidateTurnHook = (M: MuleStateSdk, lobbyPlayerId: string, actions: Action[]) => Promise<void>;
 export declare type ProgressTurnHook = (M: MuleStateSdk) => Promise<VariableMap>;
 export declare type ProgressRoundHook = (M: MuleStateSdk) => Promise<VariableMap>;
 export declare type WinConditionHook = (M: MuleStateSdk) => Promise<string | null>;
