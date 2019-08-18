@@ -55,7 +55,7 @@ export interface MuleStateSdk { // aka M
 
   // GameBoard
   getBoardDefinition: () => BoardSpace[];
-  getCustomBoardSettings: () => any;
+  getCustomBoardSettings: <T extends object>() => T;
 
   // History
   getCurrentTurnNumber: () => number;
@@ -64,11 +64,11 @@ export interface MuleStateSdk { // aka M
 
   // GameState
   getGlobalVariable: (key: string) => any;
-  getGlobalVariables: () => any; // map?
+  getGlobalVariables: <T extends object>() => T; // map
   setGlobalVariable: (key: string, value: any) => void;
   addToGlobalVariable: (key: string, additionValue: number) => void;
   getPlayerVariable: (lobbyPlayerId: string, key: string) => any;
-  getPlayerVariables: (lobbyPlayerId: string) => any; // map
+  getPlayerVariables: <T extends object>(lobbyPlayerId: string) => T; // map
   setPlayerVariable: (lobbyPlayerId: string, key: string, value: any) => void;
   addToPlayerVariable: (lobbyPlayerId: string, key: string, additionValue: number) => void;
 
