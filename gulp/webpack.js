@@ -3,27 +3,12 @@
 var PluginError = require('plugin-error');
 var log = require('fancy-log');
 var webpack = require('webpack');
-var WebpackNotifierPlugin = require('webpack-notifier');
 var webpackConfig = require('../webpack.config.js');
 
 function buildProduction(done) {
    // modify some webpack config options
    var myProdConfig = webpackConfig;
    myProdConfig.output.filename = 'index.js';
-
-   myProdConfig.plugins = myProdConfig.plugins.concat(
-      new webpack.DefinePlugin({
-          'process.env': {
-              'NODE_ENV': JSON.stringify('production')
-         }
-      }),
-    //  new webpack.optimize.CommonsChunkPlugin({ name: 'vendor', filename: 'vendor.[hash].js' }),
-      new webpack.optimize.UglifyJsPlugin({
-         compress: {
-            warnings: true
-         }
-      })
-   );
 
    // run webpack
    webpack(myProdConfig, function (err, stats) {
@@ -40,11 +25,6 @@ function createDevCompiler() {
    // modify some webpack config options
    var myDevConfig = webpackConfig;
    myDevConfig.devtool = 'inline-source-map';
-
-   myDevConfig.plugins = myDevConfig.plugins.concat(
-    //  new webpack.optimize.CommonsChunkPlugin({ name: 'vendor', filename: 'vendor.js' }),
-      new WebpackNotifierPlugin({ title: 'Webpack build', excludeWarnings: true })
-   );
 
    // create a single instance of the compiler to allow caching
    return webpack(myDevConfig);

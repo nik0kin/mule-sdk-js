@@ -1,22 +1,18 @@
-/* eslint-disable no-var, strict, prefer-arrow-callback */
 'use strict';
 
-var path = require('path');
+const path = require('path');
 
 
-var babelOptions = {
+const babelOptions = {
   "presets": [
-    [
-      "es2015",
-      {
-        "modules": false
-      }
-    ],
-    "es2016"
+    ['@babel/preset-env', {
+      "targets": "> 0.25%, not dead"
+    }]
   ]
 };
 
 module.exports = {
+  mode: 'production',
   cache: true,
   entry: './src/index.ts',
   // currently bundling q/lodash into index.js

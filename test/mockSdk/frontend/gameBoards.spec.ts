@@ -5,7 +5,6 @@ import { GameBoard } from '../../../src/types/mule';
 
 import { basicGame } from '../../mock-data/Game';
 import { basicGameBoard } from '../../mock-data/GameBoard';
-import { basicUsers } from '../../mock-data/User';
 
 describe('mock-frontend-sdk', () => {
 
@@ -77,7 +76,7 @@ describe('mock-frontend-sdk', () => {
             expect(loadedGameBoard).toEqual(basicGameBoard);
             done();
           },
-          (e) => {
+          () => {
             expect('expect this not to be called').toBeUndefined();
           }
         );

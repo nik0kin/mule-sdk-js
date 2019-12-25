@@ -1,7 +1,7 @@
 
-import { History, TurnSubmitStyle } from '../../src/types/mule';
+import { LiteHistory, TurnSubmitStyle } from '../../src/types/mule';
 
-export const basicRoundRobinHistory: History = {
+export const basicRoundRobinHistory: LiteHistory = {
   _id: 'historyId_210',
   gameId: 'testId_100',
   currentPlayerIndexTurn: 0,
@@ -16,4 +16,5 @@ export const basicRoundRobinHistory: History = {
   turns: {
     0: [],
   },
+  winner: undefined,
 };

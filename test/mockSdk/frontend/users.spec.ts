@@ -2,7 +2,6 @@
 import { MockSdk } from '../../../src/mockSdk/mock-sdk';
 import { User } from '../../../src/types/mule';
 
-import { basicGame, anotherBasicGame } from '../../mock-data/Game';
 import { basicUsers } from '../../mock-data/User';
 
 describe('mock-frontend-sdk', () => {
@@ -27,7 +26,7 @@ describe('mock-frontend-sdk', () => {
 
       SDK.Users.sessionQ()
         .then(
-          (user: User) => {
+          (/* user: User */) => {
             expect('expect this not to be called').toBeUndefined();
           },
           () => {

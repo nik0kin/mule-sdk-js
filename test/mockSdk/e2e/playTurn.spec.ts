@@ -6,10 +6,10 @@
 */
 
 import { MockSdk } from '../../../src/mockSdk/mock-sdk';
-import { History, PlayersMap, User, Turn } from '../../../src/types/mule';
+import { LiteHistory, User, Turn } from '../../../src/types/mule';
 import { MulePlayTurnRequest } from '../../../src/types/mule-http';
 
-import { basicGame, anotherBasicGame } from '../../mock-data/Game';
+import { basicGame } from '../../mock-data/Game';
 import { basicGameBoard } from '../../mock-data/GameBoard';
 import { basicGameState } from '../../mock-data/GameState';
 import { basicRoundRobinHistory } from '../../mock-data/History';
@@ -44,6 +44,7 @@ describe('MockSdk E2E API', () => {
     });
     MockSdk.addBundleCode(basicGame.ruleBundle.name, {
       actions: {},
+      validateTurn: null as any
     });
     const SDK = initSDK();
 
@@ -73,7 +74,7 @@ describe('MockSdk E2E API', () => {
         // verify history has progressed
         return SDK.Historys.readQ(basicGameBoard.history);
       })
-      .then((history: History) => {
+      .then((history: LiteHistory) => {
         expect(history.turns[currentRound - 1][playerTurnIndex]).toBeDefined();
         savedTurnId = history.turns[currentRound - 1][playerTurnIndex];
         // expect(history.currentTurn).toEqual(2); // TODO

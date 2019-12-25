@@ -112,7 +112,7 @@ SDK.Q - Q library
 
 SDK.utils.getUrlParameter(paramName)
 
-#### Experimental Spinal
+#### Experimental Spinal (not in v3)
 
 SDK.Spinal() - creates Spinal instance
 
