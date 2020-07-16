@@ -30,7 +30,7 @@
     "karma-notify-reporter": "^1.1.0",
     "karma-sourcemap-loader": "^0.3.6",
     "karma-webpack": "^4.0.2",
-    "lodash": "^4.17.15",
+    "lodash": "^4.17.19",
     "plugin-error": "^1.0.1",
     "puppeteer": "^1.14.0",
     "ts-loader": "^6.2.1",
